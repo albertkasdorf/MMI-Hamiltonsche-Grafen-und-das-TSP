@@ -1,0 +1,65 @@
+\documentclass{article}
+
+%\usepackage[utf8]{inputenc}		% LuaTex do not need this
+%\usepackage[T1]{fontenc}			% LuaTex do not need this
+\usepackage{fontspec}					% LuaTex need this
+\usepackage{lmodern}
+\usepackage{comment}
+%\usepackage[ngerman]{babel}		% LuaTex do not need this
+\usepackage{polyglossia}
+	\setdefaultlanguage[spelling=new]{german}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% LATEX Mathematical Symbols
+% https://reu.dimacs.rutgers.edu/Symbols.pdf
+% https://en.wikibooks.org/wiki/LaTeX/Mathematics
+%
+\usepackage{amssymb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% algorithm2e.sty — package for algorithms
+% http://ctan.mirrors.hoobly.com/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
+%
+\usepackage[
+	ngerman,
+	linesnumbered,
+	boxed,
+%	algochapter,
+%	rightnl,
+%	figure,
+]{algorithm2e}
+	% Then you can adjust the spacing between the body of the algorithm and its
+	% caption through the command \SetAlCapSkip.
+	\SetAlCapSkip{1em}
+	% Restyling the caption in an algorithm created with algorithm2e
+	% https://tex.stackexchange.com/questions/112294/restyling-the-caption-in-an-algorithm-created-with-algorithm2e/112295
+	\SetAlgoCaptionSeparator{:}
+	\renewcommand\AlCapFnt{\normalfont}
+	% Algorithm2e modify line numbers
+	% https://tex.stackexchange.com/questions/100145/algorithm2e-modify-line-numbers
+	\SetNlSty{textbf}{}{:}
+	% Sets the value of the space between the line numbers and the text, by default 1em.
+	\SetNlSkip{2em}
+	%\SetAlgoRefName{QXY}
+	
+	
+\title{Hamiltonsche Grafen und das TSP}
+\author{
+  Albert Kasdorf\and
+  Andreas Janster\and
+  Alex Bibanaev\and
+  Georg Braun\and
+  Rati Devdariani}
+
+\date{09.05.2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Abschnitt 1}
+\section{Abschnitt 2}
+
+\end{document}
