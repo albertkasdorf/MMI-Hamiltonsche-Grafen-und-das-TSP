@@ -1,0 +1,134 @@
+%%
+%% This is file `beamerthemeACUAS.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% acuasbeamer.dtx  (with options: `presentationa')
+%% 
+%% Copyright (C) 2008 - 2010 by Jobst Hoffmann.  All rights reserved.
+%% 
+%% IMPORTANT COPYRIGHT NOTICE:
+%% 
+%% No other permissions to copy or distribute this file in any form
+%% are granted and in particular NO PERMISSION to modify its contents.
+%% 
+%% You are NOT ALLOWED to change this file.
+%% 
+%% Please address error reports and any problems in case of UNCHANGED versions
+%% to
+%%         j.hoffmann_(at)_fh-aachen.de
+{%
+  \def\@svn@ $#1Date: #2-#3-#4 #5$$#6Revision: #7$ {%
+    \ProvidesPackage{beamerthemeACUAS}[#2/#3/#4 r#7 a beamer presentation theme for the ACUAS (JHf)]}
+  \@svn@ $Date: 2013-09-02 22:50:56 +0200 (Mo, 02. Sep 2013) $$Revision: 138 $ %
+}
+\RequirePackage{beamerbasethemes}[2004/10/07]
+\RequirePackage{ifthen}
+\newboolean{twocols@acb}%
+\setboolean{twocols@acb}{false}%
+\newsavebox{\tocbox@acb}%
+\newlength{\tocboxheight@acb}%
+\newlength{\tocboxdepth@acb}%
+\newcommand{\contents@acb}{\sectoctitlename@acb}%
+\newcommand{\createsectoc@acb}{%
+  \typeout{activate AtBeginSection}%
+  \AtBeginSection[]{%
+    \setbox\tocbox@acb=\vbox{%
+      \tableofcontents[sectionstyle=hide/hide,
+          hideothersubsections]%
+    }%
+    \settoheight{\tocboxheight@acb}{\usebox{\tocbox@acb}}%
+    \settodepth{\tocboxdepth@acb}{\usebox{\tocbox@acb}}%
+    \addtolength{\tocboxheight@acb}{\tocboxdepth@acb}%
+    \let\thiscontains@acb\relax%
+    \newif\ifafb@acb%
+    \ifthenelse{\lengthtest{\tocboxheight@acb<10pt}}{%
+      \afb@acbfalse
+    }{%
+      \let\thiscontains@acb\contents@acb%
+      \ifthenelse{\lengthtest{\tocboxheight@acb>190pt}}{%
+        \afb@acbtrue
+      }{%
+      }%
+    }%
+    \ifafb@acb%
+      \begin{frame}<presentation|handout>[allowframebreaks=0.8]%
+        \frametitle{\insertsectionhead\thiscontains@acb}%
+
+        \unvbox\tocbox@acb%
+      \end{frame}
+    \else%
+      \begin{frame}<presentation|handout>%
+        \frametitle{\insertsectionhead\thiscontains@acb}%
+
+        \unvbox\tocbox@acb%
+      \end{frame}
+    \fi%
+  }
+}
+\DeclareOption{english}{%
+  \def\sectoctitlename@acb{{\color{\@linkcolor}:} the contents one by one}
+}
+\DeclareOption{german}{%
+  \def\sectoctitlename@acb{{\color{\@linkcolor}:} die Inhalte im einzelnen}
+}
+\DeclareOption{ngerman}{%
+  \def\sectoctitlename@acb{{\color{\@linkcolor}:} die Inhalte im einzelnen}
+}
+\DeclareOption{createsectoc}{%
+  \createsectoc@acb%
+}
+\DeclareOption{createsubsectoc}{%
+    \setboolean{createsubsectocb@acb}{true}%
+}
+\DeclareOption{twocols}{%
+    \setboolean{twocols@acb}{true}%
+}
+\ProcessOptions*\relax%
+\ifthenelse{\boolean{twocols@acb}}{%
+  \IfFileExists{multicol.sty}{%
+    \RequirePackage{multicol}
+  }{%
+    \@latexerr{package multicol is not available}\@ehc%
+  }%
+}{}
+\newcommand{\setbeamerpublished}[1]{%
+  \gdef\jhfb@published{#1}
+}
+\def\jhfb@published{\the\year}
+\mode
+<presentation>
+
+\usefonttheme{afont}
+\usecolortheme{acuas}
+\useinnertheme{amarker}
+\useoutertheme{aframes}
+
+\mode
+<all>
+\providecommand{\bTitle}{}
+\renewcommand{\bTitle}[1]{%
+  \raisebox{3pt}{\parbox{0.85\linewidth}{\raggedright#1}}%
+}
+\mode
+<handout>
+\newenvironment{theindex}{%
+  \newcommand\indexspace{\par \vskip 6\p@ \@plus2\p@ \@minus1\p@\relax}
+  \newcommand\@idxitem{\par\hangindent 40\p@} \let\item\@idxitem
+  \newcommand\subitem{\@idxitem \hspace*{20\p@}}
+  \newcommand\subsubitem{\@idxitem \hspace*{30\p@}}
+  \ifthenelse{\boolean{twocols@acb}}{
+    \begin{multicols}{2}
+        \parskip\z@ \@plus .3\p@\relax
+        \columnseprule \z@ \columnsep=10pt \raggedbottom\raggedright }{}
+    }{%
+      \ifthenelse{\boolean{twocols@acb}}{%
+    \end{multicols}%
+  }{}%
+}
+\mode
+<all>
+\endinput
+%%
+%% End of file `beamerthemeACUAS.sty'.

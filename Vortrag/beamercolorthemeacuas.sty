@@ -1,0 +1,52 @@
+%%
+%% This is file `beamercolorthemeacuas.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% acuasbeamer.dtx  (with options: `colora')
+%% 
+%% Copyright (C) 2008 - 2010 by Jobst Hoffmann.  All rights reserved.
+%% 
+%% IMPORTANT COPYRIGHT NOTICE:
+%% 
+%% No other permissions to copy or distribute this file in any form
+%% are granted and in particular NO PERMISSION to modify its contents.
+%% 
+%% You are NOT ALLOWED to change this file.
+%% 
+%% Please address error reports and any problems in case of UNCHANGED versions
+%% to
+%%         j.hoffmann_(at)_fh-aachen.de
+{%
+  \def\@svn@ $#1Date: #2-#3-#4 #5$$#6Revision: #7$ {%
+    \ProvidesPackage{beamercolorthemeacuas}[#2/#3/#4 r#7 a beamer color theme for the ACUAS(JHf)]}
+  \@svn@ $Date: 2013-09-02 22:50:56 +0200 (Mo, 02. Sep 2013) $$Revision: 138 $ %
+}
+\RequirePackage{beamerbasethemes}[2004/10/07]
+\RequirePackage{acuascolor}[2004/10/07]
+\mode
+<presentation>
+\setbeamercolor{structure}{fg=black, bg=white}
+\setbeamercolor{palette primary}{fg=black, bg=white}
+\setbeamercolor{palette quaternary}{fg=red, bg=green}
+
+\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor*{author}{parent=titlelike}
+\setbeamercolor*{date}{parent=titlelike}
+\setbeamercolor*{institute}{parent=titlelike}
+\setbeamercolor*{frametitle}{parent=palette primary}
+\setbeamercolor*{frametitle}{bg=}
+\setbeamercolor*{title in head/foot}{parent=titlelike}
+\setbeamercolor*{title in head/foot}{bg=}
+\setbeamercolor*{subsubsection title}{use=structure}
+\setbeamercolor*{alerted text}{fg=FHmint, bg=white}
+\setbeamercolor{local structure}{parent=structure}
+
+\setbeamercolor{item}{parent=local structure}
+\setbeamercolor{subitem}{parent=item}
+\setbeamercolor{subsubitem}{parent=subitem}
+\hypersetup{linkcolor=FHorange}
+\endinput
+%%
+%% End of file `beamercolorthemeacuas.sty'.

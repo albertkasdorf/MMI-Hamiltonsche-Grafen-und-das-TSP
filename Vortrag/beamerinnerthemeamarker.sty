@@ -1,0 +1,82 @@
+%%
+%% This is file `beamerinnerthemeamarker.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% acuasbeamer.dtx  (with options: `innera')
+%% 
+%% Copyright (C) 2008 - 2010 by Jobst Hoffmann.  All rights reserved.
+%% 
+%% IMPORTANT COPYRIGHT NOTICE:
+%% 
+%% No other permissions to copy or distribute this file in any form
+%% are granted and in particular NO PERMISSION to modify its contents.
+%% 
+%% You are NOT ALLOWED to change this file.
+%% 
+%% Please address error reports and any problems in case of UNCHANGED versions
+%% to
+%%         j.hoffmann_(at)_fh-aachen.de
+{%
+  \def\@svn@ $#1Date: #2-#3-#4 #5$$#6Revision: #7$ {%
+    \ProvidesPackage{beamerinnerthemeamarker}[#2/#3/#4 r#7 a beamer inner theme for the ACUAS (JHf)]}
+  \@svn@ $Date: 2013-09-02 22:50:56 +0200 (Mo, 02. Sep 2013) $$Revision: 138 $ %
+}
+\RequirePackage{pgfcore}
+\usepgfmodule{shapes}
+\RequirePackage{beamerbasethemes}[2004/10/07]
+\DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
+\ExecuteOptionsBeamer{shadow=false}
+\ProcessOptionsBeamer
+\setbeamersize{text margin left=0.03\paperwidth}
+\setbeamersize{text margin right=0.09\paperwidth}
+\setbeamercolor{background canvas}{bg=white}
+\titlegraphic{%
+  %\setlength{\fboxsep}{0pt}
+  %\fbox{%
+  \includegraphics[trim={5 0 45 1}, clip, scale=0.5]{FHAAC_4C_BL-r}%
+  %}%
+}
+\setbeamertemplate{title page}{%
+  \vspace*{-1pt}
+  \begin{beamercolorbox}[ht=\paperheight, dp=0pt, wd=\paperwidth,
+      sep=0.03\paperwidth, left]{title}
+      \insertlogo%
+      \hspace*{-0.03\paperwidth}%
+      \vbox to 0.25\paperheight{% changed from 0.37!!!
+        {\usebeamerfont{title}\inserttitle}%
+      }%
+      \par\vspace{0.01\paperheight}
+      \vbox to 0.33\paperheight{% changed from 0.21!!
+        \ifx\insertsubtitle\@empty\else%
+        {\usebeamerfont{subtitle}%
+          \insertsubtitle\par}%
+        \fi%
+        {\usebeamerfont{date}\insertdate}%
+        \par\vspace{10pt}%
+        {\usebeamerfont{author}\insertauthor}%
+      }
+  \end{beamercolorbox}%
+}
+\def\subsubsectionpage{\usebeamertemplate*{subsubsection page}}
+\mode
+<article>
+{\providecommand\subsubsectionpage{}}
+
+\defbeamertemplate*{subsubsection page}{default}[1][]{%
+  \begin{beamercolorbox}[sep=8pt,center,#1]{subsubsection title}
+    \usebeamerfont{subsubsection title}\insertsubsubsectionhead\par
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{subsubsection page}[default][colsep=-4bp,
+    rounded=true,shadow=\beamer@themerounded@shadow]
+\setbeamertemplate{itemize item}{\textgreater}
+\setbeamertemplate{itemize subitem}{\textgreater}
+\setbeamertemplate{itemize subsubitem}{\textgreater}
+\mode
+<all>
+\endinput
+%%
+%% End of file `beamerinnerthemeamarker.sty'.

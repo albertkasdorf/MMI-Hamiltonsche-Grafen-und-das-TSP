@@ -1,0 +1,154 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% https://www.sharelatex.com/learn/Beamer
+%
+%%%%%%%%%% 
+\documentclass{beamer}
+	\usetheme{ACUAS}
+%	\usetheme{Madrid}
+%
+% 	- Hiding the presentation controls in LaTeX beamer presentation [closed]
+%		- https://stackoverflow.com/questions/3017030/hiding-the-presentation-controls-in-latex-beamer-presentation
+%	\usetheme{Dresden}
+%		\usecolortheme{beaver}
+	\setbeamertemplate{navigation symbols}{}
+	%
+	% Gitterllinien auf den Folien anzeigen
+	%
+	%\beamertemplategridbackground[1cm]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Packages
+%
+%%%%%%%%%% 
+\usepackage{fontspec}
+\usepackage{lmodern}
+\usepackage{polyglossia}
+	\setmainlanguage[variant=german, spelling=new]{german}
+\usepackage{graphicx}
+	\graphicspath{{./logos/}{./bilder/}}
+
+%
+% bibtex vs. biber and biblatex vs. natbib
+%	- https://tex.stackexchange.com/questions/25701/bibtex-vs-biber-and-biblatex-vs-natbib
+% The biblatex Package - Programmable Bibliographies and Citations
+% 	- http://ftp.math.purdue.edu/mirrors/ctan.org/macros/latex/exptl/biblatex/doc/biblatex.pdf
+% Biblatex citation order
+%	- https://tex.stackexchange.com/questions/51434/biblatex-citation-order
+% 		- sorting=ydnt: Sort by year (descending), name, title.
+%		- sorting=none: Do not sort at all. All entries are processed in citation order.
+%
+%\usepackage[
+%	backend=biber,
+%	style=numeric-comp,
+%	%style=ieee,
+%	sorting=none,
+%]{biblatex}
+%	\addbibresource{quellen.bib}
+	
+%\usepackage{showframe}
+
+\usepackage[mode=text]{siunitx}
+	\sisetup{locale=DE, range-phrase=--, product-units=single, binary-units=true}
+	\DeclareSIUnit{\mAh}{mAh}
+	\DeclareSIUnit{\belmilliwatt}{Bm}
+	\DeclareSIUnit{\dBm}{\deci\belmilliwatt}
+	
+\usepackage{subcaption}
+
+	% How to remove figure caption prefix “figure” in beamer
+	% https://tex.stackexchange.com/questions/82456/how-to-remove-figure-caption-prefix-figure-in-beamer
+	\captionsetup[figure]{labelformat=empty, font=scriptsize, skip=2pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Information to be included in the title page
+%
+%%%%%%%%%%
+\title[Hamiltonsche Grafen und das TSP]{Hamiltonsche Grafen und das TSP}
+%\subtitle{}
+\author[]
+{
+	Albert Kasdorf, Andreas Janster, Alex Bibanaev, Georg Braun, Rati Devdariani
+}
+\institute[FH Aachen]
+{
+	FH Aachen\\
+	Fachbereich Elektrotechnik und Informationstechnik\\
+	Ingenieur-Informatik
+}
+\date{04.05.2018}
+
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Titelseite
+%
+%%%%%%%%%%
+\frame{\titlepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Inhaltsverzeichnis?
+%
+%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Inhaltsverzeichnis}
+%\tableofcontents
+%\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 
+%
+%%%%%%%%%%
+\part{Einführung}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+%%%%%%%%%%
+\begin{frame}{Einführung\\\normalsize{Hamiltonsche Grafen und das TSP}}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 
+%
+%%%%%%%%%%
+\part{What ever... }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+%%%%%%%%%%
+\begin{frame}{Title\\\normalsize{Subtitle}}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 
+%
+%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Frame Template}
+%This is a text in first frame. This is a text in first frame. This is a text in first frame.
+%\end{frame}
+
+
+\end{document}
+

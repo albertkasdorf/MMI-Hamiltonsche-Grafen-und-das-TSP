@@ -1,0 +1,107 @@
+%%
+%% This is file `beamerouterthemeaframes.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% acuasbeamer.dtx  (with options: `outera')
+%% 
+%% Copyright (C) 2008 - 2010 by Jobst Hoffmann.  All rights reserved.
+%% 
+%% IMPORTANT COPYRIGHT NOTICE:
+%% 
+%% No other permissions to copy or distribute this file in any form
+%% are granted and in particular NO PERMISSION to modify its contents.
+%% 
+%% You are NOT ALLOWED to change this file.
+%% 
+%% Please address error reports and any problems in case of UNCHANGED versions
+%% to
+%%         j.hoffmann_(at)_fh-aachen.de
+{%
+  \def\@svn@ $#1Date: #2-#3-#4 #5$$#6Revision: #7$ {%
+    \ProvidesPackage{beamerouterthemeaframes}[#2/#3/#4 r#7 a beamer outer theme for the ACUAS (JHf)]}
+  \@svn@ $Date: 2013-09-02 22:50:56 +0200 (Mo, 02. Sep 2013) $$Revision: 138 $ %
+}
+\RequirePackage{pgfcore}
+%\usetikzlibrary{calc}
+\usepgfmodule{shapes}
+\RequirePackage{beamerbasethemes}[2004/10/07]
+\mode
+<presentation>
+\defbeamertemplate*{headline}{ACUAS theme}{}
+\defbeamertemplate*{footline}{ACUAS theme}{%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=0.025\paperheight,
+      dp=0.005\paperheight]{palette primary}%
+      \begin{pgfpicture}
+          \pgfusepath{use as bounding box}
+          \pgfsetlinewidth{0.8pt}
+          \pgftransformshift{\pgfpointanchor{current page}{south west}}
+          \pgftransformshift{\pgfpoint{0.03\paperwidth}{0.05\paperheight}}
+          \pgfpathmoveto{\pgfpointorigin}
+          \pgfpathlineto{\pgfpoint{0.88\paperwidth}{0pt}}
+          \pgfusepath{stroke}
+          \pgfrememberpicturepositiononpagetrue
+      \end{pgfpicture}%
+      \usebeamerfont{author}%
+      \hspace{0.03\paperwidth}%
+      \hbox to 0pt{%
+        \copyright{} \jhfb@published{}~%
+        \insertshortauthor/%
+        \insertshortinstitute{} -- \insertshorttitle{} -- \insertshortpart{}%
+      }%
+      \hspace{\fill}%
+      \insertframenumber
+      \hbox to 0.09\paperwidth{}%
+  \end{beamercolorbox}%
+  \vskip5pt%
+}
+\defbeamertemplate*{logo}{ACUAS theme}{
+  \begin{pgfpicture}%
+      \pgfusepath{use as bounding box}%
+      \pgftransformshift{\pgfpointanchor{current page}{north east}}%
+      \pgftransformshift{\pgfpoint{0pt}{-0.04\paperheight}}%
+      \pgftext[top, right]{%
+        \includegraphics[trim={5 0 45 1}, clip, scale=0.5]{FHAAC_4C_BL-r}}%
+      \pgfrememberpicturepositiononpagetrue%
+  \end{pgfpicture}%
+}
+\newlength\frametitleheight\setlength\frametitleheight{0.16\paperheight}
+\setbeamertemplate{frametitle}{%
+    \insertlogo%
+    \begin{pgfpicture}
+        \pgfusepath{use as bounding box}
+        \pgfsetlinewidth{0.8pt}
+        \pgftransformshift{\pgfpointanchor{current page}{north west}}
+        \pgftransformshift{\pgfpoint{0.03\paperwidth}{-0.17\paperheight}}
+        \pgfpathmoveto{\pgfpointorigin}
+        \pgfpathlineto{\pgfpoint{0.88\paperwidth}{0pt}}
+        \pgfusepath{stroke}
+        \pgfrememberpicturepositiononpagetrue
+    \end{pgfpicture}
+    \begin{beamercolorbox}[ht=0.1\paperheight,
+                           wd=0.88\paperwidth,
+                           sep=0pt]{%
+                             title in head/foot}
+        \insertframetitle%
+    \end{beamercolorbox}
+}
+\defbeamertemplate*{part page}{ACUAS theme}[1][]{%
+  \insertlogo%
+  \begin{flushleft}
+    {%
+      \usebeamerfont{part name}\usebeamercolor[fg]{part name}%
+      \partname~\insertromanpartnumber%
+    }%
+    \vskip1em\par%
+    \begin{beamercolorbox}[sep=0pt,left,#1]{part title}
+      \usebeamerfont{part title}\insertpart\par
+    \end{beamercolorbox}
+  \end{flushleft}
+}
+\setbeamertemplate{part page}[ACUAS theme][]
+\mode
+<all>
+\endinput
+%%
+%% End of file `beamerouterthemeaframes.sty'.

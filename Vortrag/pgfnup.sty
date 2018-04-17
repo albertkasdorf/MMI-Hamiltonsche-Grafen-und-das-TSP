@@ -1,0 +1,180 @@
+%%
+%% This is file `pgfnup.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% acuasbeamer.dtx  (with options: `nup')
+%% 
+%% Copyright (C) 2008 - 2010 by Jobst Hoffmann.  All rights reserved.
+%% 
+%% IMPORTANT COPYRIGHT NOTICE:
+%% 
+%% No other permissions to copy or distribute this file in any form
+%% are granted and in particular NO PERMISSION to modify its contents.
+%% 
+%% You are NOT ALLOWED to change this file.
+%% 
+%% Please address error reports and any problems in case of UNCHANGED versions
+%% to
+%%         j.hoffmann_(at)_fh-aachen.de
+{%
+  \def\@svn@ $#1Date: #2-#3-#4 #5$$#6Revision: #7$ {%
+    \ProvidesPackage{pgfnup}[#2/#3/#4 v#7 a helper package for beamer (TT/JHf)]}
+  \@svn@ $Date: 2013-09-02 22:50:56 +0200 (Mo, 02. Sep 2013) $$Revision: 138 $ %
+}
+\RequirePackage{ifthen}
+\DeclareOption{english}{%
+  \def\notesname@pgfnup{Notes:} }
+ \DeclareOption{ngerman}{%
+  \def\notesname@pgfnup{Notizen:} }
+\newif\ifjhfb@files%
+\DeclareOption{nofiles}{%
+  \setboolean{jhfb@files}{false}%
+}
+\DeclareOption{files}{%
+  \setboolean{jhfb@files}{true}%
+}
+\newif\ifjhfb@active%
+\DeclareOption{active}{%
+  \jhfb@activetrue%
+  \PackageInfo{pgfnup}{The contents of this package will
+    be active, there will be only a handout}%
+}
+\DeclareOption{inactive}{%
+  \jhfb@activefalse%
+  \PackageInfo{pgfnup}{The contents of this package will
+    be inactive, there will be no handout}%
+}
+\newif\ifjhfb@notes%
+\DeclareOption{notes}{%
+  \jhfb@notestrue%
+  \PackageInfo{pgfnup}{If the contents of this package
+    are active, there will be notes on the handout}%
+}
+\DeclareOption{nonotes}{%
+  \jhfb@notesfalse%
+  \PackageInfo{pgfnup}{If the contents of this package
+    are active, there will be no notes on the handout}%
+}
+\ExecuteOptions{english}
+\ProcessOptions*\relax%
+\ifjhfb@active%
+  \RequirePackage{pgfpages}
+  \let\goAhead\relax%
+\else%
+  \let\goAhead\endinput%
+\fi%
+\goAhead%
+\ifjhfb@files%
+\else%
+  \nofiles%
+\fi%
+\pgfpagesdeclarelayout{3 on 1 with notes}{%
+   % before actions
+   \edef\pgfpageoptionheight{\the\paperheight}
+   \edef\pgfpageoptionwidth{\the\paperwidth}
+   \edef\pgfpageoptionborder{0pt}
+ }{%
+   % after actions
+   \pgfpagesphysicalpageoptions{%
+     logical pages=6,%
+     physical height=\pgfpageoptionheight,%
+     physical width=\pgfpageoptionwidth,%
+     last logical shipout=3%
+   }%
+   \pgfpageslogicalpageoptions{1}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=.5\pgfphysicalwidth,%
+     resized height=.3333\pgfphysicalheight,%
+     center=\pgfpoint{.25\pgfphysicalwidth}{.8333333\pgfphysicalheight},%
+   }%
+   \pgfpageslogicalpageoptions{2}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=.5\pgfphysicalwidth,%
+     resized height=.3333\pgfphysicalheight,%
+     center=\pgfpoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight},%
+   }%
+   \pgfpageslogicalpageoptions{3}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=.5\pgfphysicalwidth,%
+     resized height=.3333\pgfphysicalheight,%
+     center=\pgfpoint{.25\pgfphysicalwidth}{.1666666\pgfphysicalheight},%
+   }%
+   \pgfpageslogicalpageoptions{4}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=.5\pgfphysicalwidth,%
+     resized height=.3333\pgfphysicalheight,%
+     center=\pgfpoint{.75\pgfphysicalwidth}{.8333333\pgfphysicalheight},%
+     copy from=4
+   }%
+   \pgfpageslogicalpageoptions{5}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=.5\pgfphysicalwidth,%
+     resized height=.3333\pgfphysicalheight,%
+     center=\pgfpoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight},%
+     copy from=5
+   }%
+   \pgfpageslogicalpageoptions{6}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=.5\pgfphysicalwidth,%
+     resized height=.3333\pgfphysicalheight,%
+     center=\pgfpoint{.75\pgfphysicalwidth}{.1666666\pgfphysicalheight},%
+     copy from=6
+   }%
+   \AtBeginDocument{
+     \newbox\notesbox
+     \setbox\notesbox=\vbox{
+       \hsize=\paperwidth
+       \vskip-1in\hskip-1in\vbox{
+         \vskip1cm
+       \notesname@pgfnup\vskip1cm
+       \hrule width\paperwidth\vskip1cm
+       \hrule width\paperwidth\vskip1cm
+       \hrule width\paperwidth\vskip1cm
+       \hrule width\paperwidth\vskip1cm
+       \hrule width\paperwidth\vskip1cm
+       \hrule width\paperwidth\vskip1cm
+       \hrule width\paperwidth}
+     }
+     \pgfpagesshipoutlogicalpage{4}\copy\notesbox
+     \pgfpagesshipoutlogicalpage{5}\copy\notesbox
+     \pgfpagesshipoutlogicalpage{6}\copy\notesbox
+   }
+}
+\pgfpagesdeclarelayout{2 on 1 without notes}{%
+   % before actions
+   \edef\pgfpageoptionheight{\the\paperheight}
+   \edef\pgfpageoptionwidth{\the\paperwidth}
+   \edef\pgfpageoptionborder{0pt}
+ }{%
+   % after actions
+   \pgfpagesphysicalpageoptions{%
+     logical pages=2,%
+     physical height=\pgfpageoptionheight,%
+     physical width=\pgfpageoptionwidth,%
+     last logical shipout=2%
+   }%
+   \pgfpageslogicalpageoptions{1}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=1.\pgfphysicalwidth,%
+     resized height=.5\pgfphysicalheight,%
+     center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight},%
+   }%
+   \pgfpageslogicalpageoptions{2}{%
+     border shrink=\pgfpageoptionborder,%
+     resized width=1.\pgfphysicalwidth,%
+     resized height=.5\pgfphysicalheight,%
+     center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight},%
+   }%
+}
+\ifjhfb@notes%
+  \pgfpagesuselayout{3 on 1 with notes}%
+      [a4paper,border shrink=5mm]%
+\else%
+  \pgfpagesuselayout{2 on 1 without notes}%
+      [a4paper,border shrink=5mm]%
+\fi%
+\endinput
+%%
+%% End of file `pgfnup.sty'.
