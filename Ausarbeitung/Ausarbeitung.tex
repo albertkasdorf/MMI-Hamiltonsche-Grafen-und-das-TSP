@@ -66,7 +66,7 @@
 \date{09.05.2018}
 
 \begin{document}
-\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
 \tikzstyle{selected vertex} = [vertex, fill=red!24]
 \tikzstyle{edge} = [draw,thick,-]
 \tikzstyle{weight} = [font=\small]
@@ -108,23 +108,93 @@ Der Algorithmus sieht wie folgt aus:
 \caption{Doppelter-Baum-Algorithmus}
 \end{algorithm}
 
-Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \Fref{fig:ursprungs-graf} dargestellt. Im Zuge der Übersichtlichkeit Dabei sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
-
+Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \Fref{fig:ursprungs-graf-blank} dargestellt. Im Zuge der Übersichtlichkeit sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.6]
+\begin{tikzpicture}[scale=0.8]
     % Draw a 7,11 network
     % First we draw the vertices
     \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
                             {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
-        \node[vertex] (\name) at \pos {$\name$};   
+        \node[vertex] (\name) at \pos {};   
 \end{tikzpicture}
 \caption{Knoten des Ursprungsgrafen}
-\label{fig:ursprungs-graf}
+\label{fig:ursprungs-graf-blank}
+\end{figure}
+Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spannenden Baumes $T$. Dieser ist in \Fref{fig:ursprungs-graf-mst} dargestellt.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights
+    \foreach \source/ \dest /\weight in {b/a/0, c/b/0, b/d/0, d/e/0, d/f/0, b/h/0, h/g/0}
+        \path[edge] (\source) -- node[weight] {} (\dest);
+\end{tikzpicture}
+\caption{Minimal spannender Baum}
+\label{fig:ursprungs-graf-mst}
+\end{figure}
+In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graf $T_d$ entsteht. In diesem Graf wird wie in Schritt Drei gefordert eine Euler-Tour konstruiert. In \Fref{fig:ursprungs-graf-eulertour} ist diese beispielhaft eingezeichnet.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights	
+\draw [edge, bend angle=-20, bend left, ->] (c) to node[]{1} (b);		
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{2} (a);			
+\draw [edge, bend angle=-20, bend left, ->] (a) to node[]{3} (b);			
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{4} (d);			
+\draw [edge, bend angle=-20, bend left, ->] (d) to node[]{5} (e);			
+\draw [edge, bend angle=-20, bend left, ->] (e) to node[]{6} (d);			
+\draw [edge, bend angle=-20, bend left, ->] (d) to node[]{7} (f);			
+\draw [edge, bend angle=-20, bend left, ->] (f) to node[]{8} (d);		
+\draw [edge, bend angle=-20, bend left, ->] (d) to node[]{9} (b);			
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{10} (h);			
+\draw [edge, bend angle=-20, bend left, ->] (h) to node[]{11} (g);			
+\draw [edge, bend angle=-20, bend left, ->] (g) to node[]{12} (h);			
+\draw [edge, bend angle=-20, bend left, ->] (h) to node[]{13} (b);	
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{14} (c);	
+\end{tikzpicture}
+\caption{Euler-Tour}
+\label{fig:ursprungs-graf-eulertour}
+\end{figure}
+Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Grafen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graf ist. Eine beispielhafte Tour wird anhand der \Fref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights	
+\draw [edge, ->] (c) to node[]{} (b);
+\draw [edge, ->] (b) to node[]{} (a);
+\draw [edge, ->] (a) to node[]{} (d);
+\draw [edge, ->] (d) to node[]{} (e);
+\draw [edge, ->] (e) to node[]{} (f);
+\draw [edge, ->] (f) to node[]{} (h);
+\draw [edge, ->] (h) to node[]{} (g);
+\draw [edge, ->] (g) to node[]{} (c);
+\end{tikzpicture}
+\caption{Hamilton-Kreis}
+\label{fig:ursprungs-graf-hamiltonkreis}
 \end{figure}
 
+Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht optimal. Aber es lässt sich trotzdem eine obere Grenze der Abweichung zum Optimum bestimmen. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
+\textit{$K_n$ sei ein vollständiger Graf mit positiven Kantengewichten welche die Dreiecksungleichung erfüllen. Dann sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
+\begin{displaymath}
+c(T') \leq 2 * c(OPT)
+\end{displaymath}
+.}
 
-
-%\input{GrafDoppelterBaumAlgorithmus.tex}
+% Beweis
 
 \end{document}
