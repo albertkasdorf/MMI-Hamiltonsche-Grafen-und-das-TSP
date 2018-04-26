@@ -8,7 +8,10 @@
 %\usepackage[ngerman]{babel}		% LuaTex do not need this
 \usepackage{polyglossia}
 	\setdefaultlanguage[spelling=new]{german}
-	
+
+\usepackage{float}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % LATEX Mathematical Symbols
@@ -44,7 +47,14 @@
 	\SetNlSkip{2em}
 	%\SetAlgoRefName{QXY}
 	
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows,shapes}
+
+\usepackage[vario]{fancyref}
 	
+
 \title{Hamiltonsche Grafen und das TSP}
 \author{
   Albert Kasdorf\and
@@ -56,10 +66,65 @@
 \date{09.05.2018}
 
 \begin{document}
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=20pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
+\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
 
 \maketitle
 
-\section{Abschnitt 1}
-\section{Abschnitt 2}
+\section{Algorithmen}
+
+\subsection{Doppelter-Baum-Algorithmus}
+Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Grafen ist diese wie folgt definiert.
+Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für alle Knoten u,v und w gilt:
+\begin{displaymath}
+c(u,v) \leq c(u,w) + c(w,v)
+\end{displaymath}
+Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w.
+
+% Hier noch einen fancy Graf machen
+
+
+Der Doppelte-Baum Algorithmus von Rosenkranz, Stearns und Lewis aus dem Jahr 1977 berechnet einen Hamilton-Kreis. Zunächst wird der Algorithmus formal beschrieben und anschließend anhand eines Beispiels illustriert. Abschließend wird noch bewiesen warum dieser Algorithmus eine Tour liefert.
+
+Der Algorithmus sieht wie folgt aus:
+
+\begin{algorithm}
+\KwIn{Ein vollständiger Graf $K_n$ mit Kantengewichten $ c(e) $ welche die Dreiecksungleichung erfüllen}
+\KwOut{Ein Hamilton-Kreis}
+\SetKwInOut{Parameter}{Schritt 1:}
+\Parameter{Konstruiere einen minimal spannenden Baum $T$ von $K_n$.}
+\SetKwInOut{Parameter}{Schritt 2:}
+\Parameter{Verdopple alle Kanten von $T$ (daraus resultiert ein eulersche Graf $T_d$.}
+\SetKwInOut{Parameter}{Schritt 3:}
+\Parameter{Berechne die Euler-Tour in $T_d$.}
+\SetKwInOut{Parameter}{Schritt 4:}
+\Parameter{Durchlaufe die Euler Tour von einem Startknoten aus. Falls dabei ein Knoten schon besucht wurde, nehme die Abkürzung zum nächsten unbesuchten Knoten auf der Tour.}
+\caption{Doppelter-Baum-Algorithmus}
+\end{algorithm}
+
+Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \Fref{fig:ursprungs-graf} dargestellt. Im Zuge der Übersichtlichkeit Dabei sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.6]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};   
+\end{tikzpicture}
+\caption{Knoten des Ursprungsgrafen}
+\label{fig:ursprungs-graf}
+\end{figure}
+
+
+
+%\input{GrafDoppelterBaumAlgorithmus.tex}
 
 \end{document}
