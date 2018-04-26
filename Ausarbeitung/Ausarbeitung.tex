@@ -85,9 +85,21 @@ Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für al
 \begin{displaymath}
 c(u,v) \leq c(u,w) + c(w,v)
 \end{displaymath}
-Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w.
-
-% Hier noch einen fancy Graf machen
+Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w (\Fref{fig:dreiecksungleichung}).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/u}, {(4,0)/v}, {(2,2)/w}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights
+    \foreach \source/ \dest /\weight in {u/v/0, u/w/0, w/v/0}
+        \path[edge] (\source) -- node[weight] {} (\dest);
+\end{tikzpicture}
+\caption{Dreiecksungleichung}
+\label{fig:dreiecksungleichung}
+\end{figure}
 
 
 Der Doppelte-Baum Algorithmus von Rosenkranz, Stearns und Lewis aus dem Jahr 1977 berechnet einen Hamilton-Kreis. Zunächst wird der Algorithmus formal beschrieben und anschließend anhand eines Beispiels illustriert. Abschließend wird noch bewiesen warum dieser Algorithmus eine Tour liefert.
