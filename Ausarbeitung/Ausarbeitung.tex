@@ -82,9 +82,9 @@
 \subsection{Doppelter-Baum-Algorithmus}
 Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Grafen ist diese wie folgt definiert.
 Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für alle Knoten u,v und w gilt:
-\begin{displaymath}
+\begin{equation}
 c(u,v) \leq c(u,w) + c(w,v)
-\end{displaymath}
+\end{equation}
 Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w (\Fref{fig:dreiecksungleichung}).
 \begin{figure}[H]
 \centering
@@ -202,11 +202,26 @@ Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durch
 
 Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht optimal. Aber es lässt sich trotzdem eine obere Grenze der Abweichung zum Optimum bestimmen. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
 \textit{$K_n$ sei ein vollständiger Graf mit positiven Kantengewichten welche die Dreiecksungleichung erfüllen. Dann sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
-\begin{displaymath}
-c(T') \leq 2 * c(OPT)
-\end{displaymath}
-.}
+\begin{equation}
+c(T') \leq 2 * c(OPT).
+\label{eq:test}
+\end{equation}}
 
 % Beweis
+Diese Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt so lang sein wie die Kosten des minimalen Spannbaums $T$. 
+\begin{equation}
+c(T') \leq 2 * c(T)
+\end{equation}
+
+
+Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme definieren: Entfernt man eine Kante aus der Optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also: 
+\begin{equation}
+c(T) \leq c(OPT)
+\end{equation}
+Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis was wiederum der obigen Gleichung \ref{eq:test} entspricht.
+\begin{equation}
+c(T') \leq 2 * c(T) \leq 2 * c(OPT)
+\end{equation}
+
 
 \end{document}
