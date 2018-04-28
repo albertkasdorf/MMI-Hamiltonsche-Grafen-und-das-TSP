@@ -8,7 +8,10 @@
 %\usepackage[ngerman]{babel}		% LuaTex do not need this
 \usepackage{polyglossia}
 	\setdefaultlanguage[spelling=new]{german}
-	
+
+\usepackage{float}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % LATEX Mathematical Symbols
@@ -44,7 +47,14 @@
 	\SetNlSkip{2em}
 	%\SetAlgoRefName{QXY}
 	
+
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows,shapes}
+
+\usepackage[vario]{fancyref}
 	
+
 \title{Hamiltonsche Grafen und das TSP}
 \author{
   Albert Kasdorf\and
@@ -56,10 +66,256 @@
 \date{09.05.2018}
 
 \begin{document}
+\tikzstyle{vertex}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
+\tikzstyle{selected vertex} = [vertex, fill=red!24]
+\tikzstyle{edge} = [draw,thick,-]
+\tikzstyle{weight} = [font=\small]
+\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
+\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
 
 \maketitle
 
-\section{Abschnitt 1}
-\section{Abschnitt 2}
+\section{Algorithmen}
+
+\subsection{Nearest-Neighbor-Heuristik}
+Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt wird um eine Lösung für das Problem des Handlungsreisenden zu ermitteln. Es handelt sich dabei um einen Greedy-Algorithmus der wie folgt funktioniert:
+\begin{algorithm}
+\KwIn{Ein vollständiger Graf $T$ mit Kantengewichten $c(e)$}
+\KwOut{Ein Hamilton-Kreis}
+\SetKwInOut{Parameter}{Schritt 1:}
+\Parameter{Wähle einen beliebigen Knoten als Startknoten $v$ }
+\SetKwInOut{Parameter}{Schritt 2:}
+\Parameter{Ermittle die niedrigste Kante welche den aktuellen Knoten $v$ mit einem unbesuchten Knoten $v_u$ verbindet.}
+\SetKwInOut{Parameter}{Schritt 3:}
+\Parameter{Setze $v = v_u$ }
+\SetKwInOut{Parameter}{Schritt 4:}
+\Parameter{Wenn nicht alle Knoten besucht wurden gehe wieder zu Schritt 2.}
+\caption{Nearest-Neighbor Algorithmus}
+\end{algorithm}
+
+Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen der folgenden Tabelle:
+\begin{table}
+\centering
+\label{tbl:opt-struktur-select-reduktion}
+\begin{tabular}{ |c|c|c|c|c|c|c| }
+\hline
+ & AC & BN & D& F & K & W \\ 
+\hline
+AC &  & 91 & 80 & 259 & 70 & 121 \\ 
+\hline
+BN & 91 &  & 77 & 175 & 27 & 84 \\ 
+\hline
+D & 80 & 77 &  & 232 & 47 & 29 \\ 
+\hline
+F & 259 & 175 & 232 &  & 189 & 236 \\ 
+\hline
+K & 70 & 27 & 47 & 189 &  & 55 \\ 
+\hline
+W & 121 & 84 & 29 & 236 & 55 &  \\ 
+\hline
+\end{tabular}
+\end{table}
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \Fref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % First we draw the vertices
+    \foreach \pos/\name in {{(-4,-1)/AC}, {(1,-2)/BN}, {(-0.75,2)/D},
+                            {(5,-5)/F}, {(-0.5,0)/K}, {(1,2.25)/W}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights	
+\draw [edge, ->] (AC) to node[]{1.} (K);
+\draw [edge, ->] (K) to node[]{2.} (BN);
+\draw [edge, ->] (BN) to node[]{3.} (D);
+\draw [edge, ->] (D) to node[]{4.} (W);
+\draw [edge, ->] (W) to node[]{5.} (F);
+\draw [edge, ->] (F) to node[]{6.} (AC);
+
+\end{tikzpicture}
+\caption{Ablauf des Nearest-Neighbor Algorithmus}
+\label{fig:nearest-neighbor-beispiel}
+\end{figure}
+
+Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Grafen in \Fref{fig:nearest-neighbor-guete} 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % First we draw the vertices
+    \foreach \pos/\name in {{(-2,1)/1}, {(2,1)/2}, {(-2,-1)/3},{(2,-1)/4}}
+        \node[vertex] (\name) at \pos {$\name$};
+
+\node at (0,1.25) {1};
+\node at (2.25,0) {1};
+\node at (-2.25,0) {$x$};
+\node at (0,-1.25) {1};
+\node at (-1.2,0.3) {2};
+\node at (1.2,0.3) {2};
+
+% Nearest Neighbor
+\draw [edge, color=red, transform canvas={yshift=1}] (1) to (2);
+\draw [edge, color=red] (2) to (4);
+\draw [edge, color=red, transform canvas={yshift=-1}] (4) to (3);
+\draw [edge, color=red] (3) to (1);	
+
+\draw [edge, color=green](1) to (4);
+\draw [edge, color=green](2) to (3);
+\draw [edge, color=green, transform canvas={yshift=-1}](1) to (2);
+\draw [edge, color=green, transform canvas={yshift=1}](4) to (3);
+\end{tikzpicture}
+\caption{Beispielgraf zur Ermittlung der Güte des Nearest-Neighbor Algorithmus}
+\label{fig:nearest-neighbor-guete}
+\end{figure}
+Der Algorithmus würde ausgehend vom Startpunkt 1 eine Tour (siehe roter Pfad) mit den Kosten $1+1+1+x = x +3$ berechnen. Eine optimale Lösung (grüner Pfad) hingegen hätte die Kosten $1+2+1+2 = 6$.
+
+
+\subsection{Doppelter-Baum-Algorithmus}
+Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Grafen ist diese wie folgt definiert.
+Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für alle Knoten u,v und w gilt:
+\begin{equation}
+c(u,v) \leq c(u,w) + c(w,v)
+\end{equation}
+Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w (\Fref{fig:dreiecksungleichung}).
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/u}, {(4,0)/v}, {(2,2)/w}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights
+    \foreach \source/ \dest /\weight in {u/v/0, u/w/0, w/v/0}
+        \path[edge] (\source) -- node[weight] {} (\dest);
+\end{tikzpicture}
+\caption{Dreiecksungleichung}
+\label{fig:dreiecksungleichung}
+\end{figure}
+
+
+Der Doppelte-Baum Algorithmus von Rosenkranz, Stearns und Lewis aus dem Jahr 1977 berechnet einen Hamilton-Kreis. Zunächst wird der Algorithmus formal beschrieben und anschließend anhand eines Beispiels illustriert. Abschließend wird noch bewiesen warum dieser Algorithmus eine Tour liefert.
+
+Der Algorithmus sieht wie folgt aus:
+
+\begin{algorithm}
+\KwIn{Ein vollständiger Graf $K_n$ mit Kantengewichten $ c(e) $ welche die Dreiecksungleichung erfüllen}
+\KwOut{Ein Hamilton-Kreis}
+\SetKwInOut{Parameter}{Schritt 1:}
+\Parameter{Konstruiere einen minimal spannenden Baum $T$ von $K_n$.}
+\SetKwInOut{Parameter}{Schritt 2:}
+\Parameter{Verdopple alle Kanten von $T$ (daraus resultiert ein eulersche Graf $T_d$.}
+\SetKwInOut{Parameter}{Schritt 3:}
+\Parameter{Berechne die Euler-Tour in $T_d$.}
+\SetKwInOut{Parameter}{Schritt 4:}
+\Parameter{Durchlaufe die Euler Tour von einem Startknoten aus. Falls dabei ein Knoten schon besucht wurde, nehme die Abkürzung zum nächsten unbesuchten Knoten auf der Tour.}
+\caption{Doppelter-Baum-Algorithmus}
+\end{algorithm}
+
+Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \Fref{fig:ursprungs-graf-blank} dargestellt. Im Zuge der Übersichtlichkeit sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {};   
+\end{tikzpicture}
+\caption{Knoten des Ursprungsgrafen}
+\label{fig:ursprungs-graf-blank}
+\end{figure}
+Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spannenden Baumes $T$. Dieser ist in \Fref{fig:ursprungs-graf-mst} dargestellt.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights
+    \foreach \source/ \dest /\weight in {b/a/0, c/b/0, b/d/0, d/e/0, d/f/0, b/h/0, h/g/0}
+        \path[edge] (\source) -- node[weight] {} (\dest);
+\end{tikzpicture}
+\caption{Minimal spannender Baum}
+\label{fig:ursprungs-graf-mst}
+\end{figure}
+In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graf $T_d$ entsteht. In diesem Graf wird wie in Schritt Drei gefordert eine Euler-Tour konstruiert. In \Fref{fig:ursprungs-graf-eulertour} ist diese beispielhaft eingezeichnet.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights	
+\draw [edge, bend angle=-20, bend left, ->] (c) to node[]{1} (b);		
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{2} (a);			
+\draw [edge, bend angle=-20, bend left, ->] (a) to node[]{3} (b);			
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{4} (d);			
+\draw [edge, bend angle=-20, bend left, ->] (d) to node[]{5} (e);			
+\draw [edge, bend angle=-20, bend left, ->] (e) to node[]{6} (d);			
+\draw [edge, bend angle=-20, bend left, ->] (d) to node[]{7} (f);			
+\draw [edge, bend angle=-20, bend left, ->] (f) to node[]{8} (d);		
+\draw [edge, bend angle=-20, bend left, ->] (d) to node[]{9} (b);			
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{10} (h);			
+\draw [edge, bend angle=-20, bend left, ->] (h) to node[]{11} (g);			
+\draw [edge, bend angle=-20, bend left, ->] (g) to node[]{12} (h);			
+\draw [edge, bend angle=-20, bend left, ->] (h) to node[]{13} (b);	
+\draw [edge, bend angle=-20, bend left, ->] (b) to node[]{14} (c);	
+\end{tikzpicture}
+\caption{Euler-Tour}
+\label{fig:ursprungs-graf-eulertour}
+\end{figure}
+Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Grafen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graf ist. Eine beispielhafte Tour wird anhand der \Fref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % Draw a 7,11 network
+    % First we draw the vertices
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
+                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights	
+\draw [edge, ->] (c) to node[]{} (b);
+\draw [edge, ->] (b) to node[]{} (a);
+\draw [edge, ->] (a) to node[]{} (d);
+\draw [edge, ->] (d) to node[]{} (e);
+\draw [edge, ->] (e) to node[]{} (f);
+\draw [edge, ->] (f) to node[]{} (h);
+\draw [edge, ->] (h) to node[]{} (g);
+\draw [edge, ->] (g) to node[]{} (c);
+\end{tikzpicture}
+\caption{Hamilton-Kreis}
+\label{fig:ursprungs-graf-hamiltonkreis}
+\end{figure}
+
+Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht optimal. Aber es lässt sich trotzdem eine obere Grenze der Abweichung zum Optimum bestimmen. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
+\textit{$K_n$ sei ein vollständiger Graf mit positiven Kantengewichten welche die Dreiecksungleichung erfüllen. Dann sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
+\begin{equation}
+c(T') \leq 2 * c(OPT).
+\label{eq:test}
+\end{equation}}
+
+% Beweis
+Diese Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt so lang sein wie die Kosten des minimalen Spannbaums $T$. 
+\begin{equation}
+c(T') \leq 2 * c(T)
+\end{equation}
+
+
+Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme definieren: Entfernt man eine Kante aus der Optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also: 
+\begin{equation}
+c(T) \leq c(OPT)
+\end{equation}
+Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis was wiederum der obigen Gleichung \ref{eq:test} entspricht.
+\begin{equation}
+c(T') \leq 2 * c(T) \leq 2 * c(OPT)
+\end{equation}
+Somit berechnet der Doppelte-Baum-Algorithmus immer eine Tour im Verhältnis $c(T')/OPT \leq 2$.
+
+
+
 
 \end{document}
