@@ -79,6 +79,97 @@
 
 \section{Algorithmen}
 
+\subsection{Nearest-Neighbor-Heuristik}
+Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt wird um eine Lösung für das Problem des Handlungsreisenden zu ermitteln. Es handelt sich dabei um einen Greedy-Algorithmus der wie folgt funktioniert:
+\begin{algorithm}
+\KwIn{Ein vollständiger Graf $T$ mit Kantengewichten $c(e)$}
+\KwOut{Ein Hamilton-Kreis}
+\SetKwInOut{Parameter}{Schritt 1:}
+\Parameter{Wähle einen beliebigen Knoten als Startknoten $v$ }
+\SetKwInOut{Parameter}{Schritt 2:}
+\Parameter{Ermittle die niedrigste Kante welche den aktuellen Knoten $v$ mit einem unbesuchten Knoten $v_u$ verbindet.}
+\SetKwInOut{Parameter}{Schritt 3:}
+\Parameter{Setze $v = v_u$ }
+\SetKwInOut{Parameter}{Schritt 4:}
+\Parameter{Wenn nicht alle Knoten besucht wurden gehe wieder zu Schritt 2.}
+\caption{Nearest-Neighbor Algorithmus}
+\end{algorithm}
+
+Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen der folgenden Tabelle:
+\begin{table}
+\centering
+\label{tbl:opt-struktur-select-reduktion}
+\begin{tabular}{ |c|c|c|c|c|c|c| }
+\hline
+ & AC & BN & D& F & K & W \\ 
+\hline
+AC &  & 91 & 80 & 259 & 70 & 121 \\ 
+\hline
+BN & 91 &  & 77 & 175 & 27 & 84 \\ 
+\hline
+D & 80 & 77 &  & 232 & 47 & 29 \\ 
+\hline
+F & 259 & 175 & 232 &  & 189 & 236 \\ 
+\hline
+K & 70 & 27 & 47 & 189 &  & 55 \\ 
+\hline
+W & 121 & 84 & 29 & 236 & 55 &  \\ 
+\hline
+\end{tabular}
+\end{table}
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \Fref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % First we draw the vertices
+    \foreach \pos/\name in {{(-4,-1)/AC}, {(1,-2)/BN}, {(-0.75,2)/D},
+                            {(5,-5)/F}, {(-0.5,0)/K}, {(1,2.25)/W}}
+        \node[vertex] (\name) at \pos {$\name$};
+    % Connect vertices with edges and draw weights	
+\draw [edge, ->] (AC) to node[]{1.} (K);
+\draw [edge, ->] (K) to node[]{2.} (BN);
+\draw [edge, ->] (BN) to node[]{3.} (D);
+\draw [edge, ->] (D) to node[]{4.} (W);
+\draw [edge, ->] (W) to node[]{5.} (F);
+\draw [edge, ->] (F) to node[]{6.} (AC);
+
+\end{tikzpicture}
+\caption{Ablauf des Nearest-Neighbor Algorithmus}
+\label{fig:nearest-neighbor-beispiel}
+\end{figure}
+
+Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Grafen in \Fref{fig:nearest-neighbor-guete} 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % First we draw the vertices
+    \foreach \pos/\name in {{(-2,1)/1}, {(2,1)/2}, {(-2,-1)/3},{(2,-1)/4}}
+        \node[vertex] (\name) at \pos {$\name$};
+
+\node at (0,1.25) {1};
+\node at (2.25,0) {1};
+\node at (-2.25,0) {$x$};
+\node at (0,-1.25) {1};
+\node at (-1.2,0.3) {2};
+\node at (1.2,0.3) {2};
+
+% Nearest Neighbor
+\draw [edge, color=red, transform canvas={yshift=1}] (1) to (2);
+\draw [edge, color=red] (2) to (4);
+\draw [edge, color=red, transform canvas={yshift=-1}] (4) to (3);
+\draw [edge, color=red] (3) to (1);	
+
+\draw [edge, color=green](1) to (4);
+\draw [edge, color=green](2) to (3);
+\draw [edge, color=green, transform canvas={yshift=-1}](1) to (2);
+\draw [edge, color=green, transform canvas={yshift=1}](4) to (3);
+\end{tikzpicture}
+\caption{Beispielgraf zur Ermittlung der Güte des Nearest-Neighbor Algorithmus}
+\label{fig:nearest-neighbor-guete}
+\end{figure}
+Der Algorithmus würde ausgehend vom Startpunkt 1 eine Tour (siehe roter Pfad) mit den Kosten $1+1+1+x = x +3$ berechnen. Eine optimale Lösung (grüner Pfad) hingegen hätte die Kosten $1+2+1+2 = 6$.
+
+
 \subsection{Doppelter-Baum-Algorithmus}
 Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Grafen ist diese wie folgt definiert.
 Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für alle Knoten u,v und w gilt:
@@ -222,6 +313,9 @@ Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis
 \begin{equation}
 c(T') \leq 2 * c(T) \leq 2 * c(OPT)
 \end{equation}
+Somit berechnet der Doppelte-Baum-Algorithmus immer eine Tour im Verhältnis $c(T')/OPT \leq 2$.
+
+
 
 
 \end{document}
