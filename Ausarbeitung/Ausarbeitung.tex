@@ -2,13 +2,24 @@
 
 %\usepackage[utf8]{inputenc}		% LuaTex do not need this
 %\usepackage[T1]{fontenc}			% LuaTex do not need this
-\usepackage{fontspec}					% LuaTex need this
+\usepackage{fontspec}				% LuaTex need this
 \usepackage{lmodern}
 \usepackage{comment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% https://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
+% https://tex.stackexchange.com/questions/186946/changing-the-autoref-name-for-chapter
+%
 %\usepackage[ngerman]{babel}		% LuaTex do not need this
 \usepackage{polyglossia}
 	\setdefaultlanguage[spelling=new]{german}
-	
+	\addto\captionsgerman{
+		\renewcommand{\figurename}{Abbildung}
+		\renewcommand{\figureautorefname}{Abbildung}
+	}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % LATEX Mathematical Symbols
@@ -16,6 +27,7 @@
 % https://en.wikibooks.org/wiki/LaTeX/Mathematics
 %
 \usepackage{amssymb}
+\usepackage{amsthm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -43,23 +55,88 @@
 	% Sets the value of the space between the line numbers and the text, by default 1em.
 	\SetNlSkip{2em}
 	%\SetAlgoRefName{QXY}
-	
-	
-\title{Hamiltonsche Grafen und das TSP}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% TikZ
+%
+\usepackage{tikz}
+%\usepackage{tikz,fullpage}
+	\usetikzlibrary{
+		arrows,
+		petri,
+		topaths,
+		graphs,
+		graphdrawing}
+	\usegdlibrary{trees, layered}
+\usepackage{tkz-berge}
+\usepackage{tkz-graph}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% https://www.dante.de/events/Archiv/dante2012/Programm/Vortraege/vortrag-ferber.pdf
+%
+\usepackage[
+	breaklinks,
+	colorlinks,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black,
+	pdfencoding=auto,
+]{hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+\title{Hamiltonsche Graphen und das\\ Traveling Salesman Problem (TSP)}
 \author{
   Albert Kasdorf\and
   Andreas Janster\and
   Alex Bibanaev\and
-  Georg Braun\and
-  Rati Devdariani}
-
+  Georg Braun}
 \date{09.05.2018}
 
+
+% https://en.wikibooks.org/wiki/LaTeX/Theorems
+\newtheorem{mydef}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
 \begin{document}
 
 \maketitle
 
-\section{Abschnitt 1}
-\section{Abschnitt 2}
+\section{Motivation}
+Ein junges Päärchen plant für das Hochzeitsessen den Sitzplan für jeden Gast. Die Wunschvorstellung des jungen Paars ist, das jeder Gast neben ihm zwei bekannten Personen sitzt. Hierfür hat das Paar einen Bekanntheitsgraphen erstellt. Jeder Knoten stellt dabei einen Gast und jede Kante zwischen zwei Gästen drückt aus ob sich die beiden Gäste kennen, siehe \autoref{fig:bekanntheitsgraph}.
+
+\begin{figure}
+	\begin{tikzpicture}
+		\node (A) at (0,0) [circle,draw, ultra thick, green] {a1};
+		\node (AText) at (0,0) {a1};
+		\node (B) at (1,1) [circle,draw] {a2};
+		\draw (A) -- (B);
+		\draw[-, red, very thick] (A) to[bend left=50] (B);
+		\draw[-, red] (A) to[bend right=50] (B);
+	\end{tikzpicture}
+	\caption{Bekanntheitsgraph der Hochzeitsgäste.}
+	\label{fig:bekanntheitsgraph}
+\end{figure}
+
+\begin{mydef}
+	Falls ein Graph hamiltonsch ist, dann ist er auch zusammenhängend.
+\end{mydef}
+
+\newpage
+\section{Spielwiese}
+\tikz \graph [nodes={draw, circle}] {
+	a -- b -- c -- a;
+	d -- e;
+	f -- g -- h -- d -- f;
+	e -- g;
+};
+
 
 \end{document}
