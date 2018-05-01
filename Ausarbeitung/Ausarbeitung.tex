@@ -6,6 +6,8 @@
 \usepackage{lmodern}
 \usepackage{comment}
 \usepackage[a4paper]{geometry}
+\usepackage{graphicx}
+	\graphicspath{ {Bilder/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -479,6 +481,69 @@ An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:de
 %
 \section{Traveling Salesman Problem}
 
+Das Traveling-Salesman-Problem (TSP) (dt. Problem des Handlungsreisenden) ist ein kombinatorisches Optimierungsproblem. Die Herausforderung besteht, darin eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu wählen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostenminimal und die erste Station gleich der letzten Station ist.
+
+\begin{mydef}
+Travelling-Sales-Problem: Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
+\[c(C) =  \sum_{e \in C}  c(e) \]
+\end{mydef}
+
+In der Praxis kann dieses Problem in verschiedenen Planungssituationen auftreten. Den die Begriffe „Ort“ und „Strecke“ können auf verschiedene Anwendungsbereiche abstrahiert werden. Orte können nicht nur durch Städte, sondern zum Beispiel auch durch Kunden oder Bohrlöcher repräsentiert werden, während die Entfernung für Zeiten, Grade oder Kosten stehen kann. Solche Problemszenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden. Das Problem des Handlungsreisenden ist ein NP-vollständiges Problem.
+
+\subsection{Lösungsmethoden}
+
+Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Die Lösung von \textit{exakten Algorithmen} ist optimal und muss zusätzlich durch einen Beweis gezeigt werden. \textit{Heuristiken} versuchen innerhalb eines Zeitrahmens eine zulässige Lösung, die recht nah an der Optimallösung ist, zu finden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{Graphen.png}
+	\caption{Alle Lösungen für eine Paketauslieferung an drei Häuser}
+	\label{fig:Rundreise}
+\end{figure}
+
+Um einen \textit{exakten Algorithmus} zu beleuchten, stellen wir zunächst ein triviales Beispiel für eine Planungssituation auf, und modellieren dieses mithilfe der Graphentheorie. In diesem Szenario haben wir ein Paketdienst, der drei Pakete an drei verschiedene Häuser ausliefern muss. Dazu brauchen wir vier Knoten, wobei ein Knoten unseren Startfiliale darstellt und die drei weiteren die Zielhäuser, wohin die Pakte geliefert werden müssen. Das Ziel ist es eine Tour (Hamilton-Kreis) zu definieren.
+\par Um die Lösung zu finden, erzeugen wir einen Hamilton-Kreis nach der anderen und merken uns jene. Anschließend bestimmen wir die Länge jedes Hamilton-Kreises. Um die beste Tour zufinden, wählen wir den kürzesten Hamilton-Kreis aus. Die \autoref{fig:Rundreise} zeigt alle zulässigen Touren für unser Szenario.
+
+\begin{description}
+	\item[F:] Wie viele verschiedene Touren gibt es in einem vollständigen Graphen mit n Knoten?
+\end{description}
+
+Als erstes schauen wir uns einen asymmetrischen Graphen an. Bei zwei Häusern gibt es einen Hamilton-Kreis, bei drei Häusern zwei, bei vier Häusern gibt es sechs Hamilton-Kreise.
+
+%TODO: Ein Beispiel für einen exakte Algorithmen wäre das ... . Beweis mit vollständiger Induktion ... Notiz Asymmetrisches und symmetrisches TSP
+
+\subsection{Das Bohren von Leiterplatten}
+
+Das bisherige Wissen kann ebenfalls auf andere Gebiete abgebildet werden. Beispielsweise das Herstellen einer elektronischen Leiterplatine zählt dazu. Dabei geht es darum, dass möglichst schnell \textit{n} Löcher in eine Platine gebohrt werden müssen. Je schneller eine Platine fertig ist, desto mehr können produziert werden. Das Bohren eines einzelnen Lochs ist ohne Qualitätsverlust nicht zu beschleunigen. Um jedoch Zeit zu sparen, darf der Bohrer keine unnötigen Wege zurücklegen. Die meisten Fräs- oder Bohrmaschinen in der Leiterplattenindustrie sind nur mit zwei Motoren bzw. Schienen ausgestattet um die gesamte Platine zu erreichen. Deshalb kann man sich das System als \textit{2D-Koordinatensystem} vorstellen. Der eine Motor steuert den Bohrer auf der X-Achse, also die rechts-links-Bewegung. Der andere fährt den Bohrer entlang der Y-Achse bzw. nach vorne oder hinten. Damit nur die minimale Wegstrecke zurückgelegt wird, also keine Zeit verschwendet wird, muss der optimale Zyklus für den Bohrer errechnet werden.
+
+Zu aller erst muss klar sein, wie der Abstand zwischen zwei Bohrlöchern bestimmt werden kann. Wenn man bedenkt, dass der Bohrer sich über Loch A befindet und zu Loch C kommen möchte, wird schnell klar, dass der eine Stellmotor seine Bewegung schneller beendet hat, als der andere und deshalb eine Ruhephase hat bzw. auf den zweiten Stellmotor warten muss, siehe  \autoref{abb_leiterplatine}).
+
+\begin{figure}[H]
+	\centering
+	%  \subfigure{}
+	\includegraphics[width=0.6\textwidth]{leiterplatine.jpg}
+	\caption{Beispielbohrungen einer Leiterplatine}
+	\label{abb_leiterplatine}
+\end{figure}
+
+Es reicht also nicht den einfachen Abstand zwischen den beiden Punkten auszumessen oder auszurechnen (euklidischer Abstand, vgl. Pythagoras). Das würde nur funktionieren wenn die Motoren sich diagonal fortbewegen. Der maximale Abstand muss ausgerechnet und genutzt werden:
+\[d\textsubscript{max} = max\{ |x\textsubscript{2} - x\textsubscript{1}| , |y\textsubscript{2} - y\textsubscript{1}|\} \]
+In \autoref{abb_leiterplatine2} sind beispielhaft die Kantengewichte der Kante A-C in Sekunden sowie die Bewegung der zwei Stellmotoren zu sehen. Während Stellmotor auf der X-Achse lediglich eine Sekunde benötigt um den Bohrer auf die korrekte Position zu manövrieren, benötigt der Stellmotor auf der Y-Achse 4 Sekunden. Das Gewicht der Kante ist also mit \textit{4} zu bemessen.
+
+\begin{figure}[H]
+	\centering
+	%  \subfigure{}
+	\includegraphics[width=0.6\textwidth]{leiterplatine2.jpg}
+	\caption{Bohrerbewegung zwischen Loch A und Loch C}
+	\label{abb_leiterplatine2}
+\end{figure}
+
+Bedenkt man nun, das man eine zeit optimierte Rundreise für den Bohrer finden möchte, bildet man aus dem Graphen einen vollständigen Graphen. Es sollen also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich durch das ganze Feld ohne Hindernisse bewegen kann. Nur so kann sichergestellt sein, dass das Hinzufügen von neuen Kanten im Graphen zu keinen Problemen führt.
+\\
+\begin{description}
+	\item[F:] Wie könnte eine möglichst gute Rundreise auf der Leiterplatte Aussehen?
+\end{description}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -491,7 +556,7 @@ An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:de
 Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt wird um eine Lösung für das Problem des Handlungsreisenden zu ermitteln. Es handelt sich dabei um einen Greedy-Algorithmus der wie folgt funktioniert:
 
 \begin{algorithm}
-\KwIn{Ein vollständiger Graf $T$ mit Kantengewichten $c(e)$}
+\KwIn{Ein vollständiger Graph $T$ mit Kantengewichten $c(e)$}
 \KwOut{Ein Hamilton-Kreis}
 \SetKwInOut{Parameter}{Schritt 1:}
 \Parameter{Wähle einen beliebigen Knoten als Startknoten $v$ }
@@ -550,7 +615,7 @@ Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:neares
 \label{fig:nearest-neighbor-beispiel}
 \end{figure}
 
-Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Grafen in \autoref{fig:nearest-neighbor-guete}.
+Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Graphen in \autoref{fig:nearest-neighbor-guete}.
 
 \begin{figure}[H]
 \centering
@@ -577,7 +642,7 @@ Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer 
 \draw [edge, color=green, transform canvas={yshift=-1}](1) to (2);
 \draw [edge, color=green, transform canvas={yshift=1}](4) to (3);
 \end{tikzpicture}
-\caption{Beispielgraf zur Ermittlung der Güte des Nearest-Neighbor Algorithmus}
+\caption{Beispielgraph zur Ermittlung der Güte des Nearest-Neighbor Algorithmus}
 \label{fig:nearest-neighbor-guete}
 \end{figure}
 
@@ -586,9 +651,9 @@ Der Algorithmus würde ausgehend vom Startpunkt 1 eine Tour (siehe roter Pfad) m
 
 \subsection{Doppelter-Baum-Algorithmus}
 
-Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Grafen ist diese wie folgt definiert.
+Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Graphen ist diese wie folgt definiert.
 
-Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für alle Knoten u,v und w gilt:
+Die Dreiecksungleichung garantiert bei einem vollständigen Graphen, dass für alle Knoten u,v und w gilt:
 
 \begin{equation}
 c(u,v) \leq c(u,w) + c(w,v)
@@ -616,12 +681,12 @@ Der Doppelte-Baum Algorithmus von Rosenkranz, Stearns und Lewis aus dem Jahr 197
 Der Algorithmus sieht wie folgt aus:
 
 \begin{algorithm}
-\KwIn{Ein vollständiger Graf $K_n$ mit Kantengewichten $ c(e) $ welche die Dreiecksungleichung erfüllen}
+\KwIn{Ein vollständiger Graph $K_n$ mit Kantengewichten $ c(e) $ welche die Dreiecksungleichung erfüllen}
 \KwOut{Ein Hamilton-Kreis}
 \SetKwInOut{Parameter}{Schritt 1:}
 \Parameter{Konstruiere einen minimal spannenden Baum $T$ von $K_n$.}
 \SetKwInOut{Parameter}{Schritt 2:}
-\Parameter{Verdopple alle Kanten von $T$ (daraus resultiert ein eulersche Graf $T_d$.}
+\Parameter{Verdopple alle Kanten von $T$ (daraus resultiert ein eulersche Graph $T_d$.}
 \SetKwInOut{Parameter}{Schritt 3:}
 \Parameter{Berechne die Euler-Tour in $T_d$.}
 \SetKwInOut{Parameter}{Schritt 4:}
@@ -629,7 +694,7 @@ Der Algorithmus sieht wie folgt aus:
 \caption{Doppelter-Baum-Algorithmus}
 \end{algorithm}
 
-Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \autoref{fig:ursprungs-graf-blank} dargestellt. Im Zuge der Übersichtlichkeit sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
+Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgraphen sind in \autoref{fig:ursprungs-graf-blank} dargestellt. Im Zuge der Übersichtlichkeit sind die Kanten und Kantengewichte des zusammenhängenden Graphen nicht mit eingezeichnet.
 
 \begin{figure}[H]
 \centering
@@ -640,7 +705,7 @@ Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun an
                             {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
         \node[vertex] (\name) at \pos {};   
 \end{tikzpicture}
-\caption{Knoten des Ursprungsgrafen}
+\caption{Knoten des Ursprungsgraphen}
 \label{fig:ursprungs-graf-blank}
 \end{figure}
 
@@ -662,7 +727,7 @@ Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spann
 \label{fig:ursprungs-graf-mst}
 \end{figure}
 
-In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graf $T_d$ entsteht. In diesem Graf wird wie in Schritt Drei gefordert eine Euler-Tour konstruiert. In \autoref{fig:ursprungs-graf-eulertour} ist diese beispielhaft eingezeichnet.
+In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graph $T_d$ entsteht. In diesem Graph wird wie in Schritt Drei gefordert eine Euler-Tour konstruiert. In \autoref{fig:ursprungs-graf-eulertour} ist diese beispielhaft eingezeichnet.
 
 \begin{figure}[H]
 \centering
@@ -692,7 +757,7 @@ In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt
 \label{fig:ursprungs-graf-eulertour}
 \end{figure}
 
-Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Grafen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graf ist. Eine beispielhafte Tour wird anhand der \autoref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
+Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Graphen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graph ist. Eine beispielhafte Tour wird anhand der \autoref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
 
 \begin{figure}[H]
 \centering
@@ -717,7 +782,7 @@ Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durch
 \end{figure}
 
 Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht optimal. Aber es lässt sich trotzdem eine obere Grenze der Abweichung zum Optimum bestimmen. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
-\textit{$K_n$ sei ein vollständiger Graf mit positiven Kantengewichten welche die Dreiecksungleichung erfüllen. Dann sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
+\textit{$K_n$ sei ein vollständiger Graph mit positiven Kantengewichten welche die Dreiecksungleichung erfüllen. Dann sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
 \begin{equation}
 c(T') \leq 2 * c(OPT).
 \label{eq:test}
