@@ -569,11 +569,10 @@ Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt 
 \caption{Nearest-Neighbor Algorithmus}
 \end{algorithm}
 
-Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen der folgenden Tabelle:
+Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen den Angaben in Tabelle \ref{tbl:opt-struktur-select-reduktion}
 
 \begin{table}
 \centering
-\label{tbl:opt-struktur-select-reduktion}
 \begin{tabular}{ |c|c|c|c|c|c|c| }
 \hline
  & AC & BN & D& F & K & W \\ 
@@ -591,6 +590,8 @@ K & 70 & 27 & 47 & 189 &  & 55 \\
 W & 121 & 84 & 29 & 236 & 55 &  \\ 
 \hline
 \end{tabular}
+\caption{Entfernung der Städte in km}
+\label{tbl:opt-struktur-select-reduktion}
 \end{table}
 
 Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
@@ -757,7 +758,7 @@ In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt
 \label{fig:ursprungs-graf-eulertour}
 \end{figure}
 
-Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Graphen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graph ist. Eine beispielhafte Tour wird anhand der \autoref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
+Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen, welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Graphen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender Graph ist. Eine beispielhafte Tour wird anhand der \autoref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
 
 \begin{figure}[H]
 \centering
@@ -789,13 +790,13 @@ c(T') \leq 2 * c(OPT).
 \end{equation}}
 
 % Beweis
-Diese Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt so lang sein wie die Kosten des minimalen Spannbaums $T$.
+Dieser Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt so lang sein wie die Kosten des minimalen Spannbaums $T$.
 
 \begin{equation}
 c(T') \leq 2 * c(T)
 \end{equation}
 
-Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme definieren: Entfernt man eine Kante aus der Optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also:
+Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme definieren: Entfernt man eine Kante aus der optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also:
 
 \begin{equation}
 c(T) \leq c(OPT)
