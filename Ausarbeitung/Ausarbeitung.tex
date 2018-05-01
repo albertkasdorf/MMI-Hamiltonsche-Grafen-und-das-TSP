@@ -5,6 +5,7 @@
 \usepackage{fontspec}				% LuaTex need this
 \usepackage{lmodern}
 \usepackage{comment}
+\usepackage[a4paper]{geometry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -68,10 +69,16 @@
 		topaths,
 		graphs,
 		graphdrawing,
+		graphs.standard,
 		shapes}
 	\usegdlibrary{trees, layered}
 \usepackage{tkz-berge}
 \usepackage{tkz-graph}
+\makeatletter
+\pgfmathdeclarefunction{alpha}{1}{%
+	\pgfmathint@{#1}%
+	\edef\pgfmathresult{\pgffor@alpha{\pgfmathresult}}%
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % https://www.dante.de/events/Archiv/dante2012/Programm/Vortraege/vortrag-ferber.pdf
@@ -257,7 +264,7 @@ Eines Abend als Bernd sich mit seinen alten Studienkollegen trifft kommt ihm die
 			\draw[black, ultra thick] (A)--(B)--(J)--(I)--(G)--(H)--(E)--(F)--(C)--(D)--(A);
 		\end{tikzpicture}
 	}
-	\caption{Links: Ein Graph der die Bekanntschaft zwischen den Hochzeitsgästen modelliert. Rechts: Ein Kreis in dem Bekanntschaftsgraphen jeden Gast zwei im bekannte Gäste zuweist.}
+	\caption{Links: Ein Graph der die Bekanntschaft zwischen den Hochzeitsgästen modelliert. Rechts: Ein Kreis in dem Bekanntschaftsgraphen der jeden Gast zwei im bekannte Gäste zuweist.}
 	\label{fig:acquaintance_graph}
 \end{figure}
 
@@ -272,7 +279,7 @@ Eines Abend als Bernd sich mit seinen alten Studienkollegen trifft kommt ihm die
 %
 \section{Hamiltonsche Graphen}
 
-Wie es bereits aus dem einleitenden Beispiel zu erkennen ist, wird in einem Graphen ein Kreis gesucht, der alle Knoten so miteinander verbindet, dass außer dem Start- und Endknoten kein Knoten doppelt vorkommt. Ein Graph der diese Eigenschaft erfüllt heißt hamiltonsch oder Hamilton-Graph und der Kreis heißt Hamilton-Kreis.
+Wie es bereits aus dem einleitenden Beispiel zu erkennen ist, wird in einem Graphen ein Kreis gesucht, der alle Knoten so miteinander verbindet, dass außer dem Start- und Endknoten kein Knoten doppelt vorkommt. Ein Graph der diese Eigenschaft erfüllt heißt hamiltonsch oder Hamilton-Graph und der Kreis dementsprechend Hamilton-Kreis.
 
 Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten alle Knoten genau einmal durchlaufen werden und beim zweiten alle Kanten. Ein Graph kann dabei beide, eine oder keine der beiden Eigenschaft in sich vereinen, siehe \autoref{fig:combination_of_euler_and_hamilton}
 
@@ -340,7 +347,7 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 	\label{fig:combination_of_euler_and_hamilton}
 \end{figure}
 
-% TODO: Was kommt in den nächsten Abschnitten?
+Ähnlich wie mit den Euler-Graphen werden in den folgenden zwei Abschnitten einige Kriterien untersucht, um herauszufinden ob ein Graph einen Hamilton-Kreis besitzt oder nicht. Um es gleich vorweg zu nehmen, bisher könnte kein allgemein gültiges Kriterium gefunden werden um in jedem Graphen die Existenz eines Hamilton-Kreises zu bestätigten. Nicht ohne Grund ist das Hamilton-Kreis-Problem auf der Liste der noch zu lösenden Millennium Probleme zu finden, siehe \url{http://www.claymath.org/millennium-problems}.
 
 
 %%%%%%%%%%%%
@@ -350,11 +357,11 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 %%%%%%%%%%%%
 \subsection{Knotengrad}
 
-\begin{mylem}\label{lemma_degree_of_one}
+\begin{mylem}\label{thm:lemma_degree_of_one}
 	Ein hamiltonscher Graph enthält keinen Knoten mit Grad 1.
 \end{mylem}
 
-Bei dem Lemma~\autoref{lemma_degree_of_one} handelt es sich um das einfaches Ausschlusskriterium für die Existenz eines Hamilton-Kreises. Befindet sich in dem Graphen ein Knoten mit einem Grad von eins, dann ist es nicht mehr möglich von diesem Knoten aus einen weiteren zu besuchen und somit kann auch der Kreis nicht geschlossen werden, siehe \autoref{fig:graph_with_min_degree_of_one}.
+Bei dem Lemma~\autoref{thm:lemma_degree_of_one} handelt es sich um das einfaches Ausschlusskriterium für die Existenz eines Hamilton-Kreises. Befindet sich in dem Graphen ein Knoten mit einem Grad von eins, dann ist es nicht mehr möglich von diesem Knoten aus einen weiteren zu besuchen und somit kann auch der Kreis nicht geschlossen werden, siehe \autoref{fig:graph_with_min_degree_of_one}.
 
 \begin{figure}
 	\centering
@@ -370,16 +377,16 @@ Bei dem Lemma~\autoref{lemma_degree_of_one} handelt es sich um das einfaches Aus
 	\label{fig:graph_with_min_degree_of_one}
 \end{figure}
 
-Im Jahre 1952 hat der britischer Physiker Dirac ein Kriterium aufgestellt mit der die Existenz eines Hamilton-Kreises in einem Graphen nachgewiesen werden kann, siehe Satz~\autoref{satz_dirac}.
+Im Jahre 1952 hat der britischer Physiker Dirac ein Kriterium aufgestellt mit der die Existenz eines Hamilton-Kreises in einem Graphen nachgewiesen werden kann, siehe Satz~\autoref{thm:satz_dirac}.
 
 % Was sagt dieser Satz aus? Wenn man viele Kanten hat, dann ist es wahrscheinlicher einen hamilton kreis zu finden.
-\begin{mysat}\label{satz_dirac}
+\begin{mysat}\label{thm:satz_dirac}
 	Sei G ein einfacher Graph mit mindestens drei Knoten, für den außerdem $\delta(G)\geq 0.5\cdot n$ gilt. Dann enthält der Graph einen Hamilton-Kreis.
 \end{mysat}
 
-Die Kernaussage ist dabei, das jeder Knoten des Graphen eine gewisse Mindestanzahl an Kanten zu benachbarten Knoten besitzen soll. Hier durch werden zum einem isolierte Knoten und zum anderen Bäume ausgeschlossen.
+Die Kernaussage ist dabei, das jeder Knoten des Graphen eine gewisse Mindestanzahl an Kanten zu benachbarten Knoten besitzen soll. Hier durch werden, zum einem isolierte Knoten und zum anderen Bäume ausgeschlossen.
 
-Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notwendige Bedingung für die Existenz eines Hamilton-Kreises ist. Es gibt Graphen die das Kriterium von Dirac nicht erfüllen und trotzdem einen Hamilton-Kreis besitzen, siehe \autoref{fig:hamilton_without_dirac_and_ore}.
+Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notwendige Bedingung für die Existenz eines Hamilton-Kreises ist. Es gibt Graphen die das Kriterium von Dirac nicht erfüllen und trotzdem einen Hamilton-Kreis besitzen, siehe \autoref{fig:hamilton_without_dirac}.
 
 \begin{figure}
 	\centering
@@ -392,7 +399,7 @@ Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notw
 	\draw (A)--(B)--(C)--(D)--(E)--(A);
 	\end{tikzpicture}
 	\caption{Ein Graph der einen Hamilton-Kreis enthält, jedoch das Kriterium von Dirac nicht erfüllt.}
-	\label{fig:hamilton_without_dirac_and_ore}
+	\label{fig:hamilton_without_dirac}
 \end{figure}
 
 
@@ -408,20 +415,62 @@ Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notw
 Wenn es einen Hamilton-Kreis in einem Graphen gibt, dann hat jeder Knoten mindestens zwei adjazente Knoten. Somit sind sowohl isolierte Knoten als auch nicht zusammenhängende Teilgraphen ausgeschlossen. Die Rückrichtung gilt jedoch nicht, ein Baum ist zwar zusammenhängend, aber nicht hamiltonsch.
 
 % Zusammenhang, klappt nicht beim Petersen-Graph
-\begin{mysat}\label{decay_to_connected_components}
+\begin{mysat}\label{thm:decay_to_connected_components}
 	Für jeden hamiltonschen Graphen gilt: Wenn k Knoten aus dem Graphen gelöscht werden, zerfällt der Graph in höchstens k Zusammenhangskomponenten.
 \end{mysat}
 
-Den Satz~\autoref{decay_to_connected_components} kann man sich dabei sehr vereinfacht wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis. Wenn der Faden jetzt an einer zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt entstehen maximal zwei weitere Fadenstücke.
+Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei sehr vereinfacht wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis. Wenn der Faden jetzt an einer Stelle zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt zerfällt ein Fadenstück zu maximal zwei weiteren Fadenstücken, es können niemals mehr Fadenstücke entstehen als Schnitte getätigt wurden. Zerfällt hingegen der Graph in mehr Zusammenhangskomponenten als Schnitte getätigt wurden, so kann in dem Graphen kein Hamilton-Kreis existiert haben, siehe \autoref{fig:one_cut_two_connected_components}.
 
+\begin{figure}
+	\centering
+	\subcaptionbox{}[.49\linewidth]
+	{
+		\begin{tikzpicture}[scale=1.]
+		\node (A) at (0,0) [circle, draw] {A};
+		\node (B) at (0,2) [circle, draw] {B};
+		\node (C) at (2,1) [circle, draw] {C};
+		\node (D) at (4,0) [circle, draw] {D};
+		\node (E) at (4,2) [circle, draw] {E};
+		\draw (C)--(A) (C)--(B) (C)--(D) (C)--(E);
+		\draw (A)--(B) (D)--(E);
+		\end{tikzpicture}
+	}
+	\subcaptionbox{}[.49\linewidth]
+	{
+		\begin{tikzpicture}[scale=1.]
+		\node (A) at (0,0) [circle, draw] {A};
+		\node (B) at (0,2) [circle, draw] {B};
+		\node (C) at (2,1) [circle, draw, dashed] {C};
+		\node (D) at (4,0) [circle, draw] {D};
+		\node (E) at (4,2) [circle, draw] {E};
+		\draw[dashed] (C)--(A) (C)--(B) (C)--(D) (C)--(E);
+		\draw (A)--(B) (D)--(E);
+		\end{tikzpicture}
+	}
+	\caption{Durch das herauslösen des Knoten C entstehen zwei Zusammenhangskomponenten. Ein Hamilton-Kreis kann in diesem Graphen nicht vorhanden sein.}
+	\label{fig:one_cut_two_connected_components}
+\end{figure}
 
+An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:decay_to_connected_components} um ein reines Ausschlusskriterium handelt. Den der Petersen-Graph erfüllt zwar die Bedingung, dass nie mehr Komponenten entstehen, als Knoten aus dem Graphen herausgelöst werden, jedoch enthält er keinen Hamilton-Kreis, siehe \autoref{fig:petersen_graph}.
 
-
-%%%%%%%%%
-% Schluss
-%%%%%%%%%
-\subsection{Fazit}
-Auf den vorherigen Abschnitten haben wir mehrere Kriterien (welche?) kennengelernt um herauszufinden ob es in einem Graphen einen Hamilton-Kreis gibt oder nicht. Nichts desto trotz existieren Graphen die die obigen Kriterien nicht erfüllen, aber über einen Kamilton-Kreis verfügen. Bisher könnte kein allgemein gültiges Kriterium gefunden für die Existenz gefunden werden und darum steht auch das Hamilton-Kreis-Problem auf der Liste der noch zu lösenden Millennium Probleme, siehe \url{http://www.claymath.org/millennium-problems}.
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[every node/.style={draw,circle}]
+	\graph [clockwise,math nodes] {
+		subgraph C_n [V={a,b,c,d,e}, name=A, radius=2cm];
+		subgraph I_n [V={f,g,h,i,j}, name=B, radius=1cm];
+		\foreach \x [evaluate={%
+			\i=alpha(\x);
+			\j=alpha(mod(\x+1,5)+6);
+			\k=alpha(\x+5);}] in {1,...,5}{
+			A \i -- B \k;
+			B \j -- B \k;
+		}
+	};
+	\end{tikzpicture}
+	\caption{Der Petersen-Graph enthält keinen Hamilton-Kreis.}
+	\label{fig:petersen_graph}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -438,7 +487,9 @@ Auf den vorherigen Abschnitten haben wir mehrere Kriterien (welche?) kennengeler
 \section{Algorithmen}
 
 \subsection{Nearest-Neighbor-Heuristik}
+
 Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt wird um eine Lösung für das Problem des Handlungsreisenden zu ermitteln. Es handelt sich dabei um einen Greedy-Algorithmus der wie folgt funktioniert:
+
 \begin{algorithm}
 \KwIn{Ein vollständiger Graf $T$ mit Kantengewichten $c(e)$}
 \KwOut{Ein Hamilton-Kreis}
@@ -454,6 +505,7 @@ Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt 
 \end{algorithm}
 
 Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen der folgenden Tabelle:
+
 \begin{table}
 \centering
 \label{tbl:opt-struktur-select-reduktion}
