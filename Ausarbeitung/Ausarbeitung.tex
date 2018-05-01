@@ -17,6 +17,7 @@
 	\addto\captionsgerman{
 		\renewcommand{\figurename}{Abbildung}
 		\renewcommand{\figureautorefname}{Abbildung}
+		\renewcommand{\equationautorefname}{Gleichung}
 	}
 
 
@@ -83,9 +84,25 @@
 	citecolor=black,
 	pdfencoding=auto,
 ]{hyperref}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% bibtex vs. biber and biblatex vs. natbib
+%	- https://tex.stackexchange.com/questions/25701/bibtex-vs-biber-and-biblatex-vs-natbib
+% The biblatex Package - Programmable Bibliographies and Citations
+% 	- http://ftp.math.purdue.edu/mirrors/ctan.org/macros/latex/exptl/biblatex/doc/biblatex.pdf
+% Biblatex citation order
+%	- https://tex.stackexchange.com/questions/51434/biblatex-citation-order
+% 		- sorting=ydnt: Sort by year (descending), name, title.
+%		- sorting=none: Do not sort at all. All entries are processed in citation order.
+%
+\usepackage[backend=biber,style=numeric-comp,sorting=none]{biblatex}
+	\addbibresource{Quellen.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
 \usepackage{verbatim}
-\usepackage[vario]{fancyref}
+%\usepackage[vario]{fancyref}
 \usepackage{float}
 \usepackage{subcaption}
 
@@ -458,7 +475,9 @@ W & 121 & 84 & 29 & 236 & 55 &  \\
 \hline
 \end{tabular}
 \end{table}
-Mit Aachen als Startpunkt würde der Algorithmus die Tour in \Fref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
+
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
@@ -479,7 +498,8 @@ Mit Aachen als Startpunkt würde der Algorithmus die Tour in \Fref{fig:nearest-n
 \label{fig:nearest-neighbor-beispiel}
 \end{figure}
 
-Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Grafen in \Fref{fig:nearest-neighbor-guete} 
+Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Grafen in \autoref{fig:nearest-neighbor-guete}.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
@@ -508,16 +528,22 @@ Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer 
 \caption{Beispielgraf zur Ermittlung der Güte des Nearest-Neighbor Algorithmus}
 \label{fig:nearest-neighbor-guete}
 \end{figure}
+
 Der Algorithmus würde ausgehend vom Startpunkt 1 eine Tour (siehe roter Pfad) mit den Kosten $1+1+1+x = x +3$ berechnen. Eine optimale Lösung (grüner Pfad) hingegen hätte die Kosten $1+2+1+2 = 6$.
 
 
 \subsection{Doppelter-Baum-Algorithmus}
+
 Bevor eine Beschreibung des Doppelten-Baum-Algorithmus erfolgt, wird zunächst noch der Begriff der Dreieckungleichung eingeführt. Dabei gilt es zu beachten, dass es sich nicht um die Dreiecksungleichung aus der Geometrie handelt. Für Grafen ist diese wie folgt definiert.
+
 Die Dreiecksungleichung garantiert bei einem vollständigen Grafen, dass für alle Knoten u,v und w gilt:
+
 \begin{equation}
 c(u,v) \leq c(u,w) + c(w,v)
 \end{equation}
-Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w (\Fref{fig:dreiecksungleichung}).
+
+Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer ist, als der Umweg über einen zusätzlichen Knoten w, siehe \autoref{fig:dreiecksungleichung}.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
@@ -532,7 +558,6 @@ Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer is
 \caption{Dreiecksungleichung}
 \label{fig:dreiecksungleichung}
 \end{figure}
-
 
 Der Doppelte-Baum Algorithmus von Rosenkranz, Stearns und Lewis aus dem Jahr 1977 berechnet einen Hamilton-Kreis. Zunächst wird der Algorithmus formal beschrieben und anschließend anhand eines Beispiels illustriert. Abschließend wird noch bewiesen warum dieser Algorithmus eine Tour liefert.
 
@@ -552,7 +577,8 @@ Der Algorithmus sieht wie folgt aus:
 \caption{Doppelter-Baum-Algorithmus}
 \end{algorithm}
 
-Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \Fref{fig:ursprungs-graf-blank} dargestellt. Im Zuge der Übersichtlichkeit sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
+Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun anhand eines Beispiels illustriert. Die Knoten des Ursprungsgrafen sind in \autoref{fig:ursprungs-graf-blank} dargestellt. Im Zuge der Übersichtlichkeit sind die Kanten und Kantengewichte des zusammenhängenden Grafen nicht mit eingezeichnet.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8]
@@ -565,7 +591,9 @@ Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser nun an
 \caption{Knoten des Ursprungsgrafen}
 \label{fig:ursprungs-graf-blank}
 \end{figure}
-Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spannenden Baumes $T$. Dieser ist in \Fref{fig:ursprungs-graf-mst} dargestellt.
+
+Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spannenden Baumes $T$. Dieser ist in \autoref{fig:ursprungs-graf-mst} dargestellt.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
@@ -581,7 +609,9 @@ Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spann
 \caption{Minimal spannender Baum}
 \label{fig:ursprungs-graf-mst}
 \end{figure}
-In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graf $T_d$ entsteht. In diesem Graf wird wie in Schritt Drei gefordert eine Euler-Tour konstruiert. In \Fref{fig:ursprungs-graf-eulertour} ist diese beispielhaft eingezeichnet.
+
+In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graf $T_d$ entsteht. In diesem Graf wird wie in Schritt Drei gefordert eine Euler-Tour konstruiert. In \autoref{fig:ursprungs-graf-eulertour} ist diese beispielhaft eingezeichnet.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
@@ -609,7 +639,9 @@ In Schritt Zwei werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt
 \caption{Euler-Tour}
 \label{fig:ursprungs-graf-eulertour}
 \end{figure}
-Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Grafen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graf ist. Eine beispielhafte Tour wird anhand der \Fref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
+
+Im letzten Schritt des Algorithmus wird die Euler-Tour vom Startknoten aus durchlaufen. Dabei wird versucht immer den kürzesten Weg zu nutzen welcher laut Dreiecksungleichung der direkte Weg ist. Bei der Betrachtung des Grafen muss daran gedacht werden, dass dieser immer noch ein zusammenhängender  Graf ist. Eine beispielhafte Tour wird anhand der \autoref{fig:ursprungs-graf-hamiltonkreis} und dem Startpunkt c entwickelt. Von $c$ beginnend geht die Euler-Tour zu $b$ und dann wiederum zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen würde man feststellen, dass $b$ bereits besucht wurde. Deshalb wird der direkte Weg zu $d$ genommen. Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Rückkehr zu $d$ nicht mehr möglich, sodass die direkte Verbindung zu $f$ gewählt wird. Von dort aus kann auch nicht die Euler-Tour weiter verfolgt werden, da $d$ bereits besucht wurde. Deshalb wird die direkte Kante zu $h$ gewählt. Dort geht es wieder entlang der Euler-Tour zum Knoten $g$. Die direkte Verbindung zu $c$ ist die letzte Kante welche genommen wird um den Hamilton-Kreis zu komplettieren.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
@@ -640,29 +672,38 @@ c(T') \leq 2 * c(OPT).
 \end{equation}}
 
 % Beweis
-Diese Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt so lang sein wie die Kosten des minimalen Spannbaums $T$. 
+Diese Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt so lang sein wie die Kosten des minimalen Spannbaums $T$.
+
 \begin{equation}
 c(T') \leq 2 * c(T)
 \end{equation}
 
+Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme definieren: Entfernt man eine Kante aus der Optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also:
 
-Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme definieren: Entfernt man eine Kante aus der Optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also: 
 \begin{equation}
 c(T) \leq c(OPT)
 \end{equation}
-Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis was wiederum der obigen Gleichung \ref{eq:test} entspricht.
+
+Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis was wiederum der obigen \autoref{eq:test} entspricht.
+
 \begin{equation}
 c(T') \leq 2 * c(T) \leq 2 * c(OPT)
 \end{equation}
+
 Somit berechnet der Doppelte-Baum-Algorithmus immer eine Tour im Verhältnis $c(T')/OPT \leq 2$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+% Literatur
 %
+% 	- http://linorg.usp.br/CTAN/macros/latex/contrib/biblatex/doc/biblatex.pdf
+% 		- bibnumbered, bibintoc
+%	- https://de.sharelatex.com/learn/Bibliography_management_with_biblatex
 %
-\section{Literatur}
-% TODO: Literatur hinzufügen.
+\nocite{busing2010graphen}
+\nocite{jungnickel1994graphen}
+\printbibliography[heading=bibnumbered,title={Literaturverzeichnis}]
 
 
 \end{document}
