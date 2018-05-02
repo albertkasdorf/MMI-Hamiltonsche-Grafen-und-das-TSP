@@ -484,11 +484,17 @@ An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:de
 Das Traveling-Salesman-Problem (TSP) (dt. Problem des Handlungsreisenden) ist ein kombinatorisches Optimierungsproblem. Die Herausforderung besteht, darin eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu wählen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostenminimal und die erste Station gleich der letzten Station ist.
 
 \begin{mydef}
-Travelling-Sales-Problem: Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
-\[c(C) =  \sum_{e \in C}  c(e) \]
+	Travelling-Sales-Problem: Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
+	\[c(C) =  \sum_{e \in C}  c(e) \]
 \end{mydef}
 
-In der Praxis kann dieses Problem in verschiedenen Planungssituationen auftreten. Den die Begriffe „Ort“ und „Strecke“ können auf verschiedene Anwendungsbereiche abstrahiert werden. Orte können nicht nur durch Städte, sondern zum Beispiel auch durch Kunden oder Bohrlöcher repräsentiert werden, während die Entfernung für Zeiten, Grade oder Kosten stehen kann. Solche Problemszenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden. Das Problem des Handlungsreisenden ist ein NP-vollständiges Problem.
+\subsection{Modellierung als Graph}
+
+In der Praxis kann dieses Problem in verschiedenen Planungssituationen auftreten. Den die Begriffe „Ort“ und „Strecke“ können auf verschiedene Anwendungsbereiche abstrahiert werden. Damit mathematische Verfahren zur Lösung verwendet werden können, muss eine reale Situation zunächst durch ein einfaches Modell abgebildet werden. Orte können nicht nur durch Städte, sondern zum Beispiel auch durch Kunden oder Bohrlöcher repräsentiert werden, während die Entfernung für Zeiten, Grade oder Kosten stehen kann. Solche Problemszenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden. Das Problem des Handlungsreisenden ist ein NP-vollständiges Problem.
+
+\subsubsection*{Asymmetrisches und symmetrisches TSP}
+
+Gerichtete Graphen eignen sich zur Modellierung von allgemeinen asymmetrischen TSP, weil hier können die Kanten in Hin- und Rückrichtung unterschiedliche Gewichte haben. Beim symmetrischen TSP gilt für alle Knotenpaare, das die Kantenlängen in beide Richtungen identisch sind, somit eignen sich ungerichteten Graphen zur Darstellung.
 
 \subsection{Lösungsmethoden}
 
@@ -497,20 +503,31 @@ Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \text
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Graphen.png}
-	\caption{Alle Lösungen für eine Paketauslieferung an drei Häuser}
+	\caption{Alle Lösungen für eine Paketauslieferung an drei Häuser (PLATZHALTER BILD)}
 	\label{fig:Rundreise}
 \end{figure}
 
 Um einen \textit{exakten Algorithmus} zu beleuchten, stellen wir zunächst ein triviales Beispiel für eine Planungssituation auf, und modellieren dieses mithilfe der Graphentheorie. In diesem Szenario haben wir ein Paketdienst, der drei Pakete an drei verschiedene Häuser ausliefern muss. Dazu brauchen wir vier Knoten, wobei ein Knoten unseren Startfiliale darstellt und die drei weiteren die Zielhäuser, wohin die Pakte geliefert werden müssen. Das Ziel ist es eine Tour (Hamilton-Kreis) zu definieren.
-\par Um die Lösung zu finden, erzeugen wir einen Hamilton-Kreis nach der anderen und merken uns jene. Anschließend bestimmen wir die Länge jedes Hamilton-Kreises. Um die beste Tour zufinden, wählen wir den kürzesten Hamilton-Kreis aus. Die \autoref{fig:Rundreise} zeigt alle zulässigen Touren für unser Szenario.
+\par Um die Lösung zu finden, erzeugen wir einen Hamilton-Kreis nach der anderen und merken uns jene. Anschließend bestimmen wir die Länge jedes Hamilton-Kreises. Um die beste Tour zu finden, wählen wir den kürzesten Hamilton-Kreis aus. Die \autoref{fig:Rundreise} zeigt alle zulässigen Touren für unser Szenario.
 
 \begin{description}
-	\item[F:] Wie viele verschiedene Touren gibt es in einem vollständigen Graphen mit n Knoten?
+	\item[F:] Wie viele verschiedene Touren gibt es in einem vollständigen Graphen mit n Knoten? Zeigen Sie das der Satz~\autoref{thm:count_of_hamilton_circle_in_asm_graph} gilt.
 \end{description}
 
-Als erstes schauen wir uns einen asymmetrischen Graphen an. Bei zwei Häusern gibt es einen Hamilton-Kreis, bei drei Häusern zwei, bei vier Häusern gibt es sechs Hamilton-Kreise.
+\begin{mysat}\label{thm:count_of_hamilton_circle_in_asm_graph}
+	Ein vollständiger asymmetrischer Graph enthält genau $(n-1)!$ Hamilton-Kreise.
+\end{mysat}
 
-%TODO: Ein Beispiel für einen exakte Algorithmen wäre das ... . Beweis mit vollständiger Induktion ... Notiz Asymmetrisches und symmetrisches TSP
+Beim symmetrischen TSP wird nicht zwischen einer Tour und ihrer Rückrichtung unterschieden. Für die Lösungen in \autoref{fig:Rundreise} würde es bedeuten, dass die Lösungen \textit{(b)} \textit{(d)} und \textit{(f)} wegfallen. Somit gilt:
+
+\begin{mysat}
+	Ein vollständiger symmetrischer Graph enthält genau $0.5 * (n-1)!$ Hamilton-Kreise.
+\end{mysat}
+
+Für unser Beispiel mit drei Zielen konnten wir leicht eine optimale Lösung finden. Doch was würde es bedeuten, wenn die Anzahl der Ziele auf 21 steigen würde? Die Fakultätsfunktion steigt rasant, die Konsequenz wir müssen $0.5 * 21! = 2.554.547.108.585.472.0000$ Lösungen generieren und im Anschluss daran die Kosten berechnen.
+
+Für praxisrelevante Szenarien bedeutet es eine unvermeidbare Laufzeitexplosion. Solange $P = NP$ gilt, wird es kein beweisbar schnelles Verfahren zur optimalen Lösung des TSP geben. Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden, aber auch weil man oft gar nicht an der Optimallösung interessiert ist. Aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können. Eine Städtetour durch Europa mit einem Fahrzeug ist von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter, Verkehr. In diesem Beispiel wäre die Forderung nach Optimalität ein Overkill.
+
 
 \subsection{Das Bohren von Leiterplatten}
 
@@ -543,6 +560,8 @@ Bedenkt man nun, das man eine zeit optimierte Rundreise für den Bohrer finden m
 \begin{description}
 	\item[F:] Wie könnte eine möglichst gute Rundreise auf der Leiterplatte Aussehen?
 \end{description}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -808,7 +827,11 @@ Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis
 c(T') \leq 2 * c(T) \leq 2 * c(OPT)
 \end{equation}
 
-Somit berechnet der Doppelte-Baum-Algorithmus immer eine Tour im Verhältnis $c(T')/OPT \leq 2$.
+Somit berechnet der Doppelte-Baum-Algorithmus immer eine Tour im Verhältnis:
+
+\begin{equation}
+c(T')/OPT \leq 2
+\end{equation}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
