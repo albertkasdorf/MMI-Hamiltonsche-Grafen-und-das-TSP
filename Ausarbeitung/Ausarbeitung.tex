@@ -114,6 +114,7 @@
 %\usepackage[vario]{fancyref}
 \usepackage{float}
 \usepackage{subcaption}
+	\captionsetup{subrefformat=parens}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -207,69 +208,82 @@
 %
 %
 %
-\section{Motivation}
-Das junge Pärchen Anna und Bernd planen ihre Hochzeit. Der Großteil der Aufgaben ist bereits geplant und erledigt. Nur über dem Sitzplan für das Hochzeitsessen grübeln beide schon des längeren und kommen zu keinem Ergebnis. Ihr Wunsch ist es, das während des Essens eine ausgelassen Stimmung herrscht. Daher soll neben jedem Gast, jeweils zu seiner linken und rechten Seite, zwei ihm bekannte Person sitzen.
+\section{Hamiltonsche Graphen}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+\subsection{Motivation}
+
+Das junge Pärchen Anna und Bernd planen ihre Hochzeit. Der Großteil der Aufgaben ist bereits geplant und erledigt. Nur über den Sitzplan für das Hochzeitsessen grübeln beide schon des längeren und kommen zu keinem Ergebnis. Ihr Wunsch ist es, dass während des Essens eine ausgelassen Stimmung herrscht. Daher soll neben jedem Gast, jeweils zu seiner linken und rechten Seite, zwei ihm bekannte Person sitzen.
 
 Eines Abend als Bernd sich mit seinen alten Studienkollegen trifft kommt ihm die zündende Idee. Das Sitzplatz-Problem ließe sich mit einem Graphen modellieren. Die Gäste werden durch Knoten beschrieben und die Bekanntschaft zwischen zwei Gästen durch eine Kante, siehe \autoref{fig:acquaintance_graph_a}. Wenn es einen Kreis in dem Graphen gibt, in dem jeder Knoten genau einmal vorkommt, wäre das Sitzplatz-Problem gelöst. Nach einigen Versuchen hat er einen Kreis gefunden, der alle Knoten miteinander verbindet, siehe \autoref{fig:acquaintance_graph_b}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\subcaptionbox{\label{fig:acquaintance_graph_a}}[.49\linewidth]
 	{
 		%\begin{tikzpicture}[scale=0.45, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.45]
-			\node (A) at (-1,+0) [circle, draw, ultra thick] {A};
-			\node (B) at (+1,+0) [circle, draw, ultra thick] {B};
-			\node (C) at (-4,+0) [circle, draw] {C};
-			\node (D) at (-4,-3) [circle, draw] {D};
-			\node (E) at (-4,+4) [circle, draw] {E};
-			\node (F) at (-6,+2) [circle, draw] {F};
-			\node (G) at (+0,+2) [circle, draw] {G};
-			\node (H) at (+4,+4) [circle, draw] {H};
-			\node (I) at (+4,+0) [circle, draw] {I};
-			\node (J) at (+2,-3) [circle, draw] {J};
-	
-			\draw (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
-			\draw (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
-			\draw (C)--(D) (C)--(F);
-			\draw (D)--(F);
-			\draw (E)--(F) (E)--(G) (E)--(H);
-			\draw (F)--(G);
-			\draw (G)--(H) (G)--(I);
-			\draw (I)--(J);
+		\node (A) at (-1,+0) [circle, draw, ultra thick] {A};
+		\node (B) at (+1,+0) [circle, draw, ultra thick] {B};
+		\node (C) at (-4,+0) [circle, draw] {C};
+		\node (D) at (-4,-3) [circle, draw] {D};
+		\node (E) at (-4,+4) [circle, draw] {E};
+		\node (F) at (-6,+2) [circle, draw] {F};
+		\node (G) at (+0,+2) [circle, draw] {G};
+		\node (H) at (+4,+4) [circle, draw] {H};
+		\node (I) at (+4,+0) [circle, draw] {I};
+		\node (J) at (+2,-3) [circle, draw] {J};
+		
+		\draw (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
+		\draw (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
+		\draw (C)--(D) (C)--(F);
+		\draw (D)--(F);
+		\draw (E)--(F) (E)--(G) (E)--(H);
+		\draw (F)--(G);
+		\draw (G)--(H) (G)--(I);
+		\draw (I)--(J);
 		\end{tikzpicture}
 	}
 	\subcaptionbox{\label{fig:acquaintance_graph_b}}[.49\linewidth]
 	{
 		%\begin{tikzpicture}[scale=0.45, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.45]
-			\node (A) at (-1,+0) [circle, draw, ultra thick] {A};
-			\node (B) at (+1,+0) [circle, draw, ultra thick] {B};
-			\node (C) at (-4,+0) [circle, draw] {C};
-			\node (D) at (-4,-3) [circle, draw] {D};
-			\node (E) at (-4,+4) [circle, draw] {E};
-			\node (F) at (-6,+2) [circle, draw] {F};
-			\node (G) at (+0,+2) [circle, draw] {G};
-			\node (H) at (+4,+4) [circle, draw] {H};
-			\node (I) at (+4,+0) [circle, draw] {I};
-			\node (J) at (+2,-3) [circle, draw] {J};
-			
-			\draw (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
-			\draw (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
-			\draw (C)--(D) (C)--(F);
-			\draw (D)--(F);
-			\draw (E)--(F) (E)--(G) (E)--(H);
-			\draw (F)--(G);
-			\draw (G)--(H) (G)--(I);
-			\draw (I)--(J);
-			
-			\draw[black, ultra thick] (A)--(B)--(J)--(I)--(G)--(H)--(E)--(F)--(C)--(D)--(A);
+		\node (A) at (-1,+0) [circle, draw, ultra thick] {A};
+		\node (B) at (+1,+0) [circle, draw, ultra thick] {B};
+		\node (C) at (-4,+0) [circle, draw] {C};
+		\node (D) at (-4,-3) [circle, draw] {D};
+		\node (E) at (-4,+4) [circle, draw] {E};
+		\node (F) at (-6,+2) [circle, draw] {F};
+		\node (G) at (+0,+2) [circle, draw] {G};
+		\node (H) at (+4,+4) [circle, draw] {H};
+		\node (I) at (+4,+0) [circle, draw] {I};
+		\node (J) at (+2,-3) [circle, draw] {J};
+		
+		\draw (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
+		\draw (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
+		\draw (C)--(D) (C)--(F);
+		\draw (D)--(F);
+		\draw (E)--(F) (E)--(G) (E)--(H);
+		\draw (F)--(G);
+		\draw (G)--(H) (G)--(I);
+		\draw (I)--(J);
+		
+		\draw[black, ultra thick] (A)--(B)--(J)--(I)--(G)--(H)--(E)--(F)--(C)--(D)--(A);
 		\end{tikzpicture}
 	}
 	\caption{Links: Ein Graph der die Bekanntschaft zwischen den Hochzeitsgästen modelliert. Rechts: Ein Kreis in dem Bekanntschaftsgraphen der jeden Gast zwei im bekannte Gäste zuweist.}
 	\label{fig:acquaintance_graph}
 \end{figure}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
 %\subsection{Icosian-Spiel}
 
 % Such paths and cycles are named after Hamilton (1856), who described, in a letter to his friend Graves, a mathematical game on the dodecahedron (figure 4 . 2 ~ ) in which one person sticks five pins in any five consecutive vertices and the other is required to complete the path so formed to a spanning cycle. A graph is hamiltonian if it contains a Hamilton cycle. The dodecahedron is hamiltonian (see figure 4 . 2 ~ ~ the) ; Herschel graph (figure 4.2b) is nonhamiltonian, because it is bipartite and has an odd number of vertices.
@@ -279,17 +293,21 @@ Eines Abend als Bernd sich mit seinen alten Studienkollegen trifft kommt ihm die
 %
 %
 %
-\section{Hamiltonsche Graphen}
+\subsection{Definition}
 
-Wie es bereits aus dem einleitenden Beispiel zu erkennen ist, wird in einem Graphen ein Kreis gesucht, der alle Knoten so miteinander verbindet, dass außer dem Start- und Endknoten kein Knoten doppelt vorkommt. Ein Graph der diese Eigenschaft erfüllt heißt hamiltonsch oder Hamilton-Graph und der Kreis dementsprechend Hamilton-Kreis.
+Wie es bereits aus dem einleitenden Beispiel zu erkennen ist, wird in einem Graphen ein Kreis gesucht, der alle Knoten so miteinander verbindet, dass außer dem Start- und Endknoten kein Knoten doppelt vorkommt. Ein Graph mit diesen Eigenschaften wird wie folgt definiert:
+% Ein Graph der diese Eigenschaft erfüllt heißt hamiltonsch oder Hamilton-Graph und der Kreis dementsprechend Hamilton-Kreis.
 
-Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten alle Knoten genau einmal durchlaufen werden und beim zweiten alle Kanten. Ein Graph kann dabei beide, eine oder keine der beiden Eigenschaft in sich vereinen, siehe \autoref{fig:combination_of_euler_and_hamilton}
+\begin{mydef}\label{thm:definition_hamilton_graph}
+	Ein Graph heißt hamiltonsch oder Hamilton-Graph, wenn in ihm ein Kreis existiert, der jeden Knoten genau einmal enthält. Ein solcher Kreis heißt auch Hamilton-Kreis.\cite{busing2010graphen}
+\end{mydef}
 
-\begin{figure}
+Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten alle Knoten genau einmal durchlaufen werden und beim zweiten alle Kanten. Ein Graph kann dabei beide, eine oder keine der beiden Eigenschaft in sich vereinen, siehe \autoref{fig:combination_of_euler_and_hamilton}.
+
+\begin{figure}[h]
 	\centering
-	\subcaptionbox{}[.24\linewidth]
+	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_a}}[.24\linewidth]
 	{
-		%\begin{tikzpicture}[scale=0.75, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.75]
 			\node (A) at (0,0) [circle, draw] {A};
 			\node (B) at (0,2) [circle, draw] {B};
@@ -300,9 +318,8 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 			\draw (A)--(B)--(C)--(D)--(E)--(F)--(A);
 		\end{tikzpicture}
 	}
-	\subcaptionbox{}[.24\linewidth]
+	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_b}}[.24\linewidth]
 	{
-		%\begin{tikzpicture}[scale=0.75, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.75]
 		\node (A) at (0,0) [circle, draw] {A};
 		\node (B) at (0,2) [circle, draw] {B};
@@ -316,9 +333,8 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 		\draw (E)--(F);
 		\end{tikzpicture}
 	}
-	\subcaptionbox{}[.24\linewidth]
+	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_c}}[.24\linewidth]
 	{
-		%\begin{tikzpicture}[scale=0.75, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.75]
 		\node (A) at (0,0) [circle, draw] {A};
 		\node (B) at (0,2) [circle, draw] {B};
@@ -332,9 +348,8 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 		\draw (E)--(F);
 		\end{tikzpicture}
 	}
-	\subcaptionbox{}[.24\linewidth]
+	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_d}}[.24\linewidth]
 	{
-		%\begin{tikzpicture}[scale=0.75, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.75]
 		\node (A) at (0,0) [circle, draw] {A};
 		\node (B) at (0,2) [circle, draw] {B};
@@ -345,12 +360,11 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 		\draw (F)--(A) (F)--(B) (F)--(C) (F)--(D) (F)--(E);
 		\end{tikzpicture}
 	}
-	\caption{Der Graph (a) ist sowohl eulersch als auch hamiltonsch, (b) ist nur hamiltonsch, (c) ist nur eulersch und (d) ist weder noch.}
+	\caption{Der Graph \subref{fig:combination_of_euler_and_hamilton_a} ist sowohl eulersch als auch hamiltonsch, \subref{fig:combination_of_euler_and_hamilton_b} ist nur hamiltonsch, \subref{fig:combination_of_euler_and_hamilton_c} ist nur eulersch und \subref{fig:combination_of_euler_and_hamilton_d} ist weder noch.}
 	\label{fig:combination_of_euler_and_hamilton}
 \end{figure}
 
-Ähnlich wie mit den Euler-Graphen werden in den folgenden zwei Abschnitten einige Kriterien untersucht, um herauszufinden ob ein Graph einen Hamilton-Kreis besitzt oder nicht. Um es gleich vorweg zu nehmen, bisher könnte kein allgemein gültiges Kriterium gefunden werden um in jedem Graphen die Existenz eines Hamilton-Kreises zu bestätigten. Nicht ohne Grund ist das Hamilton-Kreis-Problem auf der Liste der noch zu lösenden Millennium Probleme zu finden, siehe \url{http://www.claymath.org/millennium-problems}.
-
+Ähnlich wie mit den Euler-Graphen werden in den folgenden zwei Abschnitten einige Kriterien untersucht, um herauszufinden ob ein Graph einen Hamilton-Kreis besitzt oder nicht. Um es gleich vorweg zu nehmen, bisher konnte kein allgemein gültiges Kriterium gefunden werden, das die Existenz eines Hamilton-Kreises in polynomieller Laufzeit bestätigt.
 
 %%%%%%%%%%%%
 %
@@ -365,7 +379,7 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 
 Bei dem Lemma~\autoref{thm:lemma_degree_of_one} handelt es sich um das einfaches Ausschlusskriterium für die Existenz eines Hamilton-Kreises. Befindet sich in dem Graphen ein Knoten mit einem Grad von eins, dann ist es nicht mehr möglich von diesem Knoten aus einen weiteren zu besuchen und somit kann auch der Kreis nicht geschlossen werden, siehe \autoref{fig:graph_with_min_degree_of_one}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\begin{tikzpicture}
 		\node (A) at (0,0) [circle, draw] {A};
@@ -390,7 +404,7 @@ Die Kernaussage ist dabei, das jeder Knoten des Graphen eine gewisse Mindestanza
 
 Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notwendige Bedingung für die Existenz eines Hamilton-Kreises ist. Es gibt Graphen die das Kriterium von Dirac nicht erfüllen und trotzdem einen Hamilton-Kreis besitzen, siehe \autoref{fig:hamilton_without_dirac}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\begin{tikzpicture}
 	\node (A) at (0,0) [circle, draw] {A};
@@ -423,7 +437,7 @@ Wenn es einen Hamilton-Kreis in einem Graphen gibt, dann hat jeder Knoten mindes
 
 Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei sehr vereinfacht wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis. Wenn der Faden jetzt an einer Stelle zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt zerfällt ein Fadenstück zu maximal zwei weiteren Fadenstücken, es können niemals mehr Fadenstücke entstehen als Schnitte getätigt wurden. Zerfällt hingegen der Graph in mehr Zusammenhangskomponenten als Schnitte getätigt wurden, so kann in dem Graphen kein Hamilton-Kreis existiert haben, siehe \autoref{fig:one_cut_two_connected_components}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\subcaptionbox{}[.49\linewidth]
 	{
@@ -455,7 +469,7 @@ Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei sehr ve
 
 An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:decay_to_connected_components} um ein reines Ausschlusskriterium handelt. Den der Petersen-Graph erfüllt zwar die Bedingung, dass nie mehr Komponenten entstehen, als Knoten aus dem Graphen herausgelöst werden, jedoch enthält er keinen Hamilton-Kreis, siehe \autoref{fig:petersen_graph}.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\begin{tikzpicture}[every node/.style={draw,circle}]
 	\graph [clockwise,math nodes] {
@@ -844,7 +858,7 @@ c(T')/OPT \leq 2
 %
 \nocite{busing2010graphen}
 \nocite{jungnickel1994graphen}
-\printbibliography[heading=bibnumbered,title={Literaturverzeichnis}]
+\printbibliography[heading=bibnumbered,title={Literatur}]
 
 
 \end{document}
