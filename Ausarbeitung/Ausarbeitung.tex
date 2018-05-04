@@ -598,15 +598,21 @@ Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt 
 \SetKwInOut{Parameter}{Schritt 3:}
 \Parameter{Setze $v = v_u$ }
 \SetKwInOut{Parameter}{Schritt 4:}
-\Parameter{Wenn nicht alle Knoten besucht wurden gehe wieder zu Schritt 2.}
+\Parameter{Wenn noch nicht alle Knoten besucht wurden gehe wieder zu Schritt 2.}
+\SetKwInOut{Parameter}{Schritt 5:}
+\Parameter{Füge die Kante vom letzten besuchten Knoten zum Startknoten hinzu um den Kreis zu schließen.}
 \caption{Nearest-Neighbor Algorithmus}
 \end{algorithm}
 
-Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen den Angaben in Tabelle \ref{tbl:opt-struktur-select-reduktion}
+Eine beispielhafte Anwendung des Algorithmus wird anhand einer Routenfindung zwischen den Städten Aachen (AC), Bonn (BN), Düsseldorf (D), Frankfurt (F), Köln (K) und Wuppertal (W) demonstriert. Angenommen die Entfernungen entsprechen den Angaben in der Tabelle in Abbildung \ref{fig:nearest-neighbor-beispiel}
 
-\begin{table}
-\centering
-\begin{tabular}{ |c|c|c|c|c|c|c| }
+%% Start
+
+\begin{figure}[h]
+	\centering
+	\subcaptionbox{\label{tbl:entfernungen-staedte}}[.49\linewidth]
+	{
+		\begin{tabular}{ |c|c|c|c|c|c|c| }
 \hline
  & AC & BN & D& F & K & W \\ 
 \hline
@@ -623,14 +629,9 @@ K & 70 & 27 & 47 & 189 &  & 55 \\
 W & 121 & 84 & 29 & 236 & 55 &  \\ 
 \hline
 \end{tabular}
-\caption{Entfernung der Städte in km}
-\label{tbl:opt-struktur-select-reduktion}
-\end{table}
-
-Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
-
-\begin{figure}[H]
-\centering
+	}
+	\subcaptionbox{\label{fig:nearest-neighbor-tour}}[.49\linewidth]
+	{
 \begin{tikzpicture}[scale=0.8, auto,swap]
     % First we draw the vertices
     \foreach \pos/\name in {{(-4,-1)/AC}, {(1,-2)/BN}, {(-0.75,2)/D},
@@ -643,11 +644,17 @@ Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:neares
 \draw [edge, ->] (D) to node[]{4.} (W);
 \draw [edge, ->] (W) to node[]{5.} (F);
 \draw [edge, ->] (F) to node[]{6.} (AC);
-
 \end{tikzpicture}
-\caption{Ablauf des Nearest-Neighbor Algorithmus}
+	}
+\caption{Links: Entfernung der Städte in km. Rechts: Tour des Nearest-Neighbor Algorithmus.}
 \label{fig:nearest-neighbor-beispiel}
 \end{figure}
+
+%% Ende
+
+
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
+
 
 Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Graphen in \autoref{fig:nearest-neighbor-guete}.
 
