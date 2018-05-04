@@ -303,7 +303,7 @@ Wie es bereits aus dem einleitenden Beispiel zu erkennen ist, wird in einem Grap
 % Ein Graph der diese Eigenschaft erfüllt heißt hamiltonsch oder Hamilton-Graph und der Kreis dementsprechend Hamilton-Kreis.
 
 \begin{mydef}\label{thm:definition_hamilton_graph}
-	Ein Graph heißt \textbf{hamiltonsch} oder \textbf{Hamilton-Graph}, wenn in ihm ein Kreis existiert, der jeden Knoten genau einmal enthält. Ein solcher Kreis heißt auch \textbf{Hamilton-Kreis}.\cite{busing2010graphen}
+	Ein Graph heißt \textbf{hamiltonsch} oder \textbf{Hamilton-Graph}, wenn in ihm ein Kreis existiert, der jeden Knoten genau einmal enthält. Ein solcher Kreis heißt auch \textbf{Hamilton-Kreis}. \cite{busing2010graphen}
 \end{mydef}
 
 Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten alle Knoten genau einmal durchlaufen werden und beim zweiten alle Kanten. Ein Graph kann dabei beide, eine oder keine der beiden Eigenschaft in sich vereinen, siehe \autoref{fig:combination_of_euler_and_hamilton}.
@@ -375,71 +375,64 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 % Knotengrad
 %
 %%%%%%%%%%%%
+%Im folgenden werden Graphen anhand der Knotengrade bewertet, vorher muss jedoch definiert werden was ein vollständiger Graph ist und was der Minimalgrad eines Graphen aussagt.
 \subsection{Knotengrad}
 
-Zu beginn wird die Familie der vollständigen Graphen vorgestellt.
+Im ersten Schritt werden die vollständigen Graphen mit einer Knotenanzahl $n \geq 3$ betrachtet. \footnote{Es werden die vollständigen Graphen mit einer Knotenanzahl von eins und zwei ausgeschlossen, da es sich im ersten Fall um einen Punkt und im zweiten um Linie handelt.}
 
 \begin{mydef}
 	Ein Graph $G=(V,E)$ heißt \textbf{vollständig}, wenn jeder Knoten zu jedem anderen Knoten benachbart ist. Da der Graph also nur von der Anzahl der Knoten $n$ abhängt, bezeichnet man ihn auch als $K_n$. \cite{busing2010graphen}
 \end{mydef}
 
-Unter der Voraussetzung das $n \geq 3$ ist, kann in einem vollständigen Graphen immer ein Hamilton-Kreis gefunden werden. Da der Grad jedes Knoten genau $n-1$ beträgt und für einen 
+Um einen Kreis in einem Graphen "einzeichnen" zu können, werden pro Knoten mindestens zwei Kanten benötigt, eine Kante um in den Knoten "hineinzugehen" und eine um "herauszugehen". Da jeder Knoten des vollständigen Graphen zu jedem anderen Knoten adjazent ist, kann bei der Kreisbildung von jedem Knoten noch eine Kante zu einem unbesucht Knoten gefunden werden. Da auch der Start- und Endknoten adjazet sind, kann am Ende der Hamilton-Kreis geschlossen werden, siehe \autoref{fig:pentagon_graph}.
+Daraus folgt das jeder vollständige Graph über einen Hamilton-Kreis verfügt.
 
-Die Abbildung ??? zeigt einen $K_5$ Graphen, bei dem jeder Knotengrad 
-
-Unter der Voraussetzung das $n \geq 3$ ist, für einen Hamilton-Kreis jeder Knoten nur zwei Kanten benötigt und jeder Knotengrad in einem vollständigen Graphen genau $n-1$ beträgt ist ersichtlich das jeder vollständige Graphen einen Hamilton-Kreis enthält, siehe Abbildung ???.
-
-% TODO: Change Picture and insert letter into the nodes.
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture}
-	\def\ngon{5}
-	\def\nodenames{A, B, C, D, E}
-	\node[regular polygon,regular polygon sides=\ngon, minimum size=3cm] (p) {};
-	\foreach[count=\x] \c in \nodenames {
-		\node (p\x) at (p.corner \x) [draw, circle] {\c};
-	}
-	\foreach\x in {1,...,\numexpr\ngon-1\relax}{
-		\foreach\y in {\x,...,\ngon}{
-			\draw (p\x) -- (p\y);
+	\subcaptionbox{\label{fig:pentagon_graph}}[.45\linewidth]
+	{
+		\begin{tikzpicture}
+		\def\ngon{5}
+		\def\nodenames{A, B, C, D, E}
+		\node[regular polygon,regular polygon sides=\ngon, minimum size=3cm] (p) {};
+		\foreach[count=\x] \c in \nodenames {
+			\node (p\x) at (p.corner \x) [draw, circle] {\c};
 		}
+		\foreach\x in {1,...,\numexpr\ngon-1\relax}{
+			\foreach\y in {\x,...,\ngon}{
+				\draw (p\x) -- (p\y);
+			}
+		}
+		\end{tikzpicture}
 	}
-	\end{tikzpicture}
-	\caption{}
-	\label{fig:pentagon_graph}
-\end{figure}
-
-Zur Bewertung eines Graphen anhand seines Knotengrades muss neben dem Grad noch der Minimal- und Maximalgrad eingeführt werden.
-
-
-\begin{mydef}
-	Sei $G=(V,E)$ ein Graph. Der Wert $\delta(G)$ gibt den \textbf{Minimalgrad} in $G$ an, d.h. die kleinste in $G$ vorkommende Gradzahl, und $\Delta(G)$ den \textbf{Maximalgrad} eines Knoten in G, d.h. die größte in $G$ vorkommende Gradzahl. \cite{busing2010graphen}
-\end{mydef}
-
-
-
-
-
-
-\begin{mylem}\label{thm:lemma_degree_of_one}
-	Ein hamiltonscher Graph enthält einen Knoten mit Grad 1.
-\end{mylem}
-
-Bei dem Lemma~\autoref{thm:lemma_degree_of_one} handelt es sich um ein einfaches Ausschlusskriterium für die Existenz eines Hamilton-Kreises. Befindet sich in dem Graphen ein Knoten mit einem Grad von eins, dann ist es nicht mehr möglich von diesem Knoten aus einen weiteren zu besuchen und somit kann auch der Kreis nicht geschlossen werden, siehe \autoref{fig:graph_with_min_degree_of_one}.
-
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
+	\hfill
+	\subcaptionbox{\label{fig:graph_with_min_degree_of_one}}[.45\linewidth]
+	{
+		\begin{tikzpicture}
 		\node (A) at (0,0) [circle, draw] {A};
 		\node (B) at (0,2) [circle, draw] {B};
 		\node (C) at (1,1) [circle, draw] {C};
 		\node (D) at (2,1) [circle, draw] {D};
 		\draw (A)--(B)--(C)--(D);
 		\draw (A)--(C);
-	\end{tikzpicture}
-	\caption{Ein Graph mit einem Minimalgrad von eins kann keinen Hamilton-Kreis enthalten.}
-	\label{fig:graph_with_min_degree_of_one}
+		\end{tikzpicture}
+	}
+	\caption{Links: Ein vollständiger Graph $K_5$ der immer einen Hamilton-Kreis enthält. Rechts: Ein Graph mit einem Minimalgrad von eins kann keinen Hamilton-Kreis enthalten.}
 \end{figure}
+
+Ein vollständiger Graph kann auch über den Minimalgrad beschrieben werden, siehe Definition~\autoref{thm:min_max_degree}. Dabei muss der Zusammenhang $\delta(K_n) = n-1$ gelten.
+
+\begin{mydef}\label{thm:min_max_degree}
+	Sei $G=(V,E)$ ein Graph. Der Wert $\delta(G)$ gibt den \textbf{Minimalgrad} in $G$ an, d.h. die kleinste in $G$ vorkommende Gradzahl, und $\Delta(G)$ den \textbf{Maximalgrad} eines Knoten in G, d.h. die größte in $G$ vorkommende Gradzahl. \cite{busing2010graphen}
+\end{mydef}
+
+Im zweiten Schritt wird ein Graph betrachtet, bei dem die Kantenanzahl nicht ausreicht um einen Hamilton-Kreis zu bilden. In der \autoref{fig:graph_with_min_degree_of_one} bleibt die Bildung eines Kreises in dem Knoten D stecken. Hieraus kann das Lemma~\autoref{thm:lemma_degree_of_one} abgeleitet werden.
+
+\begin{mylem}\label{thm:lemma_degree_of_one}
+	Ein hamiltonscher Graph enthält keinen Knoten mit Grad 1.
+\end{mylem}
+
+%Bei dem Lemma~\autoref{thm:lemma_degree_of_one} handelt es sich um ein einfaches Ausschlusskriterium für die Existenz eines Hamilton-Kreises. Befindet sich in dem Graphen ein Knoten mit einem Grad von eins, dann ist es nicht mehr möglich von diesem Knoten aus einen weiteren zu besuchen und somit kann auch der Kreis nicht geschlossen werden, siehe \autoref{fig:graph_with_min_degree_of_one}.
 
 Im Jahre 1952 hat der britischer Physiker Dirac ein Kriterium aufgestellt mit der die Existenz eines Hamilton-Kreises in einem Graphen nachgewiesen werden kann, siehe Satz~\autoref{thm:satz_dirac}.
 
