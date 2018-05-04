@@ -653,41 +653,74 @@ W & 121 & 84 & 29 & 236 & 55 &  \\
 %% Ende
 
 
-Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern.
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern. Es wird auch deutlich, dass diese Lösung nicht das beste Ergebnis ist. Tatsächlich lässt sich ein relativ simples Beispiel konstruieren welches zeigt, dass die Nearest Neighbor Heuristik auch eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefern kann. In \autoref{fig:nearest-neighbor-beispiel} (a) ist dieser Graph mit den jeweiligen Kantengewichten dargestellt. Wählt man den Knoten $1$ als Startknoten so liefert der Nearest-Neighbor Algorithmus den Hamilton-Kreis in \autoref{fig:nearest-neighbor-beispiel} (b) als Ergebnis. Das Ergebnis enthält eine Kante mit variablen Kantengewicht. Die Kosten betragen also $1+1+1+x = x +3$. Aufgrund der Variable kann das Ergebnis des Algorithmus beliebig schlecht sein. Ein weiterer Hamilton-Kreis ist in \autoref{fig:nearest-neighbor-beispiel} (c) dargestellt. In diesem Kreis betragen die Kosten $1+2+1+2 = 6$.
+Falls  $x>3$ gilt handelt es dabei um einen optimalen Kreis. 
 
-
-Es stellt sich nun die Frage wie gut die Lösung ist und wie weit sie von einer optimalen Lösung entfernt ist. Es lässt sich sehr anschaulich verdeutlichen, dass die Nearest Neighbor Heuristik eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefert. Gezeigt wird das an dem Graphen in \autoref{fig:nearest-neighbor-guete}.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=0.8, auto,swap]
+% Start
+\begin{figure}[h]
+	\centering
+	\subcaptionbox{\label{fig:nearest-neighbor-graph}}[.32\linewidth]
+	{
+		\begin{tikzpicture}[scale=0.8, auto,swap]
     % First we draw the vertices
     \foreach \pos/\name in {{(-2,1)/1}, {(2,1)/2}, {(-2,-1)/3},{(2,-1)/4}}
         \node[vertex] (\name) at \pos {$\name$};
-
 \node at (0,1.25) {1};
 \node at (2.25,0) {1};
 \node at (-2.25,0) {$x$};
 \node at (0,-1.25) {1};
 \node at (-1.2,0.3) {2};
 \node at (1.2,0.3) {2};
-
 % Nearest Neighbor
-\draw [edge, color=red, transform canvas={yshift=1}] (1) to (2);
-\draw [edge, color=red] (2) to (4);
-\draw [edge, color=red, transform canvas={yshift=-1}] (4) to (3);
-\draw [edge, color=red] (3) to (1);	
-
-\draw [edge, color=green](1) to (4);
-\draw [edge, color=green](2) to (3);
-\draw [edge, color=green, transform canvas={yshift=-1}](1) to (2);
-\draw [edge, color=green, transform canvas={yshift=1}](4) to (3);
+\draw [edge] (1) to (2);
+\draw [edge] (2) to (4);
+\draw [edge] (4) to (3);
+\draw [edge] (3) to (1);	
+\draw [edge](1) to (4);
+\draw [edge](2) to (3);
 \end{tikzpicture}
-\caption{Beispielgraph zur Ermittlung der Güte des Nearest-Neighbor Algorithmus}
-\label{fig:nearest-neighbor-guete}
+	}
+	\subcaptionbox{\label{fig:nearest-neighbor-ergebnis}}[.32\linewidth]
+	{
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % First we draw the vertices
+    \foreach \pos/\name in {{(-2,1)/1}, {(2,1)/2}, {(-2,-1)/3},{(2,-1)/4}}
+        \node[vertex] (\name) at \pos {$\name$};
+\node at (0,1.25) {1};
+\node at (2.25,0) {1};
+\node at (-2.25,0) {$x$};
+\node at (0,-1.25) {1};
+% Nearest Neighbor
+\draw [edge] (1) to (2);
+\draw [edge] (2) to (4);
+\draw [edge] (4) to (3);
+\draw [edge] (3) to (1);	
+\end{tikzpicture}
+	}
+	\subcaptionbox{\label{fig:nearest-neighbor-optimum}}[.32\linewidth]
+	{
+\begin{tikzpicture}[scale=0.8, auto,swap]
+    % First we draw the vertices
+    \foreach \pos/\name in {{(-2,1)/1}, {(2,1)/2}, {(-2,-1)/3},{(2,-1)/4}}
+        \node[vertex] (\name) at \pos {$\name$};
+\node at (0,1.25) {1};
+\node at (0,-1.25) {1};
+\node at (-1.2,0.3) {2};
+\node at (1.2,0.3) {2};
+% Nearest Neighbor
+\draw [edge](1) to (4);
+\draw [edge](2) to (3);
+\draw [edge](1) to (2);
+\draw [edge](4) to (3);
+\end{tikzpicture}
+	}
+\caption{Links: Beispiel Graph. Mitte: Ergebnis Nearest-Neighbor. Rechts: Optimale Lösung falls $x>3$}
+\label{fig:nearest-neighbor-beispiel}
 \end{figure}
+% Ende
 
-Der Algorithmus würde ausgehend vom Startpunkt 1 eine Tour (siehe roter Pfad) mit den Kosten $1+1+1+x = x +3$ berechnen. Eine optimale Lösung (grüner Pfad) hingegen hätte die Kosten $1+2+1+2 = 6$.
+
+
 
 
 \subsection{Doppelter-Baum-Algorithmus}
