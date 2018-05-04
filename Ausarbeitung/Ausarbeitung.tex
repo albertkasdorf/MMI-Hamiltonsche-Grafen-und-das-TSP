@@ -543,24 +543,25 @@ An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:de
 %
 \section{Traveling Salesman Problem}
 
-Das Traveling-Salesman-Problem (TSP) (dt. Problem des Handlungsreisenden) ist ein kombinatorisches Optimierungsproblem. Die Herausforderung besteht, darin eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu wählen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostenminimal und die erste Station gleich der letzten Station ist.
+Das Traveling-Salesman-Problem (TSP) (dt. Problem des Handlungsreisenden) ist ein kombinatorisches Optimierungsproblem und ein klassischer Anwendungsfall der Hamilton Kreise. Die Herausforderung besteht, darin eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu wählen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostenminimal und die erste Station gleich der letzten Station ist.
 
 \begin{mydef}
 	Travelling-Sales-Problem: Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
 	\[c(C) =  \sum_{e \in C}  c(e) \]
 \end{mydef}
 
-\subsection{Modellierung als Graph}
-
-In der Praxis kann dieses Problem in verschiedenen Planungssituationen auftreten. Den die Begriffe „Ort“ und „Strecke“ können auf verschiedene Anwendungsbereiche abstrahiert werden. Damit mathematische Verfahren zur Lösung verwendet werden können, muss eine reale Situation zunächst durch ein einfaches Modell abgebildet werden. Orte können nicht nur durch Städte, sondern zum Beispiel auch durch Kunden oder Bohrlöcher repräsentiert werden, während die Entfernung für Zeiten, Grade oder Kosten stehen kann. Solche Problemszenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden. Das Problem des Handlungsreisenden ist ein NP-vollständiges Problem.
-
 \subsubsection*{Asymmetrisches und symmetrisches TSP}
 
-Gerichtete Graphen eignen sich zur Modellierung von allgemeinen asymmetrischen TSP, weil hier können die Kanten in Hin- und Rückrichtung unterschiedliche Gewichte haben. Beim symmetrischen TSP gilt für alle Knotenpaare, das die Kantenlängen in beide Richtungen identisch sind, somit eignen sich ungerichteten Graphen zur Darstellung.
+Gerichtete Graphen eignen sich zur Modellierung von allgemeinen asymmetrischen TSP, hier können die Kanten in Hin- und Rückrichtung unterschiedliche Gewichte haben. Beim symmetrischen TSP gilt für alle Knotenpaare, das die Kantenlängen in beide Richtungen identisch sind, somit eignen sich ungerichteten Graphen zur Darstellung.
+
+\subsection{Modellierung als Graph}
+
+In der Praxis kann dieses Problem in verschiedenen Situationen auftreten. Damit mathematische Verfahren zur Lösung verwendet werden können, muss eine reale Situation zunächst durch ein einfaches Modell repräsentiert werden. Formalisieren kann man, indem man die Orte als Knoten eines vollständigen, gewichteten Graphen abbildet, wobei die Kantengewichte die
+Entfernungen zwischen je zwei Orten kennzeichnen. Solche Szenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden.
 
 \subsection{Lösungsmethoden}
 
-Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Die Lösung von \textit{exakten Algorithmen} ist optimal und muss zusätzlich durch einen Beweis gezeigt werden. \textit{Heuristiken} versuchen innerhalb eines Zeitrahmens eine zulässige Lösung, die recht nah an der Optimallösung ist, zu finden.
+Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{Exakten Algorithmen} eine Optimallösung. \textit{Heuristiken} versuchen innerhalb eines Zeitrahmens eine zulässige Lösung, die recht nah an der Optimallösung ist, zu finden.
 
 \begin{figure}[H]
 	\centering
