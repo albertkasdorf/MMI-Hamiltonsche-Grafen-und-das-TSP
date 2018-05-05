@@ -385,7 +385,7 @@ Im ersten Schritt werden die vollständigen Graphen mit einer Knotenanzahl $n \g
 \end{mydef}
 
 Um einen Kreis in einem Graphen "einzeichnen" zu können, werden pro Knoten mindestens zwei Kanten benötigt, eine Kante um in den Knoten "hineinzugehen" und eine um "herauszugehen". Da jeder Knoten des vollständigen Graphen zu jedem anderen Knoten adjazent ist, kann bei der Kreisbildung von jedem Knoten noch eine Kante zu einem unbesucht Knoten gefunden werden. Da auch der Start- und Endknoten adjazet sind, kann am Ende der Hamilton-Kreis geschlossen werden, siehe \autoref{fig:pentagon_graph}.
-Daraus folgt das jeder vollständige Graph über einen Hamilton-Kreis verfügt.
+Daraus folgt, dass jeder vollständige Graph über einen Hamilton-Kreis verfügt.
 
 \begin{figure}[h]
 	\centering
@@ -429,7 +429,7 @@ Ein vollständiger Graph kann auch über den Minimalgrad beschrieben werden, sie
 Im zweiten Schritt wird ein Graph betrachtet, bei dem die Kantenanzahl nicht ausreicht um einen Hamilton-Kreis zu bilden. In der \autoref{fig:graph_with_min_degree_of_one} bleibt die Bildung eines Kreises in dem Knoten D stecken. Hieraus kann das Lemma~\autoref{thm:lemma_degree_of_one} abgeleitet werden.
 
 \begin{mylem}\label{thm:lemma_degree_of_one}
-	Ein hamiltonscher Graph enthält keinen Knoten mit Grad 1.
+	Ein hamiltonscher Graph enthält keinen Knoten mit Grad 1. \cite{busing2010graphen}
 \end{mylem}
 
 %Bei dem Lemma~\autoref{thm:lemma_degree_of_one} handelt es sich um ein einfaches Ausschlusskriterium für die Existenz eines Hamilton-Kreises. Befindet sich in dem Graphen ein Knoten mit einem Grad von eins, dann ist es nicht mehr möglich von diesem Knoten aus einen weiteren zu besuchen und somit kann auch der Kreis nicht geschlossen werden, siehe \autoref{fig:graph_with_min_degree_of_one}.
@@ -438,7 +438,7 @@ Im Jahre 1952 hat der britischer Physiker Dirac ein Kriterium aufgestellt mit de
 
 % Was sagt dieser Satz aus? Wenn man viele Kanten hat, dann ist es wahrscheinlicher einen hamilton kreis zu finden.
 \begin{mysat}\label{thm:satz_dirac}
-	Sei G ein einfacher Graph mit mindestens drei Knoten, für den außerdem $\delta(G)\geq 0.5\cdot n$ gilt. Dann enthält der Graph einen Hamilton-Kreis.
+	Sei G ein einfacher Graph mit mindestens drei Knoten, für den außerdem $\delta(G)\geq 0.5\cdot n$ gilt. Dann enthält der Graph einen Hamilton-Kreis. \cite{busing2010graphen}
 \end{mysat}
 
 Die Kernaussage ist dabei, das jeder Knoten des Graphen eine gewisse Mindestanzahl an Kanten zu benachbarten Knoten besitzen soll. Hier durch werden, zum einem isolierte Knoten und zum anderen Bäume ausgeschlossen.
@@ -465,18 +465,22 @@ Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notw
 %%%%%%%%%%%%%%
 \subsection{Zusammenhang}
 
-\begin{mylem}
-	Falls ein Graph hamiltonsch ist, dann ist er auch zusammenhängend.
+Neben den Knotengrad ist der Zusammenhang des Graphens eine weitere wichtige Eigenschaft, siehe Lemma~\autoref{thm:hamilton_equal_connected}.
+
+\begin{mylem}\label{thm:hamilton_equal_connected}
+	Falls ein Graph hamiltonsch ist, dann ist er auch zusammenhängend. \cite{busing2010graphen}
 \end{mylem}
 
-Wenn es einen Hamilton-Kreis in einem Graphen gibt, dann hat jeder Knoten mindestens zwei adjazente Knoten. Somit sind sowohl isolierte Knoten als auch nicht zusammenhängende Teilgraphen ausgeschlossen. Die Rückrichtung gilt jedoch nicht, ein Baum ist zwar zusammenhängend, aber nicht hamiltonsch.
+Nicht zusammenhängende Graphen können laut der Definition~\autoref{thm:definition_hamilton_graph} keinen Hamilton-Kreis enthalten. Die Rückrichtung gilt jedoch nicht, ein Baum ist zwar zusammenhängend, aber nicht hamiltonsch.
+
+%Wenn es einen Hamilton-Kreis in einem Graphen gibt, dann hat jeder Knoten mindestens zwei adjazente Knoten. Somit sind sowohl isolierte Knoten als auch nicht zusammenhängende Teilgraphen ausgeschlossen.
 
 % Zusammenhang, klappt nicht beim Petersen-Graph
 \begin{mysat}\label{thm:decay_to_connected_components}
-	Für jeden hamiltonschen Graphen gilt: Wenn k Knoten aus dem Graphen gelöscht werden, zerfällt der Graph in höchstens k Zusammenhangskomponenten.
+	Für jeden hamiltonschen Graphen gilt: Wenn k Knoten aus dem Graphen gelöscht werden, zerfällt der Graph in höchstens k Zusammenhangskomponenten. \cite{busing2010graphen}
 \end{mysat}
 
-Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei sehr vereinfacht wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis. Wenn der Faden jetzt an einer Stelle zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt zerfällt ein Fadenstück zu maximal zwei weiteren Fadenstücken, es können niemals mehr Fadenstücke entstehen als Schnitte getätigt wurden. Zerfällt hingegen der Graph in mehr Zusammenhangskomponenten als Schnitte getätigt wurden, so kann in dem Graphen kein Hamilton-Kreis existiert haben, siehe \autoref{fig:one_cut_two_connected_components}.
+Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis der jetzt den Hamilton-Kreis in einem Graphen darstellt. Wenn der Faden jetzt an einer Stelle zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt zerfällt ein Fadenstück zu maximal zwei weiteren Fadenstücken, es können niemals mehr Fadenstücke entstehen als Schnitte getätigt wurden. Zerfällt hingegen der Graph in mehr Zusammenhangskomponenten als Schnitte getätigt wurden, so kann in dem Graphen kein Hamilton-Kreis existiert haben, siehe \autoref{fig:one_cut_two_connected_components}.
 
 \begin{figure}[h]
 	\centering
@@ -504,30 +508,43 @@ Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei sehr ve
 		\draw (A)--(B) (D)--(E);
 		\end{tikzpicture}
 	}
-	\caption{Durch das herauslösen des Knoten C entstehen zwei Zusammenhangskomponenten. Ein Hamilton-Kreis kann in diesem Graphen nicht vorhanden sein.}
+	\caption{Durch das Herauslösen des Knoten C entstehen zwei Zusammenhangskomponenten. Ein Hamilton-Kreis kann in diesem Graphen nicht vorhanden sein.}
 	\label{fig:one_cut_two_connected_components}
 \end{figure}
 
-An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:decay_to_connected_components} um ein reines Ausschlusskriterium handelt. Den der Petersen-Graph erfüllt zwar die Bedingung, dass nie mehr Komponenten entstehen, als Knoten aus dem Graphen herausgelöst werden, jedoch enthält er keinen Hamilton-Kreis, siehe \autoref{fig:petersen_graph}.
+An dem Petersen-Graph kann man zeigen, dass nie mehr Komponenten entstehen, als Knoten aus dem Graphen herausgelöst werden, und trotzdem enthält er keinen Hamilton-Kreis, siehe \autoref{fig:petersen_graph}.
+
+%An dem Petersen-Graph kann man gut erkennen, das es bei dem Satz~\autoref{thm:decay_to_connected_components} um ein reines Ausschlusskriterium handelt. Den der Petersen-Graph erfüllt zwar die Bedingung, dass nie mehr Komponenten entstehen, als Knoten aus dem Graphen herausgelöst werden, jedoch enthält er keinen Hamilton-Kreis, siehe \autoref{fig:petersen_graph}.
 
 \begin{figure}[h]
 	\centering
-	\begin{tikzpicture}[every node/.style={draw,circle}]
-	\graph [clockwise,math nodes] {
-		subgraph C_n [V={a,b,c,d,e}, name=A, radius=2cm];
-		subgraph I_n [V={f,g,h,i,j}, name=B, radius=1cm];
-		\foreach \x [evaluate={%
-			\i=alpha(\x);
-			\j=alpha(mod(\x+1,5)+6);
-			\k=alpha(\x+5);}] in {1,...,5}{
-			A \i -- B \k;
-			B \j -- B \k;
-		}
-	};
+	\begin{tikzpicture}
+		\def\inc{((2*pi)/5)+pi/2}
+		\def\ro{2.1}
+		\def\ri{1.0}
+		%\node (A0) at (0,0) [circle, draw] {0};
+		
+		\node (A) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [circle, draw] {A};
+		\node (B) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [circle, draw] {B};
+		\node (C) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [circle, draw] {C};
+		\node (D) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [circle, draw] {D};
+		\node (E) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [circle, draw] {E};
+		
+		\node (F) at ({cos(deg(0*\inc))*\ri}, {sin(deg(0*\inc))*\ri}) [circle, draw] {F};
+		\node (G) at ({cos(deg(1*\inc))*\ri}, {sin(deg(1*\inc))*\ri}) [circle, draw] {G};
+		\node (H) at ({cos(deg(2*\inc))*\ri}, {sin(deg(2*\inc))*\ri}) [circle, draw] {H};
+		\node (I) at ({cos(deg(3*\inc))*\ri}, {sin(deg(3*\inc))*\ri}) [circle, draw] {I};
+		\node (J) at ({cos(deg(4*\inc))*\ri}, {sin(deg(4*\inc))*\ri}) [circle, draw] {J};
+		
+		\draw (A)--(B) (B)--(C) (C)--(D) (D)--(E) (E)--(A);
+		\draw (F)--(H) (H)--(J) (J)--(G) (G)--(I) (I)--(F);
+		\draw (A)--(F) (B)--(G) (C)--(H) (D)--(I) (E)--(J);
 	\end{tikzpicture}
 	\caption{Der Petersen-Graph enthält keinen Hamilton-Kreis.}
 	\label{fig:petersen_graph}
 \end{figure}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
