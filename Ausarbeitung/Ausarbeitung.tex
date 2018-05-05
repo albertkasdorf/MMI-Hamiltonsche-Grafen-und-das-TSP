@@ -653,7 +653,7 @@ Die Nearest-Neighbor Heuristik ist ein heuristisches Verfahren, welches genutzt 
 \SetKwInOut{Parameter}{Schritt 1:}
 \Parameter{Wähle einen beliebigen Knoten als Startknoten $v$ }
 \SetKwInOut{Parameter}{Schritt 2:}
-\Parameter{Ermittle die niedrigste Kante welche den aktuellen Knoten $v$ mit einem unbesuchten Knoten $v_u$ verbindet.}
+\Parameter{Ermittle die niedrigste Kante, welche den aktuellen Knoten $v$ mit einem unbesuchten Knoten $v_u$ verbindet.}
 \SetKwInOut{Parameter}{Schritt 3:}
 \Parameter{Setze $v = v_u$ }
 \SetKwInOut{Parameter}{Schritt 4:}
@@ -705,14 +705,14 @@ W & 121 & 84 & 29 & 236 & 55 &  \\
 \draw [edge, ->] (F) to node[]{6.} (AC);
 \end{tikzpicture}
 	}
-\caption{Links: Entfernung der Städte in km. Rechts: Tour des Nearest-Neighbor Algorithmus.}
+\caption{Links: Entfernung der Städte in km. Rechts: Tour des Nearest-Neighbor Algorithmus mit Startknoten AC.}
 \label{fig:nearest-neighbor-beispiel}
 \end{figure}
 
 %% Ende
 
 
-Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern. Es wird auch deutlich, dass diese Lösung nicht das beste Ergebnis ist. Tatsächlich lässt sich ein relativ simples Beispiel konstruieren welches zeigt, dass die Nearest Neighbor Heuristik auch eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefern kann. In \autoref{fig:nearest-neighbor-beispiel} (a) ist dieser Graph mit den jeweiligen Kantengewichten dargestellt. Wählt man den Knoten $1$ als Startknoten und fordert, dass $x>1$ ist, so liefert der Nearest-Neighbor Algorithmus den Hamilton-Kreis in \autoref{fig:nearest-neighbor-beispiel} (b) als Ergebnis. Das Ergebnis enthält eine Kante mit variablen Kantengewicht. Die Kosten betragen also $1+1+1+x = x +3$. Aufgrund der Variable kann das Ergebnis des Algorithmus beliebig schlecht sein. Ein weiterer Hamilton-Kreis ist in \autoref{fig:nearest-neighbor-beispiel} (c) dargestellt. In diesem Kreis betragen die Kosten $1+2+1+2 = 6$.
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit Gesamtkosten von 698 Kilometern liefern. Es wird auch deutlich, dass diese Lösung nicht das beste Ergebnis ist. Tatsächlich lässt sich ein relativ simples Beispiel konstruieren welches zeigt, dass die Nearest-Neighbor Heuristik auch eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefern kann. In \autoref{fig:nearest-neighbor-beispiel-guete} (a) ist dieser Graph mit den jeweiligen Kantengewichten dargestellt. Wählt man den Knoten $1$ als Startknoten und fordert, dass $x>1$ ist, so liefert der Nearest-Neighbor Algorithmus den Hamilton-Kreis in \autoref{fig:nearest-neighbor-beispiel-guete} (b) als Ergebnis. Das Ergebnis enthält eine Kante mit variablen Kantengewicht. Die Kosten betragen also $1+1+1+x = x +3$. Aufgrund der Variable kann das Ergebnis des Algorithmus beliebig schlecht sein. Ein weiterer Hamilton-Kreis ist in \autoref{fig:nearest-neighbor-beispiel-guete} (c) dargestellt. In diesem Kreis betragen die Kosten $1+2+1+2 = 6$.
 Falls  $x>3$ gilt handelt es dabei um einen optimalen Kreis. 
 
 % Start
@@ -774,7 +774,7 @@ Falls  $x>3$ gilt handelt es dabei um einen optimalen Kreis.
 \end{tikzpicture}
 	}
 \caption{Links: Beispiel Graph. Mitte: Ergebnis Nearest-Neighbor. Rechts: Optimale Lösung falls $x>3$}
-\label{fig:nearest-neighbor-beispiel}
+\label{fig:nearest-neighbor-beispiel-guete}
 \end{figure}
 % Ende
 
@@ -798,7 +798,7 @@ Der Algorithmus sieht wie folgt aus:
 \SetKwInOut{Parameter}{Schritt 3:}
 \Parameter{Berechne eine Euler-Tour in $T_d$.}
 \SetKwInOut{Parameter}{Schritt 4:}
-\Parameter{Durchlaufe die Euler Tour von einem Startknoten aus. Falls dabei ein Knoten schon besucht wurde, nehme die Abkürzung zum nächsten unbesuchten Knoten auf der Tour.}
+\Parameter{Durchlaufe die Euler-Tour von einem Startknoten aus. Falls dabei ein Knoten schon besucht wurde, nehme die Abkürzung zum nächsten unbesuchten Knoten auf der Tour.}
 \caption{Doppelter-Baum-Algorithmus}
 \end{algorithm}
 
@@ -837,7 +837,7 @@ Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spann
 \label{fig:ursprungs-graf-mst}
 \end{figure}
 
-Im zweiten Schritt werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graph $T_d$ entsteht. In diesem Graph wird wie im nächsten Schritt gefordert eine Euler-Tour konstruiert. In \autoref{fig:ursprungs-graf-eulertour} ist ein Beispiel für eine Euler Tour eingezeichnet.
+Im zweiten Schritt werden die Kanten aus dem minimal spannenden Baum $T$ verdoppelt, sodass ein eulerscher Graph $T_d$ entsteht. In diesem Graph wird wie im nächsten Schritt gefordert eine Euler-Tour konstruiert. In \autoref{fig:ursprungs-graf-eulertour} ist ein Beispiel für eine Euler-Tour eingezeichnet.
 
 \begin{figure}[H]
 \centering
@@ -925,7 +925,7 @@ Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer is
 Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht zwangsläufig optimal. Erweitert man die Eingabe des Algorithmus dahingehend, dass die Dreiecksungleichung erfüllt ist, so lässt sich das Ergebnis zumindest eingrenzen. Eine obere Schranke wird wie folgt festgelegt. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
 
 \begin{mysat}\label{thm:doppelterbaum-obere-grenze}
-$K_n$ sei ein vollständiger Graph mit Kantengewichten welche die Dreiecksungleichung erfüllen. Ferner sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
+$K_n$ sei ein vollständiger Graph mit Kantengewichten, welche die Dreiecksungleichung erfüllen. Ferner sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
 \begin{equation}
 c(T') \leq 2 * c(OPT).
 \label{eq:test}
@@ -939,13 +939,13 @@ Dieser Satz lässt sich wie folgt beweisen. Die Tour $T'$ kann maximal doppelt s
 c(T') \leq 2 * c(T)
 \end{equation}
 
-Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme finden: Entfernt man eine Kante aus der optimalen Tour $OPT$, resultiert das in einem spannenden Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also:
+Die Begründung dafür ist, dass im Algorithmus der minimal-spannende Baum verdoppelt wird und somit die Euler-Tour mit der Länge $2 * c(T)$ entsteht. Bei der Berechnung der Hamilton-Tour wird die Euler-Tour verfolgt. Ist dabei auf dem Weg zum nächsten Knoten ein bereits besuchter Knoten vorhanden, so wird der direkte Weg zu diesem genommen (siehe Algorithmus Schritt 4). Aufgrund der Dreiecksungleichung ist der direkte Weg kürzer als der zuvor geplante Umweg über den schon bereits besuchten Knoten. Somit wurde eine obere Schranke für das Ergebnis des Algorithmus aufgezeigt. Eine untere Schranke lässt sich durch folgende Annahme finden: Entfernt man eine Kante aus der optimalen Tour $OPT$ entsteht ein spannender Baum. Dieser ist nicht billiger als der minimal-spannende Baum $T$. Es gilt also:
 
 \begin{equation}
 c(T) \leq c(OPT)
 \end{equation}
 
-Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis was wiederum der obigen \autoref{eq:test} entspricht.
+Die Kombination aus der oberen und unteren Schranke führt zu folgendem Ergebnis, das der obigen \autoref{eq:test} entspricht.
 
 \begin{equation}
 c(T') \leq 2 * c(T) \leq 2 * c(OPT)
