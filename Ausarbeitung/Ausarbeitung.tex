@@ -653,7 +653,7 @@ W & 121 & 84 & 29 & 236 & 55 &  \\
 %% Ende
 
 
-Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern. Es wird auch deutlich, dass diese Lösung nicht das beste Ergebnis ist. Tatsächlich lässt sich ein relativ simples Beispiel konstruieren welches zeigt, dass die Nearest Neighbor Heuristik auch eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefern kann. In \autoref{fig:nearest-neighbor-beispiel} (a) ist dieser Graph mit den jeweiligen Kantengewichten dargestellt. Wählt man den Knoten $1$ als Startknoten so liefert der Nearest-Neighbor Algorithmus den Hamilton-Kreis in \autoref{fig:nearest-neighbor-beispiel} (b) als Ergebnis. Das Ergebnis enthält eine Kante mit variablen Kantengewicht. Die Kosten betragen also $1+1+1+x = x +3$. Aufgrund der Variable kann das Ergebnis des Algorithmus beliebig schlecht sein. Ein weiterer Hamilton-Kreis ist in \autoref{fig:nearest-neighbor-beispiel} (c) dargestellt. In diesem Kreis betragen die Kosten $1+2+1+2 = 6$.
+Mit Aachen als Startpunkt würde der Algorithmus die Tour in \autoref{fig:nearest-neighbor-beispiel} konstruieren und ein Ergebnis mit 698 Kilometern liefern. Es wird auch deutlich, dass diese Lösung nicht das beste Ergebnis ist. Tatsächlich lässt sich ein relativ simples Beispiel konstruieren welches zeigt, dass die Nearest Neighbor Heuristik auch eine beliebig schlechte Lösung für das Problem des Handlungsreisenden liefern kann. In \autoref{fig:nearest-neighbor-beispiel} (a) ist dieser Graph mit den jeweiligen Kantengewichten dargestellt. Wählt man den Knoten $1$ als Startknoten und fordert, dass $x>1$ ist, so liefert der Nearest-Neighbor Algorithmus den Hamilton-Kreis in \autoref{fig:nearest-neighbor-beispiel} (b) als Ergebnis. Das Ergebnis enthält eine Kante mit variablen Kantengewicht. Die Kosten betragen also $1+1+1+x = x +3$. Aufgrund der Variable kann das Ergebnis des Algorithmus beliebig schlecht sein. Ein weiterer Hamilton-Kreis ist in \autoref{fig:nearest-neighbor-beispiel} (c) dargestellt. In diesem Kreis betragen die Kosten $1+2+1+2 = 6$.
 Falls  $x>3$ gilt handelt es dabei um einen optimalen Kreis. 
 
 % Start
@@ -743,7 +743,7 @@ Der Algorithmus sieht wie folgt aus:
 \caption{Doppelter-Baum-Algorithmus}
 \end{algorithm}
 
-Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser anhand eines Beispielgraphen erläutert. Der vollständige Graph für den ein Hamilton-Kreis gefunden werden soll ist in \autoref{fig:ursprungs-graf-blank} dargestellt. Der Algorithmus fordert als Eingabe einen vollständigen Graphen mit Kantengewichten. Für eine übersichtlichere Darstellung wurde in der Abbildung auf die Einzeichnung der Kantengewichte verzichtet.
+Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser anhand eines Beispielgraphen erläutert. Der vollständige Graph für den ein Hamilton-Kreis gefunden werden soll ist in \autoref{fig:ursprungs-graf-blank} dargestellt. Der Algorithmus fordert als Eingabe einen vollständigen Graphen mit Kantengewichten. Als Kantengewichte wird der euklidische Abstand zwischen den jeweiligen Knoten genutzt. Für eine übersichtlichere Darstellung wurde in der Abbildung auf die Einzeichnung der Kantengewichte verzichtet.
 
 \begin{figure}[H]
 \centering
@@ -751,7 +751,7 @@ Um ein besseres Verständnis für den Algorithmus zu bekommen wird dieser anhand
     % Draw a 7,11 network
     % First we draw the vertices
     \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b},  {(1,-4)/c},
-                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,2.25)/g}, {(3,-1)/h}}
+                            {(-3,-1.5)/d}, {(-5,-3)/e}, {(-4,0.5)/f}, {(3,1.25)/g}, {(3,-1)/h}}
         \node[vertex] (\name) at \pos {$\name$}; 
     \foreach \source/ \dest /\weight in {a/b/0, a/c/0, a/d/0, a/e/0, a/f/0, a/h/0, a/g/0, b/c/0, b/d/0, b/e/0, b/f/0, b/g/0, c/d/0, c/f/0, c/h/0, c/g/0, c/e/0, d/h/0, d/g/0, d/e/0, d/f/0, e/f/0, e/g/0, e/h/0, f/h/0, f/g/0, b/h/0, h/g/0}
         \path[edge] (\source) -- node[weight] {} (\dest);  
@@ -768,7 +768,7 @@ Der erste Schritt des Algorithmus erfordert die Konstruktion eines minimal spann
     % Draw a 7,11 network
     % First we draw the vertices
     \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b},  {(1,-4)/c},
-                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,2.25)/g}, {(3,-1)/h}}
+                            {(-3,-1.5)/d}, {(-5,-3)/e}, {(-4,0.5)/f}, {(3,1.25)/g}, {(3,-1)/h}}
         \node[vertex] (\name) at \pos {$\name$};
     % Connect vertices with edges and draw weights
     \foreach \source/ \dest /\weight in {b/a/0, c/b/0, b/d/0, d/e/0, d/f/0, b/h/0, h/g/0}
@@ -786,7 +786,7 @@ Im zweiten Schritt werden die Kanten aus dem minimal spannenden Baum $T$ verdopp
     % Draw a 7,11 network
     % First we draw the vertices
     \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b},  {(1,-4)/c},
-                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,2.25)/g}, {(3,-1)/h}}
+                            {(-3,-1.5)/d}, {(-5,-3)/e}, {(-4,0.5)/f}, {(3,1.25)/g}, {(3,-1)/h}}
         \node[vertex] (\name) at \pos {$\name$};
     % Connect vertices with edges and draw weights	
 \draw [edge, bend angle=-20, bend left, ->] (c) to node[]{1} (b);		
@@ -808,15 +808,15 @@ Im zweiten Schritt werden die Kanten aus dem minimal spannenden Baum $T$ verdopp
 \label{fig:ursprungs-graf-eulertour}
 \end{figure}
 
-Anhand der dargestellten Euler-Tour wird nun die Vorgehensweise des vierten Schritts im Algorithmus erläutert. In diesem Schritt wird der Hamilton-Kreis ermittelt. Als Startpunkt wird der Knoten $c$ gewählt. Der resultierende Kreis ist in \autoref{fig:ursprungs-graf-hamiltonkreis} dargestellt. Von $c$ beginnend foglt man der Euler-Tour zu $b$. Von dort aus geht es weiter zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen stellt man fest, dass diese zum bereits besuchten Knoten $b$ führt. Der nächste unbesuchte Knoten in der Euler-Tour ist der Knoten $d$. Um dort hin zu kommen wird die Kante von $a$ zu $d$ gewählt (Erinnerung: Es handelt sich um einen vollständigen Graphen. Deshalb ist es möglich die direkte Verbindung zu nutzen). Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Verfolgung der Euler-Tour zu $d$ nicht mehr möglich, da dieser Knoten bereits besucht wurde. Der nächste unbesuchte Knoten auf der Tour ist $f$. Wie auch zuvor wird nun die direkte Kante von $e$ nach $f$ genutzt. Bei dem Versuch der Euler-Tour wieder zu folgen bemerkt man, dass der nächste Knoten $d$ auch schon besucht wurde. Der darauf folgende Knoten $b$ wurde auch schon besucht. Erst der darauf folgende Knoten $h$ wurde noch nicht besucht sodass die Kante von $f$ nach $h$ genutzt wird. Nach dem vorgestellten Schema wird weiter verfahren bis letztendlich alle Knoten besucht wurden. Die zum Erreichen der Knoten genutzten Kanten bilden somit den resultierenden Hamilton-Kreis.
+Anhand der dargestellten Euler-Tour wird nun die Vorgehensweise des vierten Schritts im Algorithmus erläutert. In diesem Schritt wird der Hamilton-Kreis ermittelt. Als Startpunkt wird der Knoten $c$ gewählt. Der resultierende Kreis ist in \autoref{fig:ursprungs-graf-hamiltonkreis} dargestellt. Von $c$ beginnend foglt man der Euler-Tour zu $b$. Von dort aus geht es weiter zu $a$. Bei einem Versuch der Euler-Tour weiter zu folgen stellt man fest, dass diese zum bereits besuchten Knoten $b$ führt. Der nächste unbesuchte Knoten in der Euler-Tour ist der Knoten $d$. Um dort hin zu kommen wird die Kante von $a$ zu $d$ gewählt (Erinnerung: Es handelt sich um einen vollständigen Graphen. Deshalb ist es möglich die direkte Verbindung zu nutzen). Von dort aus wird wieder der Euler-Tour zu $e$ gefolgt. Auch dort ist die Verfolgung der Euler-Tour zu $d$ nicht mehr möglich, da dieser Knoten bereits besucht wurde. Der nächste unbesuchte Knoten auf der Tour ist $f$. Wie auch zuvor wird nun die direkte Kante von $e$ nach $f$ genutzt. Bei dem Versuch der Euler-Tour wieder zu folgen bemerkt man, dass der nächste Knoten $d$ auch schon besucht wurde. Der darauf folgende Knoten $b$ wurde auch schon besucht. Erst der darauf folgende Knoten $h$ wurde noch nicht besucht, sodass die Kante von $f$ nach $h$ genutzt wird. Nach dem vorgestellten Schema wird weiter verfahren bis letztendlich alle Knoten besucht wurden. Die zum Erreichen der Knoten genutzten Kanten bilden somit den resultierenden Hamilton-Kreis.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.8, auto,swap]
     % Draw a 7,11 network
     % First we draw the vertices
-    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b}, {(0,-4)/c},
-                            {(-3,-1)/d}, {(-5,-3)/e}, {(-4,2)/f}, {(3,1)/g}, {(3,-1)/h}}
+    \foreach \pos/\name in {{(0,0)/a}, {(0,-2)/b},  {(1,-4)/c},
+                            {(-3,-1.5)/d}, {(-5,-3)/e}, {(-4,0.5)/f}, {(3,1.25)/g}, {(3,-1)/h}}
         \node[vertex] (\name) at \pos {$\name$};
     % Connect vertices with edges and draw weights	
 \draw [edge, ->] (c) to node[]{} (b);
