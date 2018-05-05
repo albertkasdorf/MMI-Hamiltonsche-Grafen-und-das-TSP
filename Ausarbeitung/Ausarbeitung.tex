@@ -141,7 +141,7 @@
 %
 %
 \begin{document}
-\tikzstyle{vertex}=[circle,fill=black!25,minimum size=15pt,inner sep=0pt]
+\tikzstyle{vertex}=[circle, minimum size=15pt, draw=black]
 \tikzstyle{selected vertex} = [vertex, fill=red!24]
 \tikzstyle{edge} = [draw,thick,-]
 \tikzstyle{weight} = [font=\small]
@@ -922,7 +922,7 @@ Im Kern sagt dies aus, dass der direkte Weg von einem Knoten u nach v kürzer is
 
 
 \subsubsection{Abschätzung des Doppelten-Baum-Algorithmus}
-Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht zwangsläufig optimal. Erweitert man die Eingabe Vorschrift des Algorithmus dahingehend, dass die Dreiecksungleichung erfüllt ist, so lässt sich das Ergebnis zumindest eingrenzen. Eine obere Schranke wird wie folgt festgelegt. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
+Der Doppelter-Baum-Algorithmus liefert zwar einen Hamilton-Kreis, jedoch ist dieser nicht zwangsläufig optimal. Erweitert man die Eingabe des Algorithmus dahingehend, dass die Dreiecksungleichung erfüllt ist, so lässt sich das Ergebnis zumindest eingrenzen. Eine obere Schranke wird wie folgt festgelegt. Die durch den Algorithmus bestimmte Tour ist maximal doppelt so lang wie eine optimale Tour. Formal lässt es sich wie folgt ausdrücken:
 
 \begin{mysat}\label{thm:doppelterbaum-obere-grenze}
 $K_n$ sei ein vollständiger Graph mit Kantengewichten welche die Dreiecksungleichung erfüllen. Ferner sei $T'$ das Ergebnis des Doppelten-Baum-Algorithmus und $OPT$ eine optimale Lösung. Dann gilt
