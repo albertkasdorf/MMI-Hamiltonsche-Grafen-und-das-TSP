@@ -65,7 +65,7 @@
 % TikZ
 %
 \usepackage{tikz}
-	\usetikzlibrary{graphs,shapes}
+	\usetikzlibrary{arrows.meta,graphs,shapes}
 	% Georg
 	\tikzstyle{vertex}=[circle, minimum size=15pt, draw=black]
 	\tikzstyle{selected vertex} = [vertex, fill=red!24]
@@ -82,6 +82,7 @@
 	\tikzstyle{edge_deleted} = [dashed]
 	\tikzstyle{edge_hamilton} = [ultra thick]
 	\tikzstyle{edge_normal} = []
+	\tikzstyle{edge_with_arrow} = [-{Latex[scale=1.5]}]
 \usepackage{tkz-berge}
 \usepackage{tkz-graph}
 \makeatletter
@@ -571,15 +572,93 @@ Entfernungen zwischen je zwei Orten kennzeichnen. Solche Szenarien können zudem
 
 Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{Exakten Algorithmen} eine Optimallösung. \textit{Heuristiken} versuchen innerhalb eines Zeitrahmens eine zulässige Lösung, die recht nah an der Optimallösung ist, zu finden.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth]{Graphen.png}
-	\caption{Alle Lösungen für eine Paketauslieferung an drei Häuser (PLATZHALTER BILD)}
-	\label{fig:Rundreise}
-\end{figure}
-
 Um einen \textit{exakten Algorithmus} zu beleuchten, stellen wir zunächst ein triviales Beispiel für eine Planungssituation auf, und modellieren dieses mithilfe der Graphentheorie. In diesem Szenario haben wir ein Paketdienst, der drei Pakete an drei verschiedene Häuser ausliefern muss. Dazu brauchen wir vier Knoten, wobei ein Knoten unseren Startfiliale darstellt und die drei weiteren die Zielhäuser, wohin die Pakte geliefert werden müssen. Das Ziel ist es eine Tour (Hamilton-Kreis) zu definieren.
 \par Um die Lösung zu finden, erzeugen wir einen Hamilton-Kreis nach der anderen und merken uns jene. Anschließend bestimmen wir die Länge jedes Hamilton-Kreises. Um die beste Tour zu finden, wählen wir den kürzesten Hamilton-Kreis aus. Die \autoref{fig:Rundreise} zeigt alle zulässigen Touren für unser Szenario.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\begin{tikzpicture}
+			\node (2) at (1,0) [node_normal] {2};
+			\node (4) at (0,1) [node_normal] {4};
+			\node (1) at (1,2) [node_normal] {1};
+			\node (3) at (2,1) [node_normal] {3};
+			\draw[edge_with_arrow] (1)--(4);
+			\draw[edge_with_arrow] (4)--(2);
+			\draw[edge_with_arrow] (2)--(3);
+			\draw[edge_with_arrow] (3)--(1);
+		\end{tikzpicture}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\begin{tikzpicture}
+			\node (4) at (1,0) [node_normal] {4};
+			\node (2) at (0,1) [node_normal] {2};
+			\node (1) at (1,2) [node_normal] {1};
+			\node (3) at (2,1) [node_normal] {3};
+			\draw[edge_with_arrow] (4)--(3);
+			\draw[edge_with_arrow] (3)--(1);
+			\draw[edge_with_arrow] (1)--(2);
+			\draw[edge_with_arrow] (2)--(4);
+		\end{tikzpicture}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\begin{tikzpicture}
+			\node (3) at (1,0) [node_normal] {3};
+			\node (2) at (0,1) [node_normal] {2};
+			\node (1) at (1,2) [node_normal] {1};
+			\node (4) at (2,1) [node_normal] {4};
+			\draw[edge_with_arrow] (3)--(4);
+			\draw[edge_with_arrow] (4)--(1);
+			\draw[edge_with_arrow] (1)--(2);
+			\draw[edge_with_arrow] (2)--(3);
+		\end{tikzpicture}
+	\end{subfigure}
+	\par\bigskip
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\begin{tikzpicture}
+			\node (3) at (1,0) [node_normal] {3};
+			\node (2) at (0,1) [node_normal] {2};
+			\node (1) at (1,2) [node_normal] {1};
+			\node (4) at (2,1) [node_normal] {4};
+			\draw[edge_with_arrow] (3)--(2);
+			\draw[edge_with_arrow] (2)--(1);
+			\draw[edge_with_arrow] (1)--(4);
+			\draw[edge_with_arrow] (4)--(3);
+		\end{tikzpicture}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\begin{tikzpicture}
+			\node (4) at (1,0) [node_normal] {4};
+			\node (2) at (0,1) [node_normal] {2};
+			\node (1) at (1,2) [node_normal] {1};
+			\node (3) at (2,1) [node_normal] {3};
+			\draw[edge_with_arrow] (4)--(2);
+			\draw[edge_with_arrow] (2)--(1);
+			\draw[edge_with_arrow] (1)--(3);
+			\draw[edge_with_arrow] (3)--(4);
+		\end{tikzpicture}
+	\end{subfigure}
+	\begin{subfigure}{0.3\linewidth}
+		\centering
+		\begin{tikzpicture}
+			\node (2) at (1,0) [node_normal] {2};
+			\node (4) at (0,1) [node_normal] {4};
+			\node (1) at (1,2) [node_normal] {1};
+			\node (3) at (2,1) [node_normal] {3};
+			\draw[edge_with_arrow] (2)--(4);
+			\draw[edge_with_arrow] (4)--(1);
+			\draw[edge_with_arrow] (1)--(3);
+			\draw[edge_with_arrow] (3)--(2);
+		\end{tikzpicture}
+	\end{subfigure}
+	\caption{Alle Lösungen für eine Paketauslieferung an drei Häuser.}
+	\label{fig:Rundreise}
+\end{figure}
 
 \begin{description}
 	\item[F:] Wie viele verschiedene Touren gibt es in einem vollständigen Graphen mit n Knoten? Zeigen Sie das der Satz~\autoref{thm:count_of_hamilton_circle_in_asm_graph} gilt.

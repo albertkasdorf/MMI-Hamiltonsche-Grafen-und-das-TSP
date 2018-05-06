@@ -205,13 +205,48 @@
 %
 %%%%%%%%%%
 \begin{frame}{Hamiltonsche Graphen\\\normalsize{Übung}}
-
-\begin{tikzpicture}
-	\node{Hamilton-Graph}
-		child { node{Anzahl Knoten/Kanten} }
-		child { node{Eulersch} };
-\end{tikzpicture}
-
+\begin{block}{Aufgabe:}
+	Untersuchen Sie die Graphen auf dem Übungsblatt anhand der folgenden Kriterien.
+\end{block}
+\begin{itemize}
+	\item Eulersch
+	\item Zusammenhang
+	\item Knotengrad
+	\begin{itemize}
+		\item Minimal / Maximal
+		\item Baum
+		\item Kreisfrei
+	\end{itemize}
+	\item Multigraph
+	\begin{itemize}
+		\item Parallele Kanten
+		\item Schleifen
+	\end{itemize}
+\end{itemize}
+%\begin{figure}
+%\begin{tikzpicture}[
+%	mindmap,
+%	grow cyclic,
+%	every node/.style=concept,
+%	concept color=orange!100,
+%	level 1/.append style={sibling angle=90},
+%	level 2/.append style={sibling angle=45}
+%]
+%\node{Hamilton-\\ Graph}
+%	child{node{Multigrad}
+%		child{node{Parallele Kanten}}
+%		child{node{Schleifen}}
+%	}
+%	child{node{Knotengrad}
+%		child{node{Minimal}}
+%		child{node{Maximal}}
+%		child{node{Baum}}
+%		child{node{Kreisfrei}}
+%	}
+%	child{node{Zusammenhang}}
+%	child{node{Eulersch}};
+%\end{tikzpicture}
+%\end{figure}
 \end{frame}
 
 
