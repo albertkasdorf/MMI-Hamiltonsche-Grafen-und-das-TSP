@@ -57,7 +57,6 @@
 	\DeclareSIUnit{\dBm}{\deci\belmilliwatt}
 	
 \usepackage{subcaption}
-
 	% How to remove figure caption prefix “figure” in beamer
 	% https://tex.stackexchange.com/questions/82456/how-to-remove-figure-caption-prefix-figure-in-beamer
 	\captionsetup[figure]{labelformat=empty, font=scriptsize, skip=2pt}
@@ -66,6 +65,7 @@
 	\usetikzlibrary{trees,graphs,shapes,mindmap}
 	\tikzstyle{node_normal} = [circle, draw, inner sep=0pt, minimum size=20pt]
 	\tikzstyle{node_deleted} = [circle, draw, dashed, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{node_bold} = [circle, draw, ultra thick, inner sep=0pt, minimum size=20pt]
 	\tikzstyle{edge_deleted} = [dashed]
 	\tikzstyle{edge_hamilton} = [ultra thick]
 	\tikzstyle{edge_normal} = []
@@ -95,6 +95,13 @@
 \newtheorem{mydef}{Definition}
 \newtheorem{mylem}{Lemma}
 \newtheorem{mysat}{Satz}
+
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
 
 
 \begin{document}
@@ -149,6 +156,101 @@
 %
 %%%%%%%%%%
 \begin{frame}{Hamiltonsche Graphen\\\normalsize{Motivation}}
+\only<1>
+{
+	\begin{itemize}
+		\item Bernd und Anna planen ihre Hochzeit.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\textwidth]{bernd_und_anna.jpg}
+	\end{figure}
+	\blfootnote{\tiny{Bildquelle: \url{https://gamesageddon.com/stock/media?id=28098782}}}
+}
+\only<2>
+{
+	\begin{itemize}
+		\item Beim Hochzeitsessen soll jeder Gast zwischen zwei Ihm bekannten Personen sitzen.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\textwidth]{tischform.jpg}
+	\end{figure}
+	\blfootnote{\tiny{Bildquelle: \url{http://www.hochzeit-perfekt-geplant.de/artikel/planung/tischordnung-hochzeit.html}}}
+}
+\only<3>
+{
+	\begin{itemize}
+		\item Auf dem Junggesellenabschied mit seinen alten Studienkollegen kommt Bernd eine Idee.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.5\linewidth]{junggesellenabschied.jpg}
+	\end{figure}
+	\blfootnote{\tiny{Bildquelle: \url{https://de.depositphotos.com/168789924}}}
+}
+\only<4>
+{
+	\begin{itemize}
+		\item Auf einem Bierdeckel zeichnet Bernd einen Graphen, der die Bekanntschaft zwischen den Hochzeitsgästen modelliert.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=0.6]
+			\node (A) at (-1,+0) [node_bold] {a};
+			\node (B) at (+1,+0) [node_bold] {b};
+			\node (C) at (-4,+0) [node_normal] {c};
+			\node (D) at (-4,-3) [node_normal] {d};
+			\node (E) at (-4,+4) [node_normal] {e};
+			\node (F) at (-6,+2) [node_normal] {f};
+			\node (G) at (+0,+2) [node_normal] {g};
+			\node (H) at (+4,+4) [node_normal] {h};
+			\node (I) at (+4,+0) [node_normal] {i};
+			\node (J) at (+2,-3) [node_normal] {j};
+			
+			\draw[edge_normal] (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
+			\draw[edge_normal] (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
+			\draw[edge_normal] (C)--(D) (C)--(F);
+			\draw[edge_normal] (D)--(F);
+			\draw[edge_normal] (E)--(F) (E)--(G) (E)--(H);
+			\draw[edge_normal] (F)--(G);
+			\draw[edge_normal] (G)--(H) (G)--(I);
+			\draw[edge_normal] (I)--(J);
+		\end{tikzpicture}
+	\end{figure}
+}
+\only<5>
+{
+	\begin{itemize}
+		\item Wenn in dem Graphen ein Kreis gefunden wird, der jeden Gast genau einmal enthält, dann kann jeder Gast neben zwei Ihm bekannten Gästen sitzen.
+	\end{itemize}
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[scale=0.6]
+			\node (A) at (-1,+0) [node_bold] {a};
+			\node (B) at (+1,+0) [node_bold] {b};
+			\node (C) at (-4,+0) [node_normal] {c};
+			\node (D) at (-4,-3) [node_normal] {d};
+			\node (E) at (-4,+4) [node_normal] {e};
+			\node (F) at (-6,+2) [node_normal] {f};
+			\node (G) at (+0,+2) [node_normal] {g};
+			\node (H) at (+4,+4) [node_normal] {h};
+			\node (I) at (+4,+0) [node_normal] {i};
+			\node (J) at (+2,-3) [node_normal] {j};
+			
+			\draw[edge_normal] (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
+			\draw[edge_normal] (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
+			\draw[edge_normal] (C)--(D) (C)--(F);
+			\draw[edge_normal] (D)--(F);
+			\draw[edge_normal] (E)--(F) (E)--(G) (E)--(H);
+			\draw[edge_normal] (F)--(G);
+			\draw[edge_normal] (G)--(H) (G)--(I);
+			\draw[edge_normal] (I)--(J);
+			
+			\draw[edge_hamilton] (A)--(B)--(J)--(I)--(G)--(H)--(E)--(F)--(C)--(D)--(A);
+		\end{tikzpicture}
+	\end{figure}
+}
 \end{frame}
 
 
