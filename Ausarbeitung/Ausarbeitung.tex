@@ -341,12 +341,12 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_c}}[.24\linewidth]
 	{
 		\begin{tikzpicture}[scale=0.75]
-		\node (A) at (0,0) [circle, draw] {a};
-		\node (B) at (0,2) [circle, draw] {b};
-		\node (C) at (1,3) [circle, draw] {c};
-		\node (D) at (2,2) [circle, draw] {d};
-		\node (E) at (2,0) [circle, draw] {e};
-		\node (F) at (1,1) [circle, draw] {f};
+		\node (A) at (0,0) [node_normal] {a};
+		\node (B) at (0,2) [node_normal] {b};
+		\node (C) at (1,3) [node_normal] {c};
+		\node (D) at (2,2) [node_normal] {d};
+		\node (E) at (2,0) [node_normal] {e};
+		\node (F) at (1,1) [node_normal] {f};
 		\draw[edge_normal] (A)--(F) (A)--(E);
 		\draw[edge_normal] (B)--(C) (B)--(F);
 		\draw[edge_normal] (D)--(C) (D)--(F);
@@ -356,12 +356,12 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_d}}[.24\linewidth]
 	{
 		\begin{tikzpicture}[scale=0.75]
-		\node (A) at (0,0) [circle, draw] {a};
-		\node (B) at (0,2) [circle, draw] {b};
-		\node (C) at (1,3) [circle, draw] {c};
-		\node (D) at (2,2) [circle, draw] {d};
-		\node (E) at (2,0) [circle, draw] {e};
-		\node (F) at (1,1) [circle, draw] {f};
+		\node (A) at (0,0) [node_normal] {a};
+		\node (B) at (0,2) [node_normal] {b};
+		\node (C) at (1,3) [node_normal] {c};
+		\node (D) at (2,2) [node_normal] {d};
+		\node (E) at (2,0) [node_normal] {e};
+		\node (F) at (1,1) [node_normal] {f};
 		\draw[edge_normal] (F)--(A) (F)--(B) (F)--(C) (F)--(D) (F)--(E);
 		\end{tikzpicture}
 	}
