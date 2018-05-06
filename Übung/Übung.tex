@@ -1,0 +1,389 @@
+\documentclass{article}
+
+%\usepackage[utf8]{inputenc}		% LuaTex do not need this
+%\usepackage[T1]{fontenc}			% LuaTex do not need this
+\usepackage{fontspec}				% LuaTex need this
+\usepackage{lmodern}
+\usepackage{comment}
+\usepackage[
+	a4paper,
+	top=25mm,
+	bottom=25mm,
+	left=25mm,
+	right=25mm,
+%	showframe,
+]{geometry}
+\usepackage{graphicx}
+	\graphicspath{ {Bilder/} }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% https://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
+% https://tex.stackexchange.com/questions/186946/changing-the-autoref-name-for-chapter
+%
+%\usepackage[ngerman]{babel}		% LuaTex do not need this
+\usepackage{polyglossia}
+	\setdefaultlanguage[spelling=new]{german}
+	\addto\captionsgerman{
+		\renewcommand{\figurename}{Abbildung}
+		\renewcommand{\figureautorefname}{Abbildung}
+		\renewcommand{\equationautorefname}{Gleichung}
+	}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% LATEX Mathematical Symbols
+% https://reu.dimacs.rutgers.edu/Symbols.pdf
+% https://en.wikibooks.org/wiki/LaTeX/Mathematics
+%
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% algorithm2e.sty — package for algorithms
+% http://ctan.mirrors.hoobly.com/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
+%
+\usepackage[
+	ngerman,
+	linesnumbered,
+	boxed,
+%	algochapter,
+%	rightnl,
+%	figure,
+]{algorithm2e}
+	% Then you can adjust the spacing between the body of the algorithm and its
+	% caption through the command \SetAlCapSkip.
+	\SetAlCapSkip{1em}
+	% Restyling the caption in an algorithm created with algorithm2e
+	% https://tex.stackexchange.com/questions/112294/restyling-the-caption-in-an-algorithm-created-with-algorithm2e/112295
+	\SetAlgoCaptionSeparator{:}
+	\renewcommand\AlCapFnt{\normalfont}
+	% Algorithm2e modify line numbers
+	% https://tex.stackexchange.com/questions/100145/algorithm2e-modify-line-numbers
+	\SetNlSty{textbf}{}{:}
+	% Sets the value of the space between the line numbers and the text, by default 1em.
+	\SetNlSkip{2em}
+	%\SetAlgoRefName{QXY}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% TikZ
+%
+\usepackage{tikz}
+	\usetikzlibrary{arrows.meta,graphs,shapes}
+	% Georg
+	\tikzstyle{vertex}=[circle, minimum size=15pt, draw=black]
+	\tikzstyle{selected vertex} = [vertex, fill=red!24]
+	\tikzstyle{edge} = [draw,thick,-]
+	\tikzstyle{weight} = [font=\small]
+	\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
+	\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
+	\pgfdeclarelayer{background}
+	\pgfsetlayers{background,main}
+	% Albert
+	\tikzstyle{node_normal} = [circle, draw, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{node_deleted} = [circle, draw, dashed, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{node_bold} = [circle, draw, ultra thick, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{edge_deleted} = [dashed]
+	\tikzstyle{edge_hamilton} = [ultra thick]
+	\tikzstyle{edge_normal} = []
+	\tikzstyle{edge_with_arrow} = [-{Latex[scale=1.5]}]
+\usepackage{tkz-berge}
+\usepackage{tkz-graph}
+\makeatletter
+\pgfmathdeclarefunction{alpha}{1}{%
+	\pgfmathint@{#1}%
+	\edef\pgfmathresult{\pgffor@alpha{\pgfmathresult}}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% https://www.dante.de/events/Archiv/dante2012/Programm/Vortraege/vortrag-ferber.pdf
+%
+\usepackage[
+	breaklinks,
+	colorlinks,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black,
+	pdfencoding=auto,
+]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{subcaption}
+	\captionsetup{subrefformat=parens}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+\title{Hamiltonsche Graphen}
+
+\author{
+%  Albert Kasdorf\and
+%  Andreas Janster\and
+%  Alex Bibanaev\and
+%  Georg Braun
+}
+\date{09.05.2018}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+\begin{document}
+	%\maketitle
+	\thispagestyle{empty}
+	\section{Welche der folgenden Graphen sind hamiltonsch?}
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\def\inc{((2*pi)/6)+pi/2}
+			\def\ro{1.5}
+			\node (a) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {a};
+			\node (b) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {b};
+			\node (c) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {c};
+			\node (d) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {d};
+			\node (e) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {e};
+			\node (f) at ({cos(deg(5*\inc))*\ro}, {sin(deg(5*\inc))*\ro}) [node_normal] {f};
+
+			\draw[edge_normal] (a)--(c)--(e)--(a);
+			\draw[edge_normal] (b)--(d)--(f)--(b);
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\def\inc{((2*pi)/5)+pi/2}
+			\def\ro{2}
+			\def\ri{1}
+			
+			\node (a) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {a};
+			\node (b) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {b};
+			\node (c) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {c};
+			\node (d) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {d};
+			\node (e) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {e};
+			
+			\node (f) at ({cos(deg(0*\inc))*\ri}, {sin(deg(0*\inc))*\ri}) [node_normal] {f};
+			\node (g) at ({cos(deg(1*\inc))*\ri}, {sin(deg(1*\inc))*\ri}) [node_normal] {g};
+			\node (h) at ({cos(deg(2*\inc))*\ri}, {sin(deg(2*\inc))*\ri}) [node_normal] {h};
+			\node (i) at ({cos(deg(3*\inc))*\ri}, {sin(deg(3*\inc))*\ri}) [node_normal] {i};
+			\node (j) at ({cos(deg(4*\inc))*\ri}, {sin(deg(4*\inc))*\ri}) [node_normal] {j};
+			
+			\draw[edge_normal] (a)--(b)--(c)--(d)--(e)--(a);
+			\draw[edge_normal] (f)--(g)--(h)--(i)--(j)--(f);
+			\draw[edge_normal] (a)--(f) (b)--(g) (c)--(h) (d)--(i) (e)--(j);
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\def\inc{((2*pi)/5)+pi/2}
+			\def\ro{2}
+			\def\ri{1}
+			
+			\node (A) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {a};
+			\node (B) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {b};
+			\node (C) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {c};
+			\node (D) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {d};
+			\node (E) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {e};
+			
+			\node (F) at ({cos(deg(0*\inc))*\ri}, {sin(deg(0*\inc))*\ri}) [node_normal] {f};
+			\node (G) at ({cos(deg(1*\inc))*\ri}, {sin(deg(1*\inc))*\ri}) [node_normal] {g};
+			\node (H) at ({cos(deg(2*\inc))*\ri}, {sin(deg(2*\inc))*\ri}) [node_normal] {h};
+			\node (I) at ({cos(deg(3*\inc))*\ri}, {sin(deg(3*\inc))*\ri}) [node_normal] {i};
+			\node (J) at ({cos(deg(4*\inc))*\ri}, {sin(deg(4*\inc))*\ri}) [node_normal] {j};
+			
+			\draw[edge_normal] (A)--(B) (B)--(C) (C)--(D) (D)--(E) (E)--(A);
+			\draw[edge_normal] (F)--(H) (H)--(J) (J)--(G) (G)--(I) (I)--(F);
+			\draw[edge_normal] (A)--(F) (B)--(G) (C)--(H) (D)--(I) (E)--(J);
+			\end{tikzpicture}
+		\end{subfigure}
+		\par\bigskip
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\def\inc{((2*pi)/3)+pi/2}
+			\def\ro{2}
+			\def\ri{0.75}
+			
+			\node (a) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {a};
+			\node (b) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {b};
+			\node (c) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {c};
+			
+			\node (d) at ({cos(deg(0*\inc))*\ri}, {sin(deg(0*\inc))*\ri}) [node_normal] {d};
+			\node (e) at ({cos(deg(1*\inc))*\ri}, {sin(deg(1*\inc))*\ri}) [node_normal] {e};
+			\node (f) at ({cos(deg(2*\inc))*\ri}, {sin(deg(2*\inc))*\ri}) [node_normal] {f};
+
+			\draw[edge_normal] (a)--(b)--(c)--(a);
+			\draw[edge_normal] (d)--(e)--(f)--(d);
+			\draw[edge_normal] (a)--(d) (b)--(e) (c)--(f);
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (a) at (0,2) [node_normal] {a};
+			\node (b) at (1,2) [node_normal] {b};
+			\node (c) at (2,2) [node_normal] {c};
+			\node (d) at (3,2) [node_normal] {d};
+			\node (e) at (4,2) [node_normal] {e};
+			
+			\node (f) at (0,1) [node_normal] {f};
+			\node (g) at (1,1) [node_normal] {g};
+			\node (h) at (2,1) [node_normal] {h};
+			\node (i) at (3,1) [node_normal] {i};
+			\node (j) at (4,1) [node_normal] {j};
+			
+			\node (k) at (0,0) [node_normal] {k};
+			\node (l) at (1,0) [node_normal] {l};
+			\node (m) at (2,0) [node_normal] {m};
+			\node (n) at (3,0) [node_normal] {n};
+			\node (o) at (4,0) [node_normal] {o};
+			
+			\draw[edge_normal] (a)--(b)--(c)--(d)--(e);
+			\draw[edge_normal] (f)--(g)--(h)--(i)--(j);
+			\draw[edge_normal] (k)--(l)--(m)--(n)--(o);
+			\draw[edge_normal] (a)--(f)--(k);
+			\draw[edge_normal] (b)--(g)--(l);
+			\draw[edge_normal] (c)--(h)--(m);
+			\draw[edge_normal] (d)--(i)--(n);
+			\draw[edge_normal] (e)--(j)--(o);
+
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (a) at (0,1) [node_normal] {a};
+			\node (b) at (1,2) [node_normal] {b};
+			\node (c) at (1,0) [node_normal] {c};
+			\node (d) at (2,1) [node_normal] {d};
+			\node (e) at (3,2) [node_normal] {e};
+			\node (f) at (3,0) [node_normal] {f};
+			\node (g) at (4,1) [node_normal] {g};
+
+			\draw[edge_normal] (a)--(b)--(e)--(g)--(f)--(c)--(a);
+			\draw[edge_normal] (b)--(c)--(d)--(e)--(f)--(d)--(b);
+			\end{tikzpicture}
+		\end{subfigure}
+	\end{figure}
+
+	\section{Welchen Zusammenhang können Sie zwischen der Hamilton-Eigenschaft und dem Knotengrad erkennen?}
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (a) at (0,0) [node_normal] {a};
+			\node (b) at (0,2) [node_normal] {b};
+			\node (c) at (1,3) [node_normal] {c};
+			\node (d) at (2,2) [node_normal] {d};
+			\node (e) at (2,0) [node_normal] {e};
+			\node (f) at (1,1) [node_normal] {f};
+
+			\draw[edge_normal] (f)--(a) (f)--(b) (f)--(c) (f)--(d) (f)--(e);
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (0) at (0,0) [node_normal] {?};
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\def\inc{((2*pi)/5)+pi/2}
+			\def\ro{2}
+			\node (A) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {a};
+			\node (B) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {b};
+			\node (C) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {c};
+			\node (D) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {d};
+			\node (E) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {e};
+			
+			\draw[edge_normal] (A)--(B)--(C)--(D)--(E)--(A);
+			\draw[edge_normal] (A)--(C)--(E)--(B)--(D)--(A);
+			\end{tikzpicture}
+		\end{subfigure}
+	\end{figure}
+
+	\section{Entfernen Sie einige Knoten aus den Graphen, was fällt Ihnen bezüglich der entstehenden Zusammenhangskomponenten auf?}
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.3\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (a) at (0,1) [node_normal] {a};
+			\node (b) at (1,2) [node_normal] {b};
+			\node (c) at (1,0) [node_normal] {c};
+			\node (d) at (2,1) [node_normal] {d};
+			\node (e) at (3,2) [node_normal] {e};
+			\node (f) at (3,0) [node_normal] {f};
+			\node (g) at (4,1) [node_normal] {g};
+			
+			\draw[edge_normal] (a)--(b)--(d)--(c)--(a);
+			\draw[edge_normal] (d)--(e)--(g)--(f)--(d);
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.2\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (a) at (0,0) [node_normal] {a};
+			\node (b) at (0,2) [node_normal] {b};
+			\node (c) at (1,3) [node_normal] {c};
+			\node (d) at (2,2) [node_normal] {d};
+			\node (e) at (2,0) [node_normal] {e};
+			\node (f) at (1,1) [node_normal] {f};
+			
+			\draw[edge_normal] (a)--(b) (a)--(f) (a)--(e);
+			\draw[edge_normal] (b)--(c) (b)--(d) (b)--(f);
+			\draw[edge_normal] (d)--(c) (d)--(f) (d)--(e);
+			\draw[edge_normal] (e)--(f);
+			\end{tikzpicture}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.4\linewidth}
+			\centering
+			\begin{tikzpicture}
+			\node (a) at (0,0.5) [node_normal] {a};
+			\node (b) at (1,-0.5) [node_normal] {b};
+			\node (c) at (1,1.5) [node_normal] {c};
+			\node (d) at (2,0.5) [node_normal] {d};
+			\node (e) at (3.5,0) [node_normal] {e};
+			\node (f) at (3,-1) [node_normal] {f};
+			\node (g) at (4,-1) [node_normal] {g};
+			
+			\node (h) at (4,1) [node_normal] {h};
+			\node (i) at (5,2) [node_normal] {i};
+			\node (j) at (3,2) [node_normal] {j};
+			\node (k) at (4,3) [node_normal] {k};
+			
+			\draw[edge_normal] (a)--(b)--(c)--(a);
+			\draw[edge_normal] (c)--(d)--(b);
+			\draw[edge_normal] (e)--(f)--(g)--(e);
+			\draw[edge_normal] (h)--(i)--(k)--(j)--(h);
+			\draw[edge_normal] (i)--(j);
+			\draw[edge_normal] (h)--(d)--(j);
+			\draw[edge_normal] (d)--(e)--(h);
+			\end{tikzpicture}
+		\end{subfigure}
+	\end{figure}
+
+\end{document}
