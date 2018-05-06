@@ -65,15 +65,23 @@
 % TikZ
 %
 \usepackage{tikz}
-	\usetikzlibrary{
-		arrows,
-		petri,
-		topaths,
-		graphs,
-		graphdrawing,
-		graphs.standard,
-		shapes}
-	\usegdlibrary{trees, layered}
+	\usetikzlibrary{graphs,shapes}
+	% Georg
+	\tikzstyle{vertex}=[circle, minimum size=15pt, draw=black]
+	\tikzstyle{selected vertex} = [vertex, fill=red!24]
+	\tikzstyle{edge} = [draw,thick,-]
+	\tikzstyle{weight} = [font=\small]
+	\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
+	\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
+	\pgfdeclarelayer{background}
+	\pgfsetlayers{background,main}
+	% Albert
+	\tikzstyle{node_normal} = [circle, draw, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{node_deleted} = [circle, draw, dashed, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{node_bold} = [circle, draw, ultra thick, inner sep=0pt, minimum size=20pt]
+	\tikzstyle{edge_deleted} = [dashed]
+	\tikzstyle{edge_hamilton} = [ultra thick]
+	\tikzstyle{edge_normal} = []
 \usepackage{tkz-berge}
 \usepackage{tkz-graph}
 \makeatletter
@@ -141,14 +149,6 @@
 %
 %
 \begin{document}
-\tikzstyle{vertex}=[circle, minimum size=15pt, draw=black]
-\tikzstyle{selected vertex} = [vertex, fill=red!24]
-\tikzstyle{edge} = [draw,thick,-]
-\tikzstyle{weight} = [font=\small]
-\tikzstyle{selected edge} = [draw,line width=5pt,-,red!50]
-\tikzstyle{ignored edge} = [draw,line width=5pt,-,black!20]
-\pgfdeclarelayer{background}
-\pgfsetlayers{background,main}
 
 \maketitle
 
@@ -231,52 +231,52 @@ Eines Abend als Bernd sich mit seinen alten Studienkollegen trifft kommt ihm die
 	{
 		%\begin{tikzpicture}[scale=0.45, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.45]
-		\node (A) at (-1,+0) [circle, draw, ultra thick] {A};
-		\node (B) at (+1,+0) [circle, draw, ultra thick] {B};
-		\node (C) at (-4,+0) [circle, draw] {C};
-		\node (D) at (-4,-3) [circle, draw] {D};
-		\node (E) at (-4,+4) [circle, draw] {E};
-		\node (F) at (-6,+2) [circle, draw] {F};
-		\node (G) at (+0,+2) [circle, draw] {G};
-		\node (H) at (+4,+4) [circle, draw] {H};
-		\node (I) at (+4,+0) [circle, draw] {I};
-		\node (J) at (+2,-3) [circle, draw] {J};
-		
-		\draw (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
-		\draw (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
-		\draw (C)--(D) (C)--(F);
-		\draw (D)--(F);
-		\draw (E)--(F) (E)--(G) (E)--(H);
-		\draw (F)--(G);
-		\draw (G)--(H) (G)--(I);
-		\draw (I)--(J);
+		\node (A) at (-1,+0) [node_bold] {a};
+		\node (B) at (+1,+0) [node_bold] {b};
+		\node (C) at (-4,+0) [node_normal] {c};
+		\node (D) at (-4,-3) [node_normal] {d};
+		\node (E) at (-4,+4) [node_normal] {e};
+		\node (F) at (-6,+2) [node_normal] {f};
+		\node (G) at (+0,+2) [node_normal] {g};
+		\node (H) at (+4,+4) [node_normal] {h};
+		\node (I) at (+4,+0) [node_normal] {i};
+		\node (J) at (+2,-3) [node_normal] {j};
+
+		\draw[edge_normal] (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
+		\draw[edge_normal] (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
+		\draw[edge_normal] (C)--(D) (C)--(F);
+		\draw[edge_normal] (D)--(F);
+		\draw[edge_normal] (E)--(F) (E)--(G) (E)--(H);
+		\draw[edge_normal] (F)--(G);
+		\draw[edge_normal] (G)--(H) (G)--(I);
+		\draw[edge_normal] (I)--(J);
 		\end{tikzpicture}
 	}
 	\subcaptionbox{\label{fig:acquaintance_graph_b}}[.49\linewidth]
 	{
 		%\begin{tikzpicture}[scale=0.45, every node/.style={transform shape}]
 		\begin{tikzpicture}[scale=0.45]
-		\node (A) at (-1,+0) [circle, draw, ultra thick] {A};
-		\node (B) at (+1,+0) [circle, draw, ultra thick] {B};
-		\node (C) at (-4,+0) [circle, draw] {C};
-		\node (D) at (-4,-3) [circle, draw] {D};
-		\node (E) at (-4,+4) [circle, draw] {E};
-		\node (F) at (-6,+2) [circle, draw] {F};
-		\node (G) at (+0,+2) [circle, draw] {G};
-		\node (H) at (+4,+4) [circle, draw] {H};
-		\node (I) at (+4,+0) [circle, draw] {I};
-		\node (J) at (+2,-3) [circle, draw] {J};
-		
-		\draw (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
-		\draw (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
-		\draw (C)--(D) (C)--(F);
-		\draw (D)--(F);
-		\draw (E)--(F) (E)--(G) (E)--(H);
-		\draw (F)--(G);
-		\draw (G)--(H) (G)--(I);
-		\draw (I)--(J);
-		
-		\draw[black, ultra thick] (A)--(B)--(J)--(I)--(G)--(H)--(E)--(F)--(C)--(D)--(A);
+		\node (A) at (-1,+0) [node_bold] {a};
+		\node (B) at (+1,+0) [node_bold] {b};
+		\node (C) at (-4,+0) [node_normal] {c};
+		\node (D) at (-4,-3) [node_normal] {d};
+		\node (E) at (-4,+4) [node_normal] {e};
+		\node (F) at (-6,+2) [node_normal] {f};
+		\node (G) at (+0,+2) [node_normal] {g};
+		\node (H) at (+4,+4) [node_normal] {h};
+		\node (I) at (+4,+0) [node_normal] {i};
+		\node (J) at (+2,-3) [node_normal] {j};
+
+		\draw[edge_normal] (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F) (A)--(G);
+		\draw[edge_normal] (B)--(D) (B)--(I) (B)--(J) (B)--(G) (B)--(H);
+		\draw[edge_normal] (C)--(D) (C)--(F);
+		\draw[edge_normal] (D)--(F);
+		\draw[edge_normal] (E)--(F) (E)--(G) (E)--(H);
+		\draw[edge_normal] (F)--(G);
+		\draw[edge_normal] (G)--(H) (G)--(I);
+		\draw[edge_normal] (I)--(J);
+
+		\draw[edge_hamilton] (A)--(B)--(J)--(I)--(G)--(H)--(E)--(F)--(C)--(D)--(A);
 		\end{tikzpicture}
 	}
 	\caption{Links: Ein Graph der die Bekanntschaft zwischen den Hochzeitsgästen modelliert. Rechts: Ein Kreis in dem Bekanntschaftsgraphen der jeden Gast zwei im bekannte Gäste zuweist.}
@@ -313,55 +313,55 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_a}}[.24\linewidth]
 	{
 		\begin{tikzpicture}[scale=0.75]
-			\node (A) at (0,0) [circle, draw] {A};
-			\node (B) at (0,2) [circle, draw] {B};
-			\node (C) at (1,3) [circle, draw] {C};
-			\node (D) at (2,2) [circle, draw] {D};
-			\node (E) at (2,0) [circle, draw] {E};
-			\node (F) at (1,1) [circle, draw] {F};
-			\draw (A)--(B)--(C)--(D)--(E)--(F)--(A);
+			\node (A) at (0,0) [node_normal] {a};
+			\node (B) at (0,2) [node_normal] {b};
+			\node (C) at (1,3) [node_normal] {c};
+			\node (D) at (2,2) [node_normal] {d};
+			\node (E) at (2,0) [node_normal] {e};
+			\node (F) at (1,1) [node_normal] {f};
+			\draw[edge_normal] (A)--(B)--(C)--(D)--(E)--(F)--(A);
 		\end{tikzpicture}
 	}
 	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_b}}[.24\linewidth]
 	{
 		\begin{tikzpicture}[scale=0.75]
-		\node (A) at (0,0) [circle, draw] {A};
-		\node (B) at (0,2) [circle, draw] {B};
-		\node (C) at (1,3) [circle, draw] {C};
-		\node (D) at (2,2) [circle, draw] {D};
-		\node (E) at (2,0) [circle, draw] {E};
-		\node (F) at (1,1) [circle, draw] {F};
-		\draw (A)--(B) (A)--(F) (A)--(E);
-		\draw (B)--(C) (B)--(D) (B)--(F);
-		\draw (D)--(C) (D)--(F) (D)--(E);
-		\draw (E)--(F);
+		\node (A) at (0,0) [node_normal] {a};
+		\node (B) at (0,2) [node_normal] {b};
+		\node (C) at (1,3) [node_normal] {c};
+		\node (D) at (2,2) [node_normal] {d};
+		\node (E) at (2,0) [node_normal] {e};
+		\node (F) at (1,1) [node_normal] {f};
+		\draw[edge_normal] (A)--(B) (A)--(F) (A)--(E);
+		\draw[edge_normal] (B)--(C) (B)--(D) (B)--(F);
+		\draw[edge_normal] (D)--(C) (D)--(F) (D)--(E);
+		\draw[edge_normal] (E)--(F);
 		\end{tikzpicture}
 	}
 	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_c}}[.24\linewidth]
 	{
 		\begin{tikzpicture}[scale=0.75]
-		\node (A) at (0,0) [circle, draw] {A};
-		\node (B) at (0,2) [circle, draw] {B};
-		\node (C) at (1,3) [circle, draw] {C};
-		\node (D) at (2,2) [circle, draw] {D};
-		\node (E) at (2,0) [circle, draw] {E};
-		\node (F) at (1,1) [circle, draw] {F};
-		\draw (A)--(F) (A)--(E);
-		\draw (B)--(C) (B)--(F);
-		\draw (D)--(C) (D)--(F);
-		\draw (E)--(F);
+		\node (A) at (0,0) [circle, draw] {a};
+		\node (B) at (0,2) [circle, draw] {b};
+		\node (C) at (1,3) [circle, draw] {c};
+		\node (D) at (2,2) [circle, draw] {d};
+		\node (E) at (2,0) [circle, draw] {e};
+		\node (F) at (1,1) [circle, draw] {f};
+		\draw[edge_normal] (A)--(F) (A)--(E);
+		\draw[edge_normal] (B)--(C) (B)--(F);
+		\draw[edge_normal] (D)--(C) (D)--(F);
+		\draw[edge_normal] (E)--(F);
 		\end{tikzpicture}
 	}
 	\subcaptionbox{\label{fig:combination_of_euler_and_hamilton_d}}[.24\linewidth]
 	{
 		\begin{tikzpicture}[scale=0.75]
-		\node (A) at (0,0) [circle, draw] {A};
-		\node (B) at (0,2) [circle, draw] {B};
-		\node (C) at (1,3) [circle, draw] {C};
-		\node (D) at (2,2) [circle, draw] {D};
-		\node (E) at (2,0) [circle, draw] {E};
-		\node (F) at (1,1) [circle, draw] {F};
-		\draw (F)--(A) (F)--(B) (F)--(C) (F)--(D) (F)--(E);
+		\node (A) at (0,0) [circle, draw] {a};
+		\node (B) at (0,2) [circle, draw] {b};
+		\node (C) at (1,3) [circle, draw] {c};
+		\node (D) at (2,2) [circle, draw] {d};
+		\node (E) at (2,0) [circle, draw] {e};
+		\node (F) at (1,1) [circle, draw] {f};
+		\draw[edge_normal] (F)--(A) (F)--(B) (F)--(C) (F)--(D) (F)--(E);
 		\end{tikzpicture}
 	}
 	\caption{Der Graph \subref{fig:combination_of_euler_and_hamilton_a} ist sowohl eulersch als auch hamiltonsch, \subref{fig:combination_of_euler_and_hamilton_b} ist nur hamiltonsch, \subref{fig:combination_of_euler_and_hamilton_c} ist nur eulersch und \subref{fig:combination_of_euler_and_hamilton_d} ist weder noch.}
@@ -393,14 +393,14 @@ Daraus folgt, dass jeder vollständige Graph über einen Hamilton-Kreis verfügt
 	{
 		\begin{tikzpicture}
 		\def\ngon{5}
-		\def\nodenames{A, B, C, D, E}
+		\def\nodenames{a, b, c, d, e}
 		\node[regular polygon,regular polygon sides=\ngon, minimum size=3cm] (p) {};
 		\foreach[count=\x] \c in \nodenames {
-			\node (p\x) at (p.corner \x) [draw, circle] {\c};
+			\node (p\x) at (p.corner \x) [node_normal] {\c};
 		}
 		\foreach\x in {1,...,\numexpr\ngon-1\relax}{
 			\foreach\y in {\x,...,\ngon}{
-				\draw (p\x) -- (p\y);
+				\draw[edge_normal] (p\x) -- (p\y);
 			}
 		}
 		\end{tikzpicture}
@@ -409,12 +409,12 @@ Daraus folgt, dass jeder vollständige Graph über einen Hamilton-Kreis verfügt
 	\subcaptionbox{\label{fig:graph_with_min_degree_of_one}}[.45\linewidth]
 	{
 		\begin{tikzpicture}
-		\node (A) at (0,0) [circle, draw] {A};
-		\node (B) at (0,2) [circle, draw] {B};
-		\node (C) at (1,1) [circle, draw] {C};
-		\node (D) at (2,1) [circle, draw] {D};
-		\draw (A)--(B)--(C)--(D);
-		\draw (A)--(C);
+		\node (A) at (0,0) [node_normal] {a};
+		\node (B) at (0,2) [node_normal] {b};
+		\node (C) at (1,1) [node_normal] {d};
+		\node (D) at (2,1) [node_normal] {c};
+		\draw[edge_normal] (A)--(B)--(C)--(D);
+		\draw[edge_normal] (A)--(C);
 		\end{tikzpicture}
 	}
 	\caption{Links: Ein vollständiger Graph $K_5$ der immer einen Hamilton-Kreis enthält. Rechts: Ein Graph mit einem Minimalgrad von eins kann keinen Hamilton-Kreis enthalten.}
@@ -448,12 +448,12 @@ Es sei zu erwähnen, dass der Satz von Dirac eine hinreichende jedoch keine notw
 \begin{figure}[h]
 	\centering
 	\begin{tikzpicture}
-	\node (A) at (0,0) [circle, draw] {A};
-	\node (B) at (0,1) [circle, draw] {B};
-	\node (C) at (1,2) [circle, draw] {C};
-	\node (D) at (2,1) [circle, draw] {D};
-	\node (E) at (2,0) [circle, draw] {E};
-	\draw (A)--(B)--(C)--(D)--(E)--(A);
+	\node (A) at (0,0) [node_normal] {a};
+	\node (B) at (0,1) [node_normal] {b};
+	\node (C) at (1,2) [node_normal] {c};
+	\node (D) at (2,1) [node_normal] {d};
+	\node (E) at (2,0) [node_normal] {e};
+	\draw[edge_normal] (A)--(B)--(C)--(D)--(E)--(A);
 	\end{tikzpicture}
 	\caption{Ein Graph der einen Hamilton-Kreis enthält, jedoch das Kriterium von Dirac nicht erfüllt.}
 	\label{fig:hamilton_without_dirac}
@@ -487,28 +487,28 @@ Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei wie fol
 	\subcaptionbox{}[.49\linewidth]
 	{
 		\begin{tikzpicture}[scale=1.]
-		\node (A) at (0,0) [circle, draw] {A};
-		\node (B) at (0,2) [circle, draw] {B};
-		\node (C) at (2,1) [circle, draw] {C};
-		\node (D) at (4,0) [circle, draw] {D};
-		\node (E) at (4,2) [circle, draw] {E};
-		\draw (C)--(A) (C)--(B) (C)--(D) (C)--(E);
-		\draw (A)--(B) (D)--(E);
+		\node (A) at (0,0) [node_normal] {a};
+		\node (B) at (0,2) [node_normal] {b};
+		\node (C) at (2,1) [node_normal] {c};
+		\node (D) at (4,0) [node_normal] {d};
+		\node (E) at (4,2) [node_normal] {e};
+		\draw[edge_normal] (C)--(A) (C)--(B) (C)--(D) (C)--(E);
+		\draw[edge_normal] (A)--(B) (D)--(E);
 		\end{tikzpicture}
 	}
 	\subcaptionbox{}[.49\linewidth]
 	{
 		\begin{tikzpicture}[scale=1.]
-		\node (A) at (0,0) [circle, draw] {A};
-		\node (B) at (0,2) [circle, draw] {B};
-		\node (C) at (2,1) [circle, draw, dashed] {C};
-		\node (D) at (4,0) [circle, draw] {D};
-		\node (E) at (4,2) [circle, draw] {E};
-		\draw[dashed] (C)--(A) (C)--(B) (C)--(D) (C)--(E);
-		\draw (A)--(B) (D)--(E);
+		\node (A) at (0,0) [node_normal] {a};
+		\node (B) at (0,2) [node_normal] {b};
+		\node (C) at (2,1) [node_deleted] {c};
+		\node (D) at (4,0) [node_normal] {d};
+		\node (E) at (4,2) [node_normal] {e};
+		\draw[edge_deleted] (C)--(A) (C)--(B) (C)--(D) (C)--(E);
+		\draw[edge_normal] (A)--(B) (D)--(E);
 		\end{tikzpicture}
 	}
-	\caption{Durch das Herauslösen des Knoten C entstehen zwei Zusammenhangskomponenten. Ein Hamilton-Kreis kann in diesem Graphen nicht vorhanden sein.}
+	\caption{Durch das Herauslösen des Knoten c entstehen zwei Zusammenhangskomponenten. Ein Hamilton-Kreis kann in diesem Graphen nicht vorhanden sein.}
 	\label{fig:one_cut_two_connected_components}
 \end{figure}
 
@@ -522,29 +522,27 @@ An dem Petersen-Graph kann man zeigen, dass nie mehr Komponenten entstehen, als 
 		\def\inc{((2*pi)/5)+pi/2}
 		\def\ro{2.1}
 		\def\ri{1.0}
-		%\node (A0) at (0,0) [circle, draw] {0};
+		%\node (A0) at (0,0) [node_normal] {0};
 		
-		\node (A) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [circle, draw] {A};
-		\node (B) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [circle, draw] {B};
-		\node (C) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [circle, draw] {C};
-		\node (D) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [circle, draw] {D};
-		\node (E) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [circle, draw] {E};
+		\node (A) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {a};
+		\node (B) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {b};
+		\node (C) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {c};
+		\node (D) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {d};
+		\node (E) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {e};
 		
-		\node (F) at ({cos(deg(0*\inc))*\ri}, {sin(deg(0*\inc))*\ri}) [circle, draw] {F};
-		\node (G) at ({cos(deg(1*\inc))*\ri}, {sin(deg(1*\inc))*\ri}) [circle, draw] {G};
-		\node (H) at ({cos(deg(2*\inc))*\ri}, {sin(deg(2*\inc))*\ri}) [circle, draw] {H};
-		\node (I) at ({cos(deg(3*\inc))*\ri}, {sin(deg(3*\inc))*\ri}) [circle, draw] {I};
-		\node (J) at ({cos(deg(4*\inc))*\ri}, {sin(deg(4*\inc))*\ri}) [circle, draw] {J};
+		\node (F) at ({cos(deg(0*\inc))*\ri}, {sin(deg(0*\inc))*\ri}) [node_normal] {f};
+		\node (G) at ({cos(deg(1*\inc))*\ri}, {sin(deg(1*\inc))*\ri}) [node_normal] {g};
+		\node (H) at ({cos(deg(2*\inc))*\ri}, {sin(deg(2*\inc))*\ri}) [node_normal] {h};
+		\node (I) at ({cos(deg(3*\inc))*\ri}, {sin(deg(3*\inc))*\ri}) [node_normal] {i};
+		\node (J) at ({cos(deg(4*\inc))*\ri}, {sin(deg(4*\inc))*\ri}) [node_normal] {j};
 		
-		\draw (A)--(B) (B)--(C) (C)--(D) (D)--(E) (E)--(A);
-		\draw (F)--(H) (H)--(J) (J)--(G) (G)--(I) (I)--(F);
-		\draw (A)--(F) (B)--(G) (C)--(H) (D)--(I) (E)--(J);
+		\draw[edge_normal] (A)--(B) (B)--(C) (C)--(D) (D)--(E) (E)--(A);
+		\draw[edge_normal] (F)--(H) (H)--(J) (J)--(G) (G)--(I) (I)--(F);
+		\draw[edge_normal] (A)--(F) (B)--(G) (C)--(H) (D)--(I) (E)--(J);
 	\end{tikzpicture}
 	\caption{Der Petersen-Graph enthält keinen Hamilton-Kreis.}
 	\label{fig:petersen_graph}
 \end{figure}
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
