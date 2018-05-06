@@ -592,17 +592,9 @@ Es reicht nicht den einfachen Abstand zwischen den beiden Punkten auszumessen od
 
 In \autoref{abb_leiterplatine2} sind beispielhaft die Kantengewichte der Kante \textit{1-2} in Millisekunden sowie die Bewegung der zwei Stellmotoren zu sehen. Während der Stellmotor auf der X-Achse lediglich eine Millisekunden benötigt um den Bohrer auf die korrekte Position zu manövrieren, benötigt der Stellmotor auf der Y-Achse ganze 6 Millisekunden. Das Gewicht der Kante ist also mit \textit{6} zu bemessen.
 
-%\begin{figure}[h]
-%	\centering
-%	%  \subfigure{}
-%	\includegraphics[width=0.5\textwidth]{leiterplatine2.jpg}
-%	\caption{Bohrerbewegung zwischen Loch 1 und Loch 2}
-%	\label{abb_leiterplatine2}
-%\end{figure}
-
 Bedenkt man nun, das man eine Zeit-optimierte Rundreise für den Bohrer finden möchte, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
 
-Sollen die Lösungsmethoden des TSP's an einer Straßenkarte, zum Beispiel dem Autobahnnetz angewendet werden, kann man ebenfalls einen vollständigen Graphen bilden obwohl nicht alle Orte mit einer direkten Autobahn verbunden sind. Die imaginären Strecken führen dabei nicht in die Innenstadt bzw. zum Knoten selbst sondern führen direkt daran vorbei, siehe \autoref{vollstGraph_Strassen}). Die Streckenkosten der jeweiligen Teilstrecken werden addiert als würden diese durch den Knoten führen.
+Sollen die Lösungsmethoden des TSP's an einer Straßenkarte, zum Beispiel dem Autobahnnetz angewendet werden, kann man ebenfalls einen vollständigen Graphen bilden obwohl nicht alle Orte mit einer direkten Autobahn verbunden sind. Die imaginären Strecken führen dabei nicht in die Innenstadt bzw. zum Knoten selbst sondern führen direkt daran vorbei, siehe \autoref{vollstGraph_Strassen}. Die Streckenkosten der jeweiligen Teilstrecken werden addiert als würden diese durch den Knoten führen.
 
 \begin{figure}[h]
 	\centering
