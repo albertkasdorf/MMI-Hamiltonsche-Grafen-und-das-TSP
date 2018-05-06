@@ -379,7 +379,9 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 %Im folgenden werden Graphen anhand der Knotengrade bewertet, vorher muss jedoch definiert werden was ein vollständiger Graph ist und was der Minimalgrad eines Graphen aussagt.
 \subsection{Knotengrad}
 
-Im ersten Schritt werden die vollständigen Graphen mit einer Knotenanzahl $n \geq 3$ betrachtet. \footnote{Es werden die vollständigen Graphen mit einer Knotenanzahl von eins und zwei ausgeschlossen, da es sich im ersten Fall um einen Punkt und im zweiten um Linie handelt.}
+Zu erst werden werden die vollständigen Graphen mit einer Knotenanzahl $n \geq 3$ betrachtet.\footnotemark
+
+\footnotetext{Es werden die vollständigen Graphen mit einer Knotenanzahl von eins und zwei ausgeschlossen, da es sich im ersten Fall um einen Punkt und im zweiten um eine Linie handelt.}
 
 \begin{mydef}
 	Ein Graph $G=(V,E)$ heißt \textbf{vollständig}, wenn jeder Knoten zu jedem anderen Knoten benachbart ist. Da der Graph also nur von der Anzahl der Knoten $n$ abhängt, bezeichnet man ihn auch als $K_n$. \cite{busing2010graphen}
@@ -421,13 +423,13 @@ Daraus folgt, dass jeder vollständige Graph über einen Hamilton-Kreis verfügt
 	\caption{Links: Ein vollständiger Graph $K_5$ der immer einen Hamilton-Kreis enthält. Rechts: Ein Graph mit einem Minimalgrad von eins kann keinen Hamilton-Kreis enthalten.}
 \end{figure}
 
-Ein vollständiger Graph kann auch über den Minimalgrad beschrieben werden, siehe Definition~\autoref{thm:min_max_degree}. Dabei muss der Zusammenhang $\delta(K_n) = n-1$ gelten.
+Ein vollständiger Graph kann auch über den Minimalgrad beschrieben werden, siehe Definition~\autoref{thm:min_max_degree}. Dabei gilt der Zusammenhang $\delta(K_n) = n-1$.
 
 \begin{mydef}\label{thm:min_max_degree}
 	Sei $G=(V,E)$ ein Graph. Der Wert $\delta(G)$ gibt den \textbf{Minimalgrad} in $G$ an, d.h. die kleinste in $G$ vorkommende Gradzahl, und $\Delta(G)$ den \textbf{Maximalgrad} eines Knoten in G, d.h. die größte in $G$ vorkommende Gradzahl. \cite{busing2010graphen}
 \end{mydef}
 
-Im zweiten Schritt wird ein Graph betrachtet, bei dem die Kantenanzahl nicht ausreicht um einen Hamilton-Kreis zu bilden. In der \autoref{fig:graph_with_min_degree_of_one} bleibt die Bildung eines Kreises in dem Knoten D stecken. Hieraus kann das Lemma~\autoref{thm:lemma_degree_of_one} abgeleitet werden.
+Neben den vollständigen Graphen existieren auch Graphen, bei dem die Kantenanzahl nicht ausreicht um einen Hamilton-Kreis zu bilden. In der \autoref{fig:graph_with_min_degree_of_one} bleibt die Bildung eines Kreises in dem Knoten d stecken. Hieraus kann das Lemma~\autoref{thm:lemma_degree_of_one} abgeleitet werden.
 
 \begin{mylem}\label{thm:lemma_degree_of_one}
 	Ein hamiltonscher Graph enthält keinen Knoten mit Grad 1. \cite{busing2010graphen}
@@ -481,7 +483,7 @@ Nicht zusammenhängende Graphen können laut der Definition~\autoref{thm:definit
 	Für jeden hamiltonschen Graphen gilt: Wenn $k$ Knoten aus dem Graphen gelöscht werden, zerfällt der Graph in höchstens $k$ Zusammenhangskomponenten. \cite{busing2010graphen}
 \end{mysat}
 
-Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis der jetzt den Hamilton-Kreis in einem Graphen darstellt. Wenn der Faden jetzt an einer Stelle zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt zerfällt ein Fadenstück zu maximal zwei weiteren Fadenstücken, es können niemals mehr Fadenstücke entstehen als Schnitte getätigt wurden. Zerfällt hingegen der Graph in mehr Zusammenhangskomponenten als Schnitte getätigt wurden, so kann in dem Graphen kein Hamilton-Kreis existiert haben, siehe \autoref{fig:one_cut_two_connected_components}.
+Den Satz~\autoref{thm:decay_to_connected_components} kann man sich dabei wie folgt vorstellen. Man nehme einen Faden und verbinde diesen zu einem Kreis, der den Hamilton-Kreis in einem Graphen darstellt. Wenn der Faden jetzt an einer Stelle zerschnitten wird, entsteht maximal ein Fadenstück. Mit jedem weiteren Schnitt zerfällt ein Fadenstück zu maximal zwei weiteren Fadenstücken, es können niemals mehr Fadenstücke entstehen als Schnitte getätigt wurden. Zerfällt hingegen der Graph in mehr Zusammenhangskomponenten als Schnitte getätigt wurden, so kann in dem Graphen kein Hamilton-Kreis existiert haben, siehe \autoref{fig:one_cut_two_connected_components}.
 
 \begin{figure}[h]
 	\centering
