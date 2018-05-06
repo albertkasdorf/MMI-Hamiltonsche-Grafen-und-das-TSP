@@ -553,16 +553,17 @@ An dem Petersen-Graph kann man zeigen, dass nie mehr Komponenten entstehen, als 
 \newpage
 \section{Traveling Salesman Problem}
 
-Das \textit{Traveling Salesman Problem} oder \textit{Problem des Handlungsreisenden}, wie es auf deutsch heißt, ist ein kombinatorisches Optimierungsproblem und ein Anwendungsfall der Hamilton Kreise. Die klassische Herausforderung besteht, darin eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu planen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostenminimal, kein Ort soll doppelt besucht werden und die erste Station gleich der letzten Station ist.
+Das \textit{Traveling Salesman Problem} oder \textit{Problem des Handlungsreisenden}, wie es auf deutsch heißt, ist ein kombinatorisches Optimierungsproblem und ein Anwendungsfall der Hamilton Kreise. Die klassische Herausforderung besteht darin, eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu planen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostengünstig. Zusätzlich soll kein Ort doppelt besucht werden und die erste Station ist gleich der letzten Station. 
+
 
 \subsection{Definition}
 Das allgemeine \textit{Traveling Salesman Problem} ist wie folgt definiert:
 \begin{mydef}
-	Travelling-Sales-Problem (TSP): Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
+	Traveling Salesman Problem (TSP): Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
 	\[c(C) =  \sum_{e \in C}  c(e) \]
 \end{mydef}
 
-In der Regel wird beim TSP von einem vollständigen Graphen ausgegangen, ansonsten ist im vorliegenden Problem eine Rundreise nicht möglich. Beim allgemeinen \textit{asymmetrischen TSP} können die Kanten in Hin- und Rückrichtung unterschiedliche Längen haben, so dass dieses Problem mit Hilfe eines gerichteten Graphen modelliert werden muss. Falls für alle Knotenpaare $c(u,w) = c(w,u)$ gilt, dann spricht man von einem \textit{symmetrischen TSP}, dieser kann durch ungerichteten Graphen repräsentiert werden.
+In der Regel wird beim TSP von einem vollständigen Graphen ausgegangen, ansonsten ist im vorliegenden Problem eine Rundreise nicht möglich. Beim allgemeinen \textit{asymmetrischen TSP} können die Kanten in Hin- und Rückrichtung unterschiedliche Längen haben, so dass dieses Problem mit Hilfe eines gerichteten Graphen modelliert werden muss. Falls für alle Knotenpaare $c(u,w) = c(w,u)$ gilt, dann spricht man von einem \textit{symmetrischen TSP}. Dieses kann durch ungerichteten Graphen repräsentiert werden.
 
 \subsection{Modellierung eines Problems}
 
@@ -571,7 +572,7 @@ Optimierungsprobleme in der Verkehrsplanung und Logistik oder beim Entwurf integ
 und Mikrochips. Damit mathematische Verfahren zur Lösung verwendet werden können, muss eine reale Situation zunächst durch ein einfaches Modell repräsentiert werden. Formalisieren kann man, indem man die Orte als Knoten eines gewichteten Graphen abbildet, wobei die Kantengewichte die
 Entfernungen zwischen je zwei Orten kennzeichnen. Solche Szenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden.
 
-\subsection{Das Bohren von Leiterplatten}
+\subsubsection{Das Bohren von Leiterplatten}
 
 Ein Beispiel aus der Praxis ist das Herstellen einer elektronischen Leiterplatine. Dabei geht es darum, dass möglichst schnell $n$ Löcher in eine Platine gebohrt werden müssen. Je schneller eine Platine fertig ist, desto mehr können produziert werden. Das Bohren eines einzelnen Lochs ist ohne Qualitätsverlust nicht zu beschleunigen. Um jedoch Zeit zu sparen, darf der Bohrer keine unnötigen Wege zurücklegen. Die meisten Fräs- oder Bohrmaschinen in der Leiterplattenindustrie sind lediglich mit zwei Motoren bzw. Schienen ausgestattet um die gesamte Platine zu erreichen. Deshalb kann man sich das System als \textit{2D-Koordinatensystem} vorstellen. Der eine Motor steuert den Bohrer auf der X-Achse, also die rechts-links-Bewegung. Der andere fährt den Bohrer entlang der Y-Achse bzw. nach vorne oder hinten. Damit nur die minimale Wegstrecke zurückgelegt wird, also keine Zeit verschwendet wird, muss der optimale Zyklus für den Bohrer errechnet werden. Wenn man bedenkt, dass der Bohrer sich über Loch \textit{1} befindet und zu Loch \textit{2} kommen möchte, wird klar, dass der eine Stellmotor seine Bewegung schneller beendet hat, als der andere und deshalb eine Ruhephase hat bzw. auf den zweiten Stellmotor warten muss, siehe \autoref{abb_leiterplatine}. Es ist also wichtig, wie der Abstand zwischen zwei Löchern bestimmt wird.
 
@@ -596,7 +597,7 @@ Es reicht nicht den einfachen Abstand zwischen den beiden Punkten auszumessen od
 In \autoref{abb_leiterplatine2} sind beispielhaft die Kantengewichte der Kante \textit{1-2} in Millisekunden sowie die Bewegung der zwei Stellmotoren zu sehen. Während der Stellmotor auf der X-Achse lediglich eine Millisekunden benötigt um den Bohrer auf die korrekte Position zu manövrieren, benötigt der Stellmotor auf der Y-Achse ganze 6 Millisekunden. Das Gewicht der Kante ist also mit \textit{6} zu bemessen.
 
 Bedenkt man nun, das man eine Zeit-optimierte Rundreise für den Bohrer finden möchte, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
-
+\subsubsection{Straßenkarte eines Autobahnnetz}
 Sollen die Lösungsmethoden des TSP's an einer Straßenkarte, zum Beispiel dem Autobahnnetz angewendet werden, kann man ebenfalls einen vollständigen Graphen bilden obwohl nicht alle Orte mit einer direkten Autobahn verbunden sind. Die imaginären Strecken führen dabei nicht in die Innenstadt bzw. zum Knoten selbst sondern führen direkt daran vorbei, siehe \autoref{vollstGraph_Strassen}. Die Streckenkosten der jeweiligen Teilstrecken werden addiert als würden diese durch den Knoten führen.
 
 \begin{figure}[h]
@@ -613,12 +614,13 @@ An diesem vollständigen Graphen kann man nun die Lösungsmethoden des TSP's anw
 
 \subsection{Lösungsmethoden}
 
-Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{Exakten Algorithmen} eine Optimallösung. \textit{Heuristiken} versuchen innerhalb eines Zeitrahmens eine zulässige Lösung, die recht nah an der Optimallösung ist, zu finden.
+Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{Exakten Algorithmen} eine Optimallösung. \textit{Heuristiken} dagegen garantieren nicht, dass eine optimale Lösung gefunden wird, sondern versuchen innerhalb eines Zeitrahmens eine zulässige Lösung zu finden. Unter mithilfe von Entscheidungsregeln wird sich dabei möglichst nah an die Optimallösung angenähert.
 
-Um einen \textit{exakten Algorithmus} zu beleuchten, stellen wir zunächst ein triviales Beispiel für eine Planungssituation auf, und modellieren dieses mithilfe der Graphentheorie. In diesem Szenario haben wir ein Paketdienst, der drei Pakete an drei verschiedene Häuser ausliefern muss. Dazu brauchen wir vier Knoten, wobei ein Knoten unseren Startfiliale darstellt und die drei weiteren die Zielhäuser, wohin die Pakte geliefert werden müssen. Das Ziel ist es eine Tour (Hamilton-Kreis) zu definieren.
-\par Um die Lösung zu finden, erzeugen wir einen Hamilton-Kreis nach der anderen und merken uns jene. Anschließend bestimmen wir die Länge jedes Hamilton-Kreises. Um die beste Tour zu finden, wählen wir den kürzesten Hamilton-Kreis aus. Die \autoref{fig:Rundreise} zeigt alle zulässigen Touren für unser Szenario.
+\subsubsection{Exakte Algorithmen}
+Im Folgenden wird das Problem von \textit{exakten Algorithmen} untersucht. Dazu wird ein einfaches Beispiel eines TSP-Problems mit vier Knoten betrachtet. Ausgehend vom ersten Knoten sollen alle anderen Knoten einmal besuchen. Unter der Bedingung, dass am Ende die günstigste Tour (Hamiltonkreis) ausgewählt werden soll.
+\par Eine sehr intuitive Herangehensweise an das Problem ist, wir erzeugen eine Tour nach der anderen. Dabei bestimmen wir die Länge jeder Tour und merken uns stets die bislang günstigste. Die \autoref{fig:Rundreise} zeigt alle erzeugten Touren für unser Szenario. Das ermitteln der optimalen Lösung schien recht einfach, doch ein solcher Einsatz ist in der Praxis unbrauchbar. Die Begründung dafür ist die benötigte Rechenzeit, denn diese spielt oft die entscheidende Rolle, wenn es um das Lösen von TSP-Problemen geht. Die angewendete intuitive Herangehensweise war ein exakter Algorithmus, aber praktisch ist diese Methode unbrauchbar.
 
-\begin{figure}[h]
+\begin{figure}[!h]
 	\centering
 	\begin{subfigure}{0.3\linewidth}
 		\centering
@@ -719,13 +721,14 @@ Beim symmetrischen TSP wird nicht zwischen einer Tour und ihrer Rückrichtung un
 
 Für unser Beispiel mit drei Zielen konnten wir leicht eine optimale Lösung finden. Doch was würde es bedeuten, wenn die Anzahl der Ziele auf 21 steigen würde? Die Fakultätsfunktion steigt rasant, die Konsequenz wir müssen $0.5 * 21! = 2.554.547.108.585.472.0000$ Lösungen generieren und im Anschluss daran die Kosten berechnen.
 
-Für praxisrelevante Szenarien bedeutet es eine unvermeidbare Laufzeitexplosion. Solange $P = NP$ gilt, wird es kein beweisbar schnelles Verfahren zur optimalen Lösung des TSP geben. Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden, aber auch weil man oft gar nicht an der Optimallösung interessiert ist. Aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können. Eine Städtetour durch Europa mit einem Fahrzeug ist von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter, Verkehr. In diesem Beispiel wäre die Forderung nach Optimalität ein Overkill.
+Daraus lässt sich die Schlussfolgerung ziehen, dass für praxisrelevante Szenarien bedeutet es eine unvermeidbare Laufzeitexplosion. Solange $P = NP$ gilt, wird es kein schnelles Verfahren zur optimalen Lösung des TSP geben. Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden, aber auch weil man oft gar nicht an der Optimallösung interessiert ist. Aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können. Eine Städtetour durch Europa mit einem Fahrzeug ist von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter, Verkehr. In diesem Beispiel wäre die Forderung nach Optimalität ein Overkill.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %
+\newpage
 \section{Algorithmen}
 
 \subsection{Nearest-Neighbor-Heuristik}
