@@ -16,6 +16,7 @@
 \usepackage{graphicx}
 	\graphicspath{ {Bilder/} }
 
+\usepackage{pdflscape}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % https://tex.stackexchange.com/questions/82993/how-to-change-the-name-of-document-elements-like-figure-contents-bibliogr
@@ -359,4 +360,38 @@
 %		\end{subfigure}
 %	\end{figure}
 
+
+
+\begin{landscape}
+\pagenumbering{gobble}
+\section*{Entfernungen von verschiedenen Städten}
+
+\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c| }
+\hline
+ & Berlin & Cuxhaven & Duisburg & Emden & Frankfurt & Lüneberg & Konstanz & München & Weimar & Würzburg \\
+\hline
+Berlin &  & 350 & 480 & 430 & 430 & 220 & 620 & 510 & 230 & 390 \\
+\hline
+Cuxhaven & 350 &  & 300 & 120 & 420 & 140 & 700 & 670 & 370 & 470 \\
+\hline
+Duisburg & 480 & 300 &  & 220 & 200 & 320 & 460 & 510 & 330 & 300 \\
+\hline
+Emden & 430 & 120 & 220 &  & 380 & 220 & 650 & 660 & 390 & 440 \\
+\hline
+Frankfurt & 430 & 420 & 200 & 380 &  & 370 & 280 & 310 & 220 & 100 \\
+\hline
+Lüneberg & 220 & 140 & 320 & 220 & 370 &  & 630 & 580 & 260 & 390 \\
+\hline
+Konstanz & 620 & 700 & 460 & 650 & 280 & 630 &  & 190 & 400 & 250 \\
+\hline
+München & 510 & 670 & 510 & 660 & 310 & 580 & 190 &  & 320 & 220 \\
+\hline
+Weimar & 230 & 370 & 330 & 390 & 220 & 260 & 400 & 320 &  & 170 \\
+\hline
+Würzburg & 390 & 470 & 300 & 440 & 100 & 390 & 250 & 220 & 170 & \\
+\hline
+\end{tabular}
+	
+\end{landscape}
+	
 \end{document}
