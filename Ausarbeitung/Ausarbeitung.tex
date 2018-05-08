@@ -555,13 +555,13 @@ An dem Petersen-Graph kann man zeigen, dass nie mehr Komponenten entstehen, als 
 \newpage
 \section{Traveling Salesman Problem}
 
-Das \textit{Traveling Salesman Problem} oder \textit{Problem des Handlungsreisenden}, wie es auf deutsch heißt, ist ein kombinatorisches Optimierungsproblem und ein Anwendungsfall der Hamilton Kreise. Die klassische Herausforderung besteht darin, eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu planen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostengünstig. Zusätzlich soll kein Ort doppelt besucht werden und die erste Station ist gleich der letzten Station. 
+Das \textit{Traveling Salesman Problem} oder \textit{Problem des Handlungsreisenden}, wie es auf deutsch heißt, ist ein kombinatorisches Optimierungsproblem und ein Anwendungsfall der Hamilton Kreise. Die klassische Herausforderung besteht darin, eine optimale Reihenfolge für den Besuch einer vorgegebenen Menge von Orten so zu planen, dass die zurückgelegte Strecke des Handlungsreisenden möglichst kostengünstig ist. Zusätzlich soll kein Ort doppelt besucht werden und die erste Station ist gleich der letzten Station. 
 
 
 \subsection{Definition}
 Das allgemeine \textit{Traveling Salesman Problem} ist wie folgt definiert:
 \begin{mydef}
-	Traveling Salesman Problem (TSP): Gegeben sei ein vollständiger Graph K\textsubscript{n} mit positiven Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
+	Traveling Salesman Problem (TSP): Gegeben sei ein vollständiger Graph K\textsubscript{n} mit Gewichten \textit{c(e)} auf den einzelnen Kanten  \textit{e}. Gesucht ist ein Hamilton-Kreis \textit{C} in K\textsubscript{n} mit minimalem Gewicht c(C), wobei gilt
 	\[c(C) =  \sum_{e \in C}  c(e) \]
 \end{mydef}
 
@@ -619,11 +619,11 @@ Nun können die Lösungsmethoden des TSP's angewendet werden. Sollte in der opti
 
 \subsection{Lösungsmethoden}
 
-Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{Exakten Algorithmen} eine Optimallösung. \textit{Heuristiken} dagegen garantieren nicht, dass eine optimale Lösung gefunden wird, sondern versuchen innerhalb eines Zeitrahmens eine zulässige Lösung zu finden. Unter mithilfe von Entscheidungsregeln wird sich dabei möglichst nah an die Optimallösung angenähert.
+Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{exakte Algorithmen} eine Optimallösung. \textit{Heuristiken} dagegen garantieren nicht, dass eine optimale Lösung gefunden wird, sondern versuchen innerhalb eines Zeitrahmens eine zulässige Lösung zu finden. Unter mithilfe von Entscheidungsregeln wird sich dabei möglichst nah an die Optimallösung angenähert.
 
 \subsubsection{Exakte Algorithmen}
-Im Folgenden wird das Problem von \textit{exakten Algorithmen} untersucht. Dazu wird ein einfaches Beispiel eines TSP-Problems mit vier Knoten betrachtet. Ausgehend vom ersten Knoten sollen alle anderen Knoten einmal besucht werden. Unter der Bedingung, dass am Ende die günstigste Tour (Hamiltonkreis) ausgewählt werden soll.
-\par Eine sehr intuitive Herangehensweise an das Problem ist, wir erzeugen eine Tour nach der anderen. Dabei bestimmen wir die Länge jeder Tour und merken uns stets die bislang günstigste. Die \autoref{fig:Rundreise} zeigt alle erzeugten Touren für unser Szenario. 
+Im Folgenden werden \textit{exakte Algorithmen} näher betrachtet. Dazu wird ein einfaches Beispiel eines TSP-Problems mit vier Knoten betrachtet. Ausgehend vom ersten Knoten sollen alle anderen Knoten einmal besucht werden. Am Ende soll die Lösung mit der günstigsten Tour (Hamiltonkreis) ausgewählt werden.
+\par Eine sehr intuitive Herangehensweise an das Problem ist, dass wir eine Tour nach der anderen erzeugen. Dabei bestimmen wir die Länge jeder Tour und merken uns stets die bislang günstigste. Die \autoref{fig:Rundreise} zeigt alle erzeugten Touren für unser Beispiel. 
 
 \begin{figure}[!h]
 	\centering
@@ -710,23 +710,24 @@ Im Folgenden wird das Problem von \textit{exakten Algorithmen} untersucht. Dazu 
 	\label{fig:Rundreise}
 \end{figure}
 \newpage
-Das ermitteln der optimalen Lösung schien recht einfach, doch ein solcher Einsatz ist in der Praxis unbrauchbar. Die Begründung dafür liegt in der benötigten Rechenzeit für die Ermittlung der Lösung. Diese spielt nämlich die entscheidende Rolle, wenn es um das Lösen von TSP-Problemen geht. Die angewendete intuitive Herangehensweise war zwar ein exakter Algorithmus, jedoch ist diese Methode für die meisten Anwendungsfälle in der Praxis unbrauchbar. 
-\par Um die Ursache dafür zu verstehen, ist zuerst einmal zu klären, wie viele verschiedene Hamilton-Kreise es in einem vollständigen Graphen mit n Knoten gibt: Wenn man von einem beliebigen Knoten $v_0$ beginnt, dann kann die Tour als Nächstes einen der $n - 1$ anderen Knoten enthalten. Unter der Voraussetzung das dieser Knoten $v_1 \neq v_0$ ist, verbleiben für die Auswahl des nächsten Knotens noch $n - 2$ Möglichkeiten. Wird diese Gedankenfolge fortgesetzt, dann erschließt sich demnach, dass ein vollständiger asymmetrischer Graph genau $(n - 1)!$ Touren enthält. Beim \textit{symmetrischen TSP} wird nicht zwischen einer Tour und ihrer Rückrichtung unterschieden. Für die Lösungen in \autoref{fig:Rundreise} würde es bedeuten, dass die Lösungen der unteren Reihe wegfallen. Somit gilt:
+
+Die angewendete Herangehensweise war ein exakter Algorithmus. Das Ermitteln der optimalen Lösung schien recht einfach, dennoch ist diese Methode für die meisten Anwendungsfälle in der Praxis unbrauchbar. Die Begründung dafür liegt in der benötigten Rechenzeit für die Ermittlung der Lösung. Diese stellt das entscheidende Kriterium dar, wenn es um das Lösen von TSP-Problemen geht. 
+\par Um die Ursache dafür zu verstehen, ist zuerst einmal zu klären, wie viele verschiedene Hamilton-Kreise es in einem vollständigen Graphen mit n Knoten gibt: Wenn man von einem beliebigen Knoten $v_0$ beginnt, dann kann die Tour als Nächstes einen der $n - 1$ anderen Knoten enthalten. Unter der Voraussetzung, dass dieser Knoten $v_1 \neq v_0$ ist, verbleiben für die Auswahl des nächsten Knotens noch $n - 2$ Möglichkeiten. Wird diese Gedankenfolge fortgesetzt, dann erschließt sich demnach, dass ein vollständiger asymmetrischer Graph genau $(n - 1)!$ Touren enthält. Beim \textit{symmetrischen TSP} wird nicht zwischen einer Tour und ihrer Rückrichtung unterschieden. Für die \autoref{fig:Rundreise} folgt daraus, dass die Lösungen der unteren Reihe wegfallen. 
+\par Somit gilt:
 
 \begin{mysat}
 	Ein vollständiger symmetrischer Graph enthält genau $0.5 * ( n - 1)!$ Hamilton-Kreise.
 \end{mysat}
 
-Die Fakultätsfunktion wächst sehr. Für das \textit{Bohren von Leiterplatten} Problem aus \autoref{fig:leiterplatine}, hat es zur Folge, dass $0.5 * 21! = 2.554.547.108.585.472.0000$ Touren generiert und jeweils die Kosten berechnet werden müssen. Für die Beispiel-Herangehensweise, muss man für jede Tourlänge $n$ Additionen vornehmen, das wären bei 18 Löchern rund 3,2 Billiarden Additionen.
-\par Daraus lässt sich die Schlussfolgerung ziehen, dass für praxisrelevante Szenarien es eine unvermeidbare Laufzeitexplosion entsteht. Das liegt daran, dass das TSP-Problem zu einer Klasse von sehr schwierigen Problemen gehört, den sogenannten NP-vollständigen Problemen. Es wird angenommen, dass jeder deterministische Algorithmus zur exakten Lösung dieser Probleme mindestens exponentiell viele Rechenschritte ausführen muss.
-\par Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden, aber auch weil man oft gar nicht an der Optimallösung interessiert ist. Aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können. Zum Beispiel eine Städtetour durch Europa mit einem Fahrzeug ist von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter oder Verkehr. Man kann also zum Schluss kommen, dass in solchen Szenarien die Forderung nach Optimalität überzogen ist.
+Die Fakultätsfunktion wächst stark. Für das Problem aus \autoref{fig:leiterplatine} (Leiterplatten) hat es zur Folge, dass $0.5 * 17! = 1.7784371 * 10^{14}$ Touren erzeugt und jeweils die Kosten berechnet werden müssen. In der gewählten Herangehensweise aus dem Beispiel, müssen $n$ Additionen pro Tourlänge vorgenommen werden. Insgesamt wären für 18 Löchern rund $3,2 * 10^{15}$ Additionen notwendig.
+\par Daraus lässt sich die Schlussfolgerung ziehen, dass für die Berechnung der optimalen Lösung für praxisrelevante Anwendungsfälle eine enorme Laufzeit entsteht. Das liegt daran, dass das TSP-Problem zu einer Reihe von schwierigen Problemen gehört, den sogenannten NP-vollständigen Problemen. Es wird angenommen, dass jeder Algorithmus zur exakten Lösung dieser Probleme mindestens exponentiell viele Rechenschritte ausführen muss.
+\par Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden. Diese liefern zwar nicht unbedingt die optimale Lösung, aber aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können, ist man oft gar nicht an der Optimallösung interessiert. Zum Beispiel ist eine Städtetour durch Europa mit einem Fahrzeug von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter oder Verkehr. Man kann also zum Schluss kommen, dass in solchen Szenarien die Forderung nach Optimalität überzogen ist.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %
-\newpage
 \section{Algorithmen}
 
 \subsection{Nearest-Neighbor-Heuristik}
