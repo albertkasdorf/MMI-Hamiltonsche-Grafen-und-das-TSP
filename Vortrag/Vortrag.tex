@@ -262,9 +262,7 @@
 
 \begin{columns}
 	\column{0.5\linewidth}
-	\begin{block}{Definition:}
-		Ein Graph heißt \textbf{hamiltonsch} oder \textbf{Hamilton-Graph}, wenn in ihm ein Kreis existiert, der jeden Knoten genau einmal enthält. Ein solcher Kreis heißt auch \textbf{Hamilton-Kreis}.
-	\end{block}
+	Ein Graph heißt \textbf{hamiltonsch} oder \textbf{Hamilton-Graph}, wenn in ihm ein Kreis existiert, der jeden Knoten genau einmal enthält. Ein solcher Kreis heißt auch \textbf{Hamilton-Kreis}.
 	\column{0.5\linewidth}
 	\begin{figure}
 		\begin{tikzpicture}[scale=0.4]
@@ -329,34 +327,27 @@
 %
 %%%%%%%%%%
 \begin{frame}{Hamiltonsche Graphen\\\normalsize{Vollständigkeit}}
-
-\begin{columns}
-
-\column{0.5\linewidth}
-\begin{block}{Definition:}
-Ein Graph $G=(V,E)$ heißt \textbf{vollständig}, wenn jeder Knoten zu jedem anderen Knoten benachbart ist.
-%Da der Graph also nur von der Anzahl der Knoten $n$ abhängt, bezeichnet man ihn auch als $K_n$.
-\end{block}
-
-\column{0.5\linewidth}
-\begin{figure}
-\centering
-\begin{tikzpicture}
-\node (A) at (0,0) [node_normal] {a};
-\node (B) at (0,2) [node_normal] {b};
-\node (C) at (2,2) [node_normal] {c};
-\node (D) at (2,0) [node_normal] {d};
-
-\draw[edge_normal] (A)--(C) (C)--(D) (D)--(A);
-\draw[edge_normal] (B)--(A) (B)--(C) (B)--(D);
-
-\draw[edge_hamilton] (A)--(C)--(B)--(D)--(A);
-\end{tikzpicture}
-%\caption{$K_4$}
-\end{figure}
-
-\end{columns}
-
+	\begin{columns}
+		\column{0.5\linewidth}
+		\begin{block}{Definition:}
+			Ein Graph heißt \textbf{vollständig}, wenn jeder Knoten zu jedem anderen Knoten benachbart ist.
+		\end{block}
+		\column{0.5\linewidth}
+		\begin{figure}
+			\centering
+			\begin{tikzpicture}
+			\node (A) at (0,0) [node_normal] {a};
+			\node (B) at (0,2) [node_normal] {b};
+			\node (C) at (2,2) [node_normal] {c};
+			\node (D) at (2,0) [node_normal] {d};
+			
+			\draw[edge_normal] (A)--(C) (C)--(D) (D)--(A);
+			\draw[edge_normal] (B)--(A) (B)--(C) (B)--(D);
+			
+			\draw[edge_hamilton] (A)--(C)--(B)--(D)--(A);
+			\end{tikzpicture}
+		\end{figure}
+	\end{columns}
 \end{frame}
 
 
@@ -408,9 +399,9 @@ Ein Graph $G=(V,E)$ heißt \textbf{vollständig}, wenn jeder Knoten zu jedem and
 \begin{frame}{Hamiltonsche Graphen\\\normalsize{Zusammenhangskomponenten}}
 	\begin{columns}
 		\column{0.5\linewidth}
-		\begin{block}{Satz:}
+%		\begin{block}{Satz:}
 			Für jeden hamiltonschen Graphen gilt: Wenn $k$ Knoten aus dem Graphen gelöscht werden, zerfällt der Graph in höchstens $k$ Zusammenhangskomponenten.
-		\end{block}
+%		\end{block}
 	
 		\column{0.5\linewidth}
 		\only<2>
@@ -568,15 +559,16 @@ Ein Graph $G=(V,E)$ heißt \textbf{vollständig}, wenn jeder Knoten zu jedem and
 %
 %%%%%%%%%%
 \begin{frame}{Hamiltonsche Graphen\\\normalsize{Satz von Dirac (2/2)}}
-\begin{columns}
-\column{0.5\linewidth}
-\begin{block}{Satz von Dirac:}
-	Sei G ein einfacher Graph mit mindestens drei Knoten, für den außerdem $\delta(G)\geq 0.5\cdot n$ gilt. Dann enthält der Graph einen Hamilton-Kreis.
-\end{block}
+	\begin{columns}
+		\column{0.5\linewidth}
+		%\begin{block}{Satz von Dirac:}
+		Sei G ein einfacher Graph mit mindestens drei Knoten, für den außerdem $\delta(G)\geq 0.5\cdot n$ gilt. Dann enthält der Graph einen Hamilton-Kreis.
+		%\end{block}
 \only<3>
 {
 	\begin{block}{}
-		Es gibt auch Graphen die den Satz von Dirac nicht erfüllen und trotzdem einen Hamilton-Kreis besitzen.
+		Vorsicht: Die Rückrichtung gilt nicht.
+		%Es gibt auch Graphen die den Satz von Dirac nicht erfüllen und trotzdem einen Hamilton-Kreis besitzen.
 	\end{block}
 }
 \column{0.5\linewidth}
@@ -584,23 +576,42 @@ Ein Graph $G=(V,E)$ heißt \textbf{vollständig}, wenn jeder Knoten zu jedem and
 {
 	\begin{figure}
 		\centering
+%		\begin{tikzpicture}
+%		\def\inc{((2*pi)/5)+pi/2}
+%		\def\ro{2.1}
+%		\node (A) at (0,0) [node_normal] {a};
+%		\node (B) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {b};
+%		\node (C) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {c};
+%		\node (D) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {d};
+%		\node (E) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {e};
+%		\node (F) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {f};
+%		
+%		\draw[edge_normal] (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F);
+%		\draw[edge_normal] (B)--(C)--(D)--(E)--(F)--(B);
+%		\draw[edge_normal] (D)--(B) (D)--(F);
+%		\draw[edge_hamilton] (D)--(B)--(C)--(A)--(F)--(E)--(D);
+%		\end{tikzpicture}
+%		\captionsetup{justification=centering}
+%		\caption{$n=6$\\ $\delta(G)=3$}
+
 		\begin{tikzpicture}
-		\def\inc{((2*pi)/5)+pi/2}
-		\def\ro{2.1}
-		\node (A) at (0,0) [node_normal] {a};
-		\node (B) at ({cos(deg(0*\inc))*\ro}, {sin(deg(0*\inc))*\ro}) [node_normal] {b};
-		\node (C) at ({cos(deg(1*\inc))*\ro}, {sin(deg(1*\inc))*\ro}) [node_normal] {c};
-		\node (D) at ({cos(deg(2*\inc))*\ro}, {sin(deg(2*\inc))*\ro}) [node_normal] {d};
-		\node (E) at ({cos(deg(3*\inc))*\ro}, {sin(deg(3*\inc))*\ro}) [node_normal] {e};
-		\node (F) at ({cos(deg(4*\inc))*\ro}, {sin(deg(4*\inc))*\ro}) [node_normal] {f};
-		
-		\draw[edge_normal] (A)--(B) (A)--(C) (A)--(D) (A)--(E) (A)--(F);
-		\draw[edge_normal] (B)--(C)--(D)--(E)--(F)--(B);
-		\draw[edge_normal] (D)--(B) (D)--(F);
-		\draw[edge_hamilton] (D)--(B)--(C)--(A)--(F)--(E)--(D);
+		\node (f) at (1,2) [node_normal] {a};
+		\node (d) at (2,-1) [node_normal] {h};
+		\node (c) at (2,1) [node_normal] {f};
+		\node (b) at (4,-1) [node_normal] {d};
+		\node (a) at (5,0) [node_normal] {c};
+		\node (e) at (2,3) [node_normal] {e};
+		\node (g) at (5,2) [node_normal] {g};
+		\node (h) at (4,3) [node_normal] {b};
+
+		\draw[edge_normal] (a)--(d) (a)--(c) (a)--(f) (a)--(e) (a)--(h) (a)--(g);
+		\draw[edge_normal] (b)--(d) (b)--(c) (b)--(e) (b)--(g);
+		\draw[edge_normal] (c)--(d) (c)--(f) (c)--(g);
+		\draw[edge_normal] (d)--(f);
+		\draw[edge_normal] (e)--(h) (e)--(g);
+		\draw[edge_normal] (f)--(h) (g)--(h);
 		\end{tikzpicture}
-		\captionsetup{justification=centering}
-		\caption{$n=6$\\ $\delta(G)=3$}
+		
 	\end{figure}
 }
 \only<3>
