@@ -596,11 +596,11 @@ Es reicht nicht den einfachen Abstand zwischen den beiden Punkten auszumessen od
 
 In \autoref{abb_leiterplatine2} sind beispielhaft die Kantengewichte der Kante \textit{1-2} in Millisekunden sowie die Bewegung der zwei Stellmotoren zu sehen. Während der Stellmotor auf der X-Achse lediglich eine Millisekunden benötigt um den Bohrer auf die korrekte Position zu manövrieren, benötigt der Stellmotor auf der Y-Achse ganze 6 Millisekunden. Das Gewicht der Kante ist also mit \textit{6} zu bemessen.
 
-Bedenkt man nun, das man eine Zeit-optimierte Rundreise für den Bohrer finden möchte, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
-\newpage
-\subsubsection{Straßenkarte eines Autobahnnetz}
-Bedenkt man nun, das eine Zeit optimierte Rundreise für den Bohrer gefunden werden soll, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
+Bedenkt man nun, dass man eine Zeit-optimierte Rundreise für den Bohrer finden möchte, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
 
+\subsubsection{Straßenkarte eines Autobahnnetz}
+
+Bedenkt man nun, das eine Zeit optimierte Rundreise für den Bohrer gefunden werden soll, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
 
 \subsubsection{Straßenkarte eines Autobahnnetzes}
 
@@ -613,9 +613,9 @@ Sollen die Lösungsmethoden des TSP's an einer Straßenkarte, zum Beispiel dem A
 	\label{vollstGraph_Strassen}
 \end{figure}
 
-Eine andere Lösung des Problems ist ein zusätzliches Kantengewicht zu erstellen. Da der existierende Graph vollständig sein muss, werden die noch nicht existierenden Kanten hinzugefügt und mit dem zusätzlichen Gewicht \textit{1} abgespeichert. Die existierenden Straßen bzw. Kanten werden mit einer \textit{0} versehen.
+Es ist möglich einen Graph auf einen Hamilton-Kreis mit Hilfe einer TSP-Modellierung zu prüfen. Dafür muss vorerst imaginär ein vollständiger Graph gebildet werden, sollte dieser noch nicht existieren. Danach wird jeder realen Kante ein Kantengewicht  \textit{1} zugeordnet. Die Imaginären Kanten bekommen ein höheres Gewicht \textit{M}, welches größer als \textit{1} ist.
 
-An diesem vollständigen Graphen kann man nun die Lösungsmethoden des TSP's anwenden. Bei jeder genutzten Straße bzw. Kante wird der Wert des zusätzlichen Kantengewichtes auf einen Zähler addiert. Beträgt der Wert dieses Zählers bei gefundener günstiger Route immer noch \textit{0}, ist alles in Ordnung, es wurden nur existierende Straßen genutzt. Andernfalls muss eine neue Route gesucht werden.
+Nun können die Lösungsmethoden des TSP's angewendet werden. Sollte in der optimalen TSP-Route eine einzige imaginäre Kante genutzt werden, so existiert kein Hamilton-Kreis im Graphen. Andernfalls, sollte also keine dieser imaginären Kanten mit Gewicht \textit{< 1} genutzt werden, existiert ein Hamilton-Kreis und der Graph ist somit hamiltonsch.
 
 \subsection{Lösungsmethoden}
 
