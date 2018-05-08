@@ -379,7 +379,7 @@ Die Hamilton-Eigenschaft ähnelt der Euler-Eigenschaft, nur das bei dem ersten a
 %Im folgenden werden Graphen anhand der Knotengrade bewertet, vorher muss jedoch definiert werden was ein vollständiger Graph ist und was der Minimalgrad eines Graphen aussagt.
 \subsection{Knotengrad}
 
-Zu erst werden werden die vollständigen Graphen mit einer Knotenanzahl $n \geq 3$ betrachtet.\footnotemark
+Zuerst werden die vollständigen Graphen mit einer Knotenanzahl $n \geq 3$ betrachtet.\footnotemark
 
 \footnotetext{Es werden die vollständigen Graphen mit einer Knotenanzahl von eins und zwei ausgeschlossen, da es sich im ersten Fall um einen Punkt und im zweiten um eine Linie handelt.}
 
@@ -569,14 +569,11 @@ In der Regel wird beim TSP von einem vollständigen Graphen ausgegangen, ansonst
 
 \subsection{Modellierung eines Problems}
 
-Das TSP-Problem tritt in der Praxis in vielen Anwendungen als Teilproblem auf. Hierzu gehören z.B.
-Optimierungsprobleme in der Verkehrsplanung und Logistik oder beim Entwurf integrierter Schaltungen
-und Mikrochips. Damit mathematische Verfahren zur Lösung verwendet werden können, muss eine reale Situation zunächst durch ein einfaches Modell repräsentiert werden. Formalisieren kann man, indem man die Orte als Knoten eines gewichteten Graphen abbildet, wobei die Kantengewichte die
-Entfernungen zwischen je zwei Orten kennzeichnen. Solche Szenarien können zudem durch Zusatzbedingungen wie Zeitfenster oder eingeschränkte Ressourcen erweitert werden.
+Das TSP-Problem tritt in der Praxis in vielen Anwendungen auf. Hierzu gehören zum Beispiel Optimierungsprobleme in der Verkehrsplanung, in der Logistik oder bei Entwürfen von integrierter Schaltungen und Mikrochips. Damit mathematische Verfahren zur Lösung verwendet werden können, muss eine reale Situation durch ein einfaches Modell repräsentiert werden. Orte oder spezielle Punkte werden dabei durch Knoten abgebildet. Die Kantengewichte beschreiben dabei beispielsweise die Entfernung zwischen zwei Orten.
 
 \subsubsection{Das Bohren von Leiterplatten}
 
-Ein Beispiel aus der Praxis ist das Herstellen einer elektronischen Leiterplatine. Dabei geht es darum, dass möglichst schnell $n$ Löcher in eine Platine gebohrt werden müssen. Je schneller eine Platine fertig ist, desto mehr können produziert werden. Das Bohren eines einzelnen Lochs ist ohne Qualitätsverlust nicht zu beschleunigen. Um jedoch Zeit zu sparen, darf der Bohrer keine unnötigen Wege zurücklegen. Die meisten Fräs- oder Bohrmaschinen in der Leiterplattenindustrie sind lediglich mit zwei Motoren bzw. Schienen ausgestattet um die gesamte Platine zu erreichen. Deshalb kann man sich das System als \textit{2D-Koordinatensystem} vorstellen. Der eine Motor steuert den Bohrer auf der X-Achse, also die rechts-links-Bewegung. Der andere fährt den Bohrer entlang der Y-Achse bzw. nach vorne oder hinten. Damit nur die minimale Wegstrecke zurückgelegt wird, also keine Zeit verschwendet wird, muss der optimale Zyklus für den Bohrer errechnet werden. Wenn man bedenkt, dass der Bohrer sich über Loch \textit{1} befindet und zu Loch \textit{2} kommen möchte, wird klar, dass der eine Stellmotor seine Bewegung schneller beendet hat, als der andere und deshalb eine Ruhephase hat bzw. auf den zweiten Stellmotor warten muss, siehe \autoref{abb_leiterplatine}. Es ist also wichtig, wie der Abstand zwischen zwei Löchern bestimmt wird.
+Ein solches Beispiel aus der Praxis ist das Herstellen einer elektronischen Leiterplatine. Dabei geht es darum, dass möglichst schnell $n$ Löcher in eine Platine gebohrt werden müssen. Je schneller eine Platine fertig ist, desto mehr können produziert werden. Das Bohren eines einzelnen Lochs ist ohne Qualitätsverlust nicht zu beschleunigen. Um jedoch Zeit zu sparen, darf der Bohrer keine unnötigen Wege zurücklegen. Die meisten Fräs- oder Bohrmaschinen in der Leiterplattenindustrie sind lediglich mit zwei Motoren bzw. Schienen ausgestattet um die gesamte Platine zu erreichen. Deshalb kann man sich das System als \textit{2D-Koordinatensystem} vorstellen, siehe \autoref{abb_leiterplatine}. Der eine Motor steuert den Bohrer auf der X-Achse, also die rechts-links-Bewegung. Der andere fährt den Bohrer entlang der Y-Achse bzw. nach vorne oder hinten. Damit nur die minimale Wegstrecke zurückgelegt wird, also keine Zeit verschwendet wird, muss der optimale Zyklus für den Bohrer errechnet werden. Wenn man bedenkt, dass der Bohrer sich über Bohrloch \textit{1} befindet und zu Loch \textit{2} kommen möchte, wird klar, dass der eine Stellmotor seine Bewegung schneller beendet hat, als der andere und deshalb eine Ruhephase hat bzw. auf den zweiten Stellmotor warten muss. Es ist also wichtig, wie der Abstand zwischen zwei Löchern bestimmt wird.
 
 \begin{figure}[h]
 	\centering
@@ -602,6 +599,11 @@ In \autoref{abb_leiterplatine2} sind beispielhaft die Kantengewichte der Kante \
 Bedenkt man nun, das man eine Zeit-optimierte Rundreise für den Bohrer finden möchte, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
 \newpage
 \subsubsection{Straßenkarte eines Autobahnnetz}
+Bedenkt man nun, das eine Zeit optimierte Rundreise für den Bohrer gefunden werden soll, bildet man aus dem Graphen einen vollständigen Graphen. Es soll also jeder Knoten mit allen anderen verbunden sein. In dem Beispiel geht man davon aus, dass der Bohrer sich über die ganze Platine ohne Hindernisse bewegen kann. An dem vollständigen Graphen können danach die Lösungsmethoden des TSP angewendet werden.
+
+
+\subsubsection{Straßenkarte eines Autobahnnetzes}
+
 Sollen die Lösungsmethoden des TSP's an einer Straßenkarte, zum Beispiel dem Autobahnnetz angewendet werden, kann man ebenfalls einen vollständigen Graphen bilden obwohl nicht alle Orte mit einer direkten Autobahn verbunden sind. Die imaginären Strecken führen dabei nicht in die Innenstadt bzw. zum Knoten selbst sondern führen direkt daran vorbei, siehe \autoref{vollstGraph_Strassen}. Die Streckenkosten der jeweiligen Teilstrecken werden addiert als würden diese durch den Knoten führen.
 
 \begin{figure}[h]
