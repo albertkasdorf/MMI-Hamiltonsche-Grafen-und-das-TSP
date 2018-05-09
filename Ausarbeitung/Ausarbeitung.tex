@@ -619,7 +619,7 @@ Nun können die Lösungsmethoden des TSP's angewendet werden. Sollte in der opti
 
 \subsection{Lösungsmethoden}
 
-Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Vorraussetzung einer beliebig langen Laufzeit, finden \textit{exakte Algorithmen} eine Optimallösung. \textit{Heuristiken} dagegen garantieren nicht, dass eine optimale Lösung gefunden wird, sondern versuchen innerhalb eines Zeitrahmens eine zulässige Lösung zu finden. Unter mithilfe von Entscheidungsregeln wird sich dabei möglichst nah an die Optimallösung angenähert.
+Grundsätzlich gibt es zwei verschiedene Kategorien von Lösungsansätzen: \textit{exakte Algorithmen} und \textit{Heuristiken}. Unter der Voraussetzung einer beliebig langen Laufzeit, finden \textit{exakte Algorithmen} eine Optimallösung. \textit{Heuristiken} dagegen garantieren nicht, dass eine optimale Lösung gefunden wird, sondern versuchen innerhalb eines Zeitrahmens eine zulässige Lösung zu finden. Unter mithilfe von Entscheidungsregeln wird sich dabei möglichst nah an die optimale Lösung angenähert.
 
 \subsubsection{Exakte Algorithmen}
 Im Folgenden werden \textit{exakte Algorithmen} näher betrachtet. Dazu wird ein einfaches Beispiel eines TSP-Problems mit vier Knoten betrachtet. Ausgehend vom ersten Knoten sollen alle anderen Knoten einmal besucht werden. Am Ende soll die Lösung mit der günstigsten Tour (Hamiltonkreis) ausgewählt werden.
@@ -721,13 +721,26 @@ Die angewendete Herangehensweise war ein exakter Algorithmus. Das Ermitteln der 
 
 Die Fakultätsfunktion wächst stark. Für das Problem aus \autoref{fig:leiterplatine} (Leiterplatten) hat es zur Folge, dass $0.5 * 17! = 1.7784371 * 10^{14}$ Touren erzeugt und jeweils die Kosten berechnet werden müssen. In der gewählten Herangehensweise aus dem Beispiel, müssen $n$ Additionen pro Tourlänge vorgenommen werden. Insgesamt wären für 18 Löchern rund $3,2 * 10^{15}$ Additionen notwendig.
 \par Daraus lässt sich die Schlussfolgerung ziehen, dass für die Berechnung der optimalen Lösung für praxisrelevante Anwendungsfälle eine enorme Laufzeit entsteht. Das liegt daran, dass das TSP-Problem zu einer Reihe von schwierigen Problemen gehört, den sogenannten NP-vollständigen Problemen. Es wird angenommen, dass jeder Algorithmus zur exakten Lösung dieser Probleme mindestens exponentiell viele Rechenschritte ausführen muss.
-\par Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden. Diese liefern zwar nicht unbedingt die optimale Lösung, aber aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können, ist man oft gar nicht an der Optimallösung interessiert. Zum Beispiel ist eine Städtetour durch Europa mit einem Fahrzeug von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter oder Verkehr. Man kann also zum Schluss kommen, dass in solchen Szenarien die Forderung nach Optimalität überzogen ist.
+\par Das ist die Ursache dafür, dass in der Praxis Heuristiken verwendet werden, obwohl sie nicht unbedingt die optimale Lösung liefern. Aufgrund der Tatsache, dass die verwendeten Daten schon Fehler enthalten oder nicht genau ermittelt werden können, sind suboptimale Lösungen, die möglichst nahe dem Optimum liegen, häufig ausreichend. Zum Beispiel ist eine Städtetour durch Europa mit einem Fahrzeug von vielen Faktoren abhängig wie: Fahrzeugtyp, Wetter oder Verkehr. In solchen Anwendungen ist die Forderung nach Optimalität überzogen.
 
+\subsubsection{TSP-Herausforderungen}
+Das TSP ist eines der am intensivsten erforschten Probleme in der Computermathematik. Die Seite \textit{http://www.math.uwaterloo.ca/tsp/index.html} widmet sich der Geschichte, den Anwendungen und der aktuellen Forschung dieser Herausforderung. Dort werden auch sämtliche Rekorde rund um das Thema TSP festgehalten.
+\par Als Beispiel am 20. April 2001 verkündeten David Applegate, Robert Bixby, Vašek Chvátal und William Cook die optimale Lösung eines TSP-Problems durch 15.112 Städte in Deutschland. Dies war die größte TSP-Herausforderung, die zu der Zeit gelöst worden war, und übertraf die 13.509 Städte Tour durch die Vereinigten Staaten, die 1998 gelöst wurde. Die optimale Tour war $66.000km$ lang. Die Berechnung wurde in einem Netzwerk von 110 Prozessoren an der Rice University und der Princeton University durchgeführt. Die gesamte Computerzeit, die bei der Berechnung verwendet wurde, betrug 22,6 Jahre.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{detsp.jpg}
+	\caption{Lösung eines TSP-Problems durch 15.112 Städte in Deutschland}
+	\label{detsp}
+\end{figure}
+
+Die aktuelle (Stand 09.05.18) Herausforderung ist es eine optimale Tour durch 100,000 Städte zu finden. Das Preisgeld für dieses Problem beträgt 1000\$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %
+\newpage
 \section{Algorithmen}
 
 \subsection{Nearest-Neighbor-Heuristik}
